@@ -1,11 +1,13 @@
 import random
+import time
 
 import pyxel
+from sprite import Sprite
 from projectile import EnemyProjectile
 
 
 # Enemy parent class.Contains all common attributes for all enemies
-class Enemy:
+class Enemy(Sprite):
     # Declaration of the Enemy init method with all the attributes from the class
 
     def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
@@ -54,34 +56,42 @@ class Enemy:
     # Basic methods for the enemy class:
 
     # Update method -> Has to be called every frame -> Is update method inside a class used as the move method??
-    def update(self):
-        ...
 
-
+    # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
+    def draw(self):
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  colkey=self.transparent)
 
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
+    def __int__(self, position_x: float, position_y: float,projectile:EnemyProjectile,acceleration = 3,):
+        self.acceleration = acceleration
+        self.time = time.time()
         super().__init__(position_x, position_y, projectile)
-    def draw(self):
-        pyxel.blt(10,10,0,44,4,8,8,colkey=0)
-    # Draw method -> Each child enemy has the sprites generated are independent??
+
+    def update(self):
+        self.time = time-time.time()
+        self.position_x = self.acceleration * time
+        self.position_y = self.acceleration * time
+
 
 class RedEnemy(Enemy):
     def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
         super().__init__(position_x, position_y, projectile)
-    def draw(self):
-        pyxel.blt(20,10,0,59,4,10,9,colkey=0)
+
 
 class Bombardier(Enemy):
     def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
         super().__init__(position_x, position_y, projectile)
+
     def draw(self):
-        pyxel.blt(30,10,0,73,3,14,11,colkey=0)
+        pyxel.blt(30, 10, 0, 73, 3, 14, 11, colkey=0)
+
 
 class SuperBombardier(Enemy):
     def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
         super().__init__(position_x, position_y, projectile)
+
     def draw(self):
-        pyxel.blt(10,10,0,89,0,14,16,colkey=0)
+        pyxel.blt(10, 10, 0, 89, 0, 14, 16, colkey=0)
