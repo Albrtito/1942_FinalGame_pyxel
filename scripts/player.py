@@ -1,6 +1,7 @@
 import time
 import pyxel
 from projectile import Projectile
+from projectileManager import ProjectileManager
 from projectile import PlayerProjectile
 
 player = None
@@ -16,10 +17,13 @@ class Player:
         # Position variables
         self.position_x = position_x
         self.position_y = position_y
+        # The speed right now is constant but could be named as an attribute
+        self.player_speed = 2
         self.player_projectiles = []
-        # The player can shoot every some ms
+        # The player can shoot every some ms(rate of fire)
+        # The time_between_shots is a timer in order to shoot every rate of fire(ms)
         self.rate_of_fire = 500
-        self.next_shot_time = 0
+        self.time_between_shots = 0
 
     # Property and setter for position_x
     @property
@@ -49,30 +53,25 @@ class Player:
 
     def update(self):
         # Calls a function that will move the player
-        self.move(self.position_x,self.position_y)
+        self.move(self.position_x, self.position_y)
 
-
-        # code for the shooting of the player
-        if time.time() > self.next_shot_time and pyxel.btn(pyxel.KEY_SPACE):
-            self.next_shot_time = time.time() + self.rate_of_fire / 1000
-            self.player_projectiles.append(self.shoot())
-
-        if len(self.player_projectiles) != 0:
-            for projectile in self.player_projectiles:
-                projectile.update()
+        # code for the shooting of the player: If the time since the next shot is bigger than the time between shots
+        # and the space key is pressed, shoot
+        if time.time() > self.time_between_shots and pyxel.btn(pyxel.KEY_SPACE):
+            self.time_between_shots = time.time() + self.rate_of_fire / 1000
+            self.shoot()
 
     def draw(self):
         pyxel.blt(self.position_x, self.position_y, 0, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT, colkey=8)
-        if len(self.player_projectiles) != 0:
-            for projectile in self.player_projectiles:
-                projectile.draw()
 
     # Methods for player class
+
+    # Shoot method creates a player projectile in the projectileManager class
     def shoot(self):
-        return Projectile(self.position_x, self.position_y, 5.0)
+        ProjectileManager.create_projectile(self.position_x, self.position_y, self.player_speed, "PlayerProjectile")
 
     # This function moves the player given an imput in the keyboard keys
-    def move(self,position_x,position_y):
+    def move(self, position_x, position_y):
         if pyxel.btn(pyxel.KEY_LEFT) and self.position_x != 0:
             self.position_x -= 1
         if pyxel.btn(pyxel.KEY_RIGHT) and self.position_x < WIDTH - PLAYER_WIDTH:

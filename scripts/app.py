@@ -1,6 +1,7 @@
 import pyxel
 from player import Player
 from enemy import Enemy
+from projectileManager import ProjectileManager
 from projectile import Projectile
 from projectile import PlayerProjectile
 enemy_visible = False
@@ -13,16 +14,24 @@ score = 0
 highscore = 20
 class App:
     def __init__(self):
+        self.projectile_manager = ProjectileManager()
         pyxel.init(WIDTH,HEIGHT)
         pyxel.load('../assets/App.pyxres')
         global player
         player = Player(float(WIDTH/2-PLAYER_WIDTH/2),float(HEIGHT-PLAYER_HEIGHT))
         pyxel.run(self.update,self.draw)
 
+
+    @property
+    def projectile_manager(self):
+        return self.__projectile_manager
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
         player.update()
+        self.projectile_manager.update()
+
+
 
     def draw(self):
         pyxel.cls(0)
@@ -30,6 +39,7 @@ class App:
         pyxel.text(30,1, f"Highest Score: {highscore}",7)
         pyxel.text(30,7, f"Current Score: {score}",7)
         player.draw()
+        self.projectile_manager.draw()
         if pyxel.btn(pyxel.KEY_S):
             global enemy
             enemy = Enemy
