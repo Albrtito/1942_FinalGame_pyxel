@@ -18,17 +18,18 @@ class ProjectileManager:
     def update(self):
         # Update the projectiles in each player and enemy list. Delete the projectile
         # if more than 5 seconds have passed since its creation
+        # for player projectiles
         for elem in self.player_projectiles:
             if elem.is_alive:
                 elem.update()
-                print(f"Alive")
             else:
-                self.player_projectiles.remove(elem)
-        for elem in self.enemy_projectiles:
-            if not elem.isalive:
                 del elem
-            else:
+        # for enemy projectiles
+        for elem in self.enemy_projectiles:
+            if elem.isalive:
                 elem.update()
+            else:
+                del elem
 
     def draw(self):
         # Draw the projectiles in a list using the method from resources
@@ -39,6 +40,6 @@ class ProjectileManager:
     # the projectile_type attribute (must be a string)
     def create_projectile(self, position_x: int, position_y: int, speed: int, projectile_type: str):
         if projectile_type == "PlayerProjectile":
-            self.player_projectiles.append(Projectile(position_x, position_y, speed))
+            self.player_projectiles.append(PlayerProjectile(position_x, position_y, speed))
         if projectile_type == "EnemyProjectile":
             self.enemy_projectiles.append(EnemyProjectile(position_x, position_y, speed))

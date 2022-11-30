@@ -78,11 +78,8 @@ class Projectile:
 
 # Child classes of clss Projectile, difference is only in the sprite
 class PlayerProjectile(Projectile):
-    def __init__(self, position_x: float, position_y: float, speed: float):
-        super().__init__(self, position_x, position_y, speed)
-        ...
+    ...
 
 
 class EnemyProjectile(Projectile):
-    def __int__(self, direction_x: int, direction_y: int):
-        super().__init__(self, direction_x, direction_y)
+   ...

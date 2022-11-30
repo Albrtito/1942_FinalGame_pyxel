@@ -4,8 +4,8 @@ from projectileManager import ProjectileManager
 
 
 player = None
-HEIGHT = 128
-WIDTH = 128
+HEIGHT = 160
+WIDTH = 120
 PLAYER_WIDTH = 16
 PLAYER_HEIGHT = 16
 
@@ -73,10 +73,10 @@ class Player:
     # This function moves the player given an input in the keyboard keys
     def move(self, position_x, position_y):
         if pyxel.btn(pyxel.KEY_LEFT) and self.position_x != 0:
-            self.position_x -= 1
+            self.position_x -= self.player_speed
         if pyxel.btn(pyxel.KEY_RIGHT) and self.position_x < WIDTH - PLAYER_WIDTH:
-            self.position_x += 1
+            self.position_x += self.player_speed
         if pyxel.btn(pyxel.KEY_DOWN) and self.position_y < HEIGHT - PLAYER_HEIGHT:
-            self.position_y += 1
+            self.position_y += self.player_speed
         if pyxel.btn(pyxel.KEY_UP) and self.position_y != 0:
-            self.position_y -= 1
+            self.position_y -= self.player_speed
