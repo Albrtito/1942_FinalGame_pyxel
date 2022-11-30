@@ -8,7 +8,10 @@ class Projectile:
         self.position_x = position_x
         self.position_y = position_y
         self.speed = speed
-
+        # Time until a projectile is deleted (seg)
+        self.lifespan = 3
+        self.created_time = time.time()
+        self.is_alive = True
 
     # Property and setter for the direction_x
     @property
@@ -49,11 +52,17 @@ class Projectile:
         else:
             self.__speed = speed
 
+    # This is a read only property
+    @property
+    def in_screen(self):
+        return self.__in_screen
+
     # Methods for the Projectile mother class, things all projectiles do
     def update(self):
-       #Update method, changes the position of the projectile
+        # Update method, changes the position of the projectile
         self.position_y -= self.speed
-
+        # Check if the projectile needs to be deleted
+        self.is_alive = self.check_delete(self.lifespan,self.created_time)
 
     def draw(self):
         # The position at wich a projectile has to be deleted will
@@ -61,7 +70,11 @@ class Projectile:
         if self.position_y >= -10:
             pyxel.blt(self.position_x, self.position_y, 0, 0, 16, 16, 16, colkey=8)
 
-
+    def check_delete(self,lifespan,created_time):
+        if (created_time + lifespan) <= time.time():
+            return False
+        else:
+            return True
 
 # Child classes of clss Projectile, difference is only in the sprite
 class PlayerProjectile(Projectile):

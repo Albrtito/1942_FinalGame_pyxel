@@ -70,7 +70,7 @@ class Player:
     def shoot(self):
         self.projectile_manager.create_projectile(self.position_x, self.position_y, self.player_speed, "PlayerProjectile")
 
-    # This function moves the player given an imput in the keyboard keys
+    # This function moves the player given an input in the keyboard keys
     def move(self, position_x, position_y):
         if pyxel.btn(pyxel.KEY_LEFT) and self.position_x != 0:
             self.position_x -= 1
