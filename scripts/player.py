@@ -1,8 +1,7 @@
 import time
 import pyxel
-from projectile import Projectile
 from projectileManager import ProjectileManager
-from projectile import PlayerProjectile
+
 
 player = None
 HEIGHT = 128
@@ -13,28 +12,29 @@ PLAYER_HEIGHT = 16
 
 class Player:
 
-    def __init__(self, position_x=0, position_y=0):
+    def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
         # Position variables
         self.position_x = position_x
         self.position_y = position_y
         # The speed right now is constant but could be named as an attribute
         self.player_speed = 2
-        self.player_projectiles = []
+        # self.player_projectiles = []
         # The player can shoot every some ms(rate of fire)
         # The time_between_shots is a timer in order to shoot every rate of fire(ms)
         self.rate_of_fire = 500
         self.time_between_shots = 0
-
+        # The projectile manager for the shots fired by the player
+        self.projectile_manager = projectile_manager
     # Property and setter for position_x
     @property
     def position_x(self):
         return self.__position_x
 
     @position_x.setter
-    def position_x(self, position_x: float):
+    def position_x(self, position_x: int):
         # Only change the position_x to float values
-        if type(position_x) != float:
-            raise TypeError("The position must be a float")
+        if type(position_x) != int:
+            raise TypeError("The position must be an int")
         else:
             self.__position_x = position_x
 
@@ -44,10 +44,10 @@ class Player:
         return self.__position_y
 
     @position_y.setter
-    def position_y(self, position_y: float):
+    def position_y(self, position_y: int):
         # Only change the position_y to float values
-        if type(position_y) != float:
-            raise TypeError("The position must be a float")
+        if type(position_y) != int:
+            raise TypeError("The position must be an int")
         else:
             self.__position_y = position_y
 
@@ -68,7 +68,7 @@ class Player:
 
     # Shoot method creates a player projectile in the projectileManager class
     def shoot(self):
-        ProjectileManager.create_projectile(self.position_x, self.position_y, self.player_speed, "PlayerProjectile")
+        self.projectile_manager.create_projectile(self.position_x, self.position_y, self.player_speed, "PlayerProjectile")
 
     # This function moves the player given an imput in the keyboard keys
     def move(self, position_x, position_y):

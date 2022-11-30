@@ -4,11 +4,10 @@ import pyxel
 
 # Mother class for all projectiles,both the enemy`s and the player`s
 class Projectile:
-    def __init__(self, position_x: float, position_y: float, speed: float):
+    def __init__(self, position_x: int, position_y: int, speed: int):
         self.position_x = position_x
         self.position_y = position_y
         self.speed = speed
-
 
 
     # Property and setter for the direction_x
@@ -17,10 +16,10 @@ class Projectile:
         return self.__position_x
 
     @position_x.setter
-    def position_x(self, position_x: float):
+    def position_x(self, position_x: int):
         # Only change the direction_x to float values
-        if type(position_x) != float:
-            raise TypeError("The position must be a float")
+        if type(position_x) != int:
+            raise TypeError("The position must be a int")
         else:
             self.__position_x = position_x
 
@@ -30,10 +29,10 @@ class Projectile:
         return self.__position_y
 
     @position_y.setter
-    def position_y(self, position_y: float):
+    def position_y(self, position_y: int):
         # Only change the direction_y to float values
-        if type(position_y) != float:
-            raise TypeError("The position must be a float")
+        if type(position_y) != int:
+            raise TypeError("The position must be a int")
         else:
             self.__position_y = position_y
 
@@ -43,10 +42,10 @@ class Projectile:
         return self.__speed
 
     @speed.setter
-    def speed(self, speed: float):
+    def speed(self, speed: int):
         # Only change the direction_y to float values
-        if type(speed) != float:
-            raise TypeError("The speed must be a float")
+        if type(speed) != int:
+            raise TypeError("The speed must be a int")
         else:
             self.__speed = speed
 
