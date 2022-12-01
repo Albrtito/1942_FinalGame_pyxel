@@ -67,11 +67,9 @@ class Enemy(Sprite):
 class RegularEnemy(Enemy):
     def __int__(self, position_x: float, position_y: float,projectile:EnemyProjectile,acceleration = 3,):
         self.acceleration = acceleration
-        self.time = time.time()
         super().__init__(position_x, position_y, projectile)
 
     def update(self):
-        self.time = time-time.time()
         self.position_x = self.acceleration * time
         self.position_y = self.acceleration * time
 

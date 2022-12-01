@@ -22,7 +22,8 @@ class App:
         self.projectile_manager = ProjectileManager()
         self.player = Player(int(WIDTH / 2), int(HEIGHT / 2), self.projectile_manager)
         self.enemies = []
-        self.test_enemy = RegularEnemy(16,0,8,8)
+
+       # self.test_enemy = RegularEnemy(16,0,8,8)
 
         # Variables for the movement of the background and graphics
         self.background_roll = x
@@ -70,7 +71,7 @@ class App:
         # Draw bullets
         self.projectile_manager.draw()
         # Draw enemies
-        self.test_enemy.draw()
+        #self.test_enemy.draw()
 
 
 App()
