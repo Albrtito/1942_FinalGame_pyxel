@@ -22,7 +22,7 @@ class App:
         self.projectile_manager = ProjectileManager()
         self.player = Player(int(WIDTH / 2), int(HEIGHT / 2), self.projectile_manager)
         self.enemies = []
-
+        self.enemy = RegularEnemy()
        # self.test_enemy = RegularEnemy(16,0,8,8)
 
         # Variables for the movement of the background and graphics
@@ -45,12 +45,12 @@ class App:
         # Update of the game objects
         self.player.update()
         self.projectile_manager.update()
-        self.background_roll += 0
+        self.background_roll += 1
 
     def draw(self):
         # Background: The roll is not well done but works
         pyxel.cls(0)
-        pyxel.bltm(x=0, y=0, tm=0, u=0, v=0 - self.background_roll, w=WIDTH, h=HEIGHT)
+        pyxel.bltm(x=0, y=0, tm=0, u=0, v=2000-self.background_roll, w=WIDTH, h=HEIGHT)
         pyxel.text(30, 1, f"Highest Score: {self.best_score}", 7)
         pyxel.text(30, 7, f"Current Score: {self.score}", 7)
 

@@ -10,7 +10,7 @@ from projectile import EnemyProjectile
 class Enemy(Sprite):
     # Declaration of the Enemy init method with all the attributes from the class
 
-    def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
+    def __init__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
         self.position_x = position_x
         self.position_y = position_y
         self.projectile = projectile
@@ -65,7 +65,7 @@ class Enemy(Sprite):
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __int__(self, position_x: float, position_y: float,projectile:EnemyProjectile,acceleration = 3,):
+    def __init__(self, position_x: float, position_y: float,projectile:EnemyProjectile,acceleration = 3,):
         self.acceleration = acceleration
         super().__init__(position_x, position_y, projectile)
 
@@ -75,12 +75,12 @@ class RegularEnemy(Enemy):
 
 
 class RedEnemy(Enemy):
-    def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
+    def __init__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
         super().__init__(position_x, position_y, projectile)
 
 
 class Bombardier(Enemy):
-    def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
+    def __init__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
         super().__init__(position_x, position_y, projectile)
 
     def draw(self):
@@ -88,7 +88,7 @@ class Bombardier(Enemy):
 
 
 class SuperBombardier(Enemy):
-    def __int__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
+    def __init__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
         super().__init__(position_x, position_y, projectile)
 
     def draw(self):
