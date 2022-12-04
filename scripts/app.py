@@ -15,6 +15,7 @@ PLAYER_HEIGHT = 16
 x = 0
 
 #Cambios hechos, primera version
+#Version Ignacio
 class App:
     def __init__(self):
         # Classes attribute
