@@ -15,8 +15,6 @@ PLAYER_HEIGHT = 16
 x = 0
 
 
-# score = 0
-# highscore = 20
 class App:
     def __init__(self):
         # Classes attribute

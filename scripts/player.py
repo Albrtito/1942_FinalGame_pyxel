@@ -109,21 +109,22 @@ class Player:
             self.position_u = 0
 
     def animate_loop(self):
-        self.position_u += 16
-        if self.position_u <= 80:
+
+        if self.position_u < 80:
             print("done loop")
             if self.position_u == 32:
                 self.position_y -= 1
-            elif self.position_u == 48:
+            if self.position_u == 48:
                 self.position_y += 0
-            elif self.position_u == 64:
+            if self.position_u == 64:
                 self.position_y += 1
                 self.position_u += 16
-            elif self.position_u == 80:
+            if self.position_u == 80:
                 self.position_y -= 1
+            self.position_u += 16
             time.sleep(.5)
-
-        self.loop = False
+        else:
+            self.loop = False
 
 
 
