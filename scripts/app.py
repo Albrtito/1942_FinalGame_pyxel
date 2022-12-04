@@ -14,7 +14,7 @@ PLAYER_WIDTH = 16
 PLAYER_HEIGHT = 16
 x = 0
 
-
+#Cambios hechos, primera version
 class App:
     def __init__(self):
         # Classes attribute
