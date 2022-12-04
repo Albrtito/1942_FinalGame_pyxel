@@ -75,7 +75,8 @@ class Player:
             # print("draw, move")
             self.player_animations()
         else:
-            self.animate_loop()
+            if pyxel.frame_count//10 == 0:
+                self.animate_loop()
 
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, 0, PLAYER_WIDTH, PLAYER_HEIGHT,
                   colkey=8)
@@ -107,19 +108,20 @@ class Player:
             self.position_u = 0
 
     def animate_loop(self):
+        if self.position_u == 16:
+            self.position_u = 32
         if self.position_u < 80:
             print("done loop")
             if self.position_u == 32:
                 self.position_y -= 1
-            if self.position_u == 48:
+            elif self.position_u == 48:
                 self.position_y += 0
-            if self.position_u == 64:
+            elif self.position_u == 64:
                 self.position_y += 1
-                self.position_u += 16
-            if self.position_u == 80:
+            elif self.position_u == 80:
                 self.position_y -= 1
+
             self.position_u += 16
-            time.sleep(.5)
         else:
             self.loop = False
 
