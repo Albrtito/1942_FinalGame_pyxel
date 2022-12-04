@@ -4,6 +4,7 @@ import pyxel
 from sprite import Sprite
 from player import Player
 from projectileManager import ProjectileManager
+from enemyManager import EnemyManager
 from enemy import Enemy, RegularEnemy
 from background_manager import BackgroundManager
 
@@ -22,7 +23,7 @@ class App:
         self.background_manager = BackgroundManager(WIDTH, HEIGHT)
         self.projectile_manager = ProjectileManager()
         self.player = Player(int(WIDTH / 2), int(HEIGHT / 2), self.projectile_manager)
-        self.enemies = []
+        self.enemies = EnemyManager.create_enemy(self,0,20,'Regular')
 
         # Variables of the game loop:
         self.game_loop = False
@@ -58,7 +59,8 @@ class App:
             self.projectile_manager.draw()
             # Draw player
             self.player.draw()
-
+            # Draw Enemy
+            self.enemies.draw()
         else:
             self.background_manager.draw()
 

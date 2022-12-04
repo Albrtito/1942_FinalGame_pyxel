@@ -58,7 +58,7 @@ class Enemy:
 
     # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
     def draw(self):
-        ...
+        pyxel.blt(self.position_x,self.position_y,0,self.position_u,self.position_v,self.width,self.height,self.transparent_color)
 
     def update(self):
         ...
@@ -67,6 +67,11 @@ class Enemy:
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager, acceleration=3, ):
+        self.position_u = 0
+        self.position_v = 32
+        self.height = 16
+        self.width = 16
+        self.transparent_color = 0
         super().__init__(position_x, position_y, projectile_manager)
         self.acceleration = acceleration
 
@@ -77,20 +82,30 @@ class RegularEnemy(Enemy):
 
 class RedEnemy(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        self.position_u = 0
+        self.position_v = 48
+        self.height = 16
+        self.width = 16
+        self.transparent_color = 0
         super().__init__(position_x, position_y, projectile_manager)
 
 
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        self.position_u = 0
+        self.position_v = 64
+        self.height = 16
+        self.width = 16
+        self.transparent_color = 0
         super().__init__(position_x, position_y, projectile_manager)
-
-    def draw(self):
-        pyxel.blt(30, 10, 0, 73, 3, 14, 11, colkey=0)
 
 
 class SuperBombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        self.position_u = 0
+        self.position_v = 80
+        self.height = 32
+        self.width = 16
+        self.transparent_color = 0
         super().__init__(position_x, position_y, projectile_manager)
 
-    def draw(self):
-        pyxel.blt(10, 10, 0, 89, 0, 14, 16, colkey=0)
