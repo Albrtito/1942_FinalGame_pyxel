@@ -16,6 +16,7 @@ x = 0
 
 
 # Cambios hechos, primera version
+# Esta es la version de alberto
 class App:
     def __init__(self):
         # Classes attribute
