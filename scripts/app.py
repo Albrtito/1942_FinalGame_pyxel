@@ -14,7 +14,9 @@ PLAYER_WIDTH = 16
 PLAYER_HEIGHT = 16
 x = 0
 
-#Cambios hechos, primera version
+
+# Cambios hechos, primera version
+# Esta es la version de alberto
 class App:
     def __init__(self):
         # Classes attribute
@@ -29,8 +31,6 @@ class App:
         pyxel.init(WIDTH, HEIGHT, title="Pyxel 1942")
         pyxel.load('../assets/App.pyxres')
         pyxel.run(self.update, self.draw)
-
-
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_RETURN):
