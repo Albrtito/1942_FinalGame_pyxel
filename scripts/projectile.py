@@ -4,10 +4,11 @@ import pyxel
 
 # Mother class for all projectiles,both the enemy`s and the player`s
 class Projectile:
-    def __init__(self, position_x: int, position_y: int, speed: int):
+    def __init__(self, position_x: int, position_y: int):
         self.position_x = position_x
         self.position_y = position_y
-        self.speed = speed
+        # Basic speed for all projectiles, can change for player and enemy projectiles
+        self.speed = 3
         # Time until a projectile is deleted (seg)
         self.lifespan = 3
         self.created_time = time.time()
@@ -43,7 +44,7 @@ class Projectile:
     @property
     def speed(self):
         return self.__speed
-
+    # This setter is only for the case that the speed changes in player and enemies projectiles
     @speed.setter
     def speed(self, speed: int):
         # Only change the direction_y to float values

@@ -77,8 +77,7 @@ class Player:
 
     # Shoot method creates a player projectile in the projectileManager class
     def shoot(self):
-        self.projectile_manager.create_projectile(self.position_x, self.position_y, self.player_speed,
-                                                  "PlayerProjectile")
+        self.projectile_manager.create_projectile(self.position_x, self.position_y,"PlayerProjectile")
 
     # This function moves the player given an input in the keyboard keys
     def move(self):

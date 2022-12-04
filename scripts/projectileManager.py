@@ -38,8 +38,8 @@ class ProjectileManager:
 
     # This method returns an object of class projectile, subclass PlayerProjectile or EnemyProjectile, depending on
     # the projectile_type attribute (must be a string)
-    def create_projectile(self, position_x: int, position_y: int, speed: int, projectile_type: str):
+    def create_projectile(self, position_x: int, position_y: int, projectile_type: str):
         if projectile_type == "PlayerProjectile":
-            self.player_projectiles.append(PlayerProjectile(position_x, position_y, speed))
+            self.player_projectiles.append(PlayerProjectile(position_x, position_y))
         if projectile_type == "EnemyProjectile":
-            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y, speed))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y))
