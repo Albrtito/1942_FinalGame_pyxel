@@ -57,6 +57,15 @@ class Player:
             self.__position_y = position_y
 
     def update(self):
+        # If the key Z is pressed, then the player is in a loop, everything else stops
+        if pyxel.btnp(pyxel.KEY_Z):
+            print("loop")
+            self.loop = True
+
+        # When the player is in a loop we call the animate_move_method, which animates and moves the player in the loop.
+        if self.loop and (pyxel.frame_count % 10 == 0):
+            self.animate_move_loop()
+
         if not self.loop:
             # Calls a function that will move the player
             self.move()
@@ -68,22 +77,19 @@ class Player:
                 self.shoot()
 
     def draw(self):
-        if pyxel.btnp(pyxel.KEY_Z):
-            # print("loop")
-            self.loop = True
+        # If the player is not in the loop, then the animations for its movement are normal
         if not self.loop:
-            # print("draw, move")
+            # Method for the animations of the player, changes the variable position_u
             self.player_animations()
-        else:
-            self.animate_loop()
 
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, 0, PLAYER_WIDTH, PLAYER_HEIGHT,
                   colkey=8)
+
     # Methods for player class
 
     # Shoot method creates a player projectile in the projectileManager class
     def shoot(self):
-        self.projectile_manager.create_projectile(self.position_x, self.position_y,"PlayerProjectile")
+        self.projectile_manager.create_projectile(self.position_x, self.position_y, "PlayerProjectile")
 
     # This function moves the player given an input in the keyboard keys
     def move(self):
@@ -106,23 +112,24 @@ class Player:
         else:
             self.position_u = 0
 
-    def animate_loop(self):
-        if self.position_u < 80:
-            print("done loop")
-            if self.position_u == 32:
-                self.position_y -= 1
-            if self.position_u == 48:
-                self.position_y += 0
-            if self.position_u == 64:
-                self.position_y += 1
-                self.position_u += 16
-            if self.position_u == 80:
-                self.position_y -= 1
+    # Function for the animation and movement of a player when its inside a loop
+    def animate_move_loop(self):
+        # We set the player to the starting position(it starts in the movement animation)
+        if self.position_u == 16:
             self.position_u += 16
-            time.sleep(.5)
+        # We pass through each of the animations, one every x frames, stated in the update method
+        # Each animation changes the position of the plane by some amount. The plane ends up in the same position
+        # so it doesn´t go off-screen
+        if self.position_u < 80:
+            if self.position_u == 32:
+                self.position_y -= 10
+            elif self.position_u == 48:
+                self.position_y -= 10
+            elif self.position_u == 64:
+                self.position_y += 20
+            elif self.position_u == 80:
+                self.position_y -= 20
+            self.position_u += 16
+        # When the loop is done, we end it by setting the variable loop to false, everything goes back to normal
         else:
             self.loop = False
-
-
-
-
