@@ -24,6 +24,7 @@ class Player:
         self.player_speed = 2
         # Draw variables of the player -> make something so this works with class sprite
         self.position_u = 0
+        self.loop = False
         # The player can shoot every some ms(rate of fire)
         # The time_between_shots is a timer in order to shoot every rate of fire(ms)
         self.rate_of_fire = 500
@@ -58,21 +59,28 @@ class Player:
             self.__position_y = position_y
 
     def update(self):
-        # Calls a function that will move the player
-        self.move()
+        if not self.loop:
+            # Calls a function that will move the player
+            self.move()
 
-        # code for the shooting of the player: If the time since the next shot is bigger than the time between shots
-        # and the space key is pressed, shoot
-        if time.time() > self.time_between_shots and pyxel.btn(pyxel.KEY_SPACE):
-            self.time_between_shots = time.time() + self.rate_of_fire / 1000
-            self.shoot()
+            # code for the shooting of the player: If the time since the next shot is bigger than the time between shots
+            # and the space key is pressed, shoot
+            if time.time() > self.time_between_shots and pyxel.btn(pyxel.KEY_SPACE):
+                self.time_between_shots = time.time() + self.rate_of_fire / 1000
+                self.shoot()
 
     def draw(self):
-        self.player_animations()
+        if pyxel.btnp(pyxel.KEY_Z):
+            print("loop")
+            self.loop = True
+        if not self.loop:
+            print("draw, move")
+            self.player_animations()
+        else:
+            self.animate_loop()
 
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, 0, PLAYER_WIDTH, PLAYER_HEIGHT,
                   colkey=8)
-
     # Methods for player class
 
     # Shoot method creates a player projectile in the projectileManager class
@@ -99,3 +107,24 @@ class Player:
             self.position_u = 16
         else:
             self.position_u = 0
+
+    def animate_loop(self):
+        self.position_u += 16
+        if self.position_u <= 80:
+            print("done loop")
+            if self.position_u == 32:
+                self.position_y -= 1
+            elif self.position_u == 48:
+                self.position_y += 0
+            elif self.position_u == 64:
+                self.position_y += 1
+                self.position_u += 16
+            elif self.position_u == 80:
+                self.position_y -= 1
+            time.sleep(.5)
+
+        self.loop = False
+
+
+
+
