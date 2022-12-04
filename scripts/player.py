@@ -3,7 +3,6 @@ import pyxel
 from projectileManager import ProjectileManager
 from sprite import Sprite
 
-player = None
 HEIGHT = 128
 WIDTH = 128
 PLAYER_WIDTH = 16
@@ -16,7 +15,6 @@ PLAYER_HEIGHT = 16
 class Player:
 
     def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
-
         # Position variables
         self.position_x = position_x
         self.position_y = position_y
@@ -71,10 +69,10 @@ class Player:
 
     def draw(self):
         if pyxel.btnp(pyxel.KEY_Z):
-            print("loop")
+            # print("loop")
             self.loop = True
         if not self.loop:
-            print("draw, move")
+            # print("draw, move")
             self.player_animations()
         else:
             self.animate_loop()
@@ -109,7 +107,6 @@ class Player:
             self.position_u = 0
 
     def animate_loop(self):
-
         if self.position_u < 80:
             print("done loop")
             if self.position_u == 32:

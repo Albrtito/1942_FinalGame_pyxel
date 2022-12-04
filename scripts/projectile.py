@@ -44,6 +44,7 @@ class Projectile:
     @property
     def speed(self):
         return self.__speed
+
     # This setter is only for the case that the speed changes in player and enemies projectiles
     @speed.setter
     def speed(self, speed: int):
@@ -53,29 +54,25 @@ class Projectile:
         else:
             self.__speed = speed
 
-    # This is a read only property
-    @property
-    def in_screen(self):
-        return self.__in_screen
-
     # Methods for the Projectile mother class, things all projectiles do
     def update(self):
         # Update method, changes the position of the projectile
         self.position_y -= self.speed
         # Check if the projectile needs to be deleted
-        self.is_alive = self.check_delete(self.lifespan,self.created_time)
+        self.is_alive = self.check_delete(self.lifespan, self.created_time)
+        print("alive")
 
     def draw(self):
         # The position at wich a projectile has to be deleted will
         # vary when we are creating a movement in the background
-        if self.position_y >= -10:
-            pyxel.blt(self.position_x, self.position_y, 0, 0, 16, 16, 16, colkey=0)
+        pyxel.blt(self.position_x, self.position_y, 0, 0, 16, 16, 16, colkey=0)
 
-    def check_delete(self,lifespan,created_time):
+    def check_delete(self, lifespan, created_time):
         if (created_time + lifespan) <= time.time():
             return False
         else:
             return True
+
 
 # Child classes of clss Projectile, difference is only in the sprite
 class PlayerProjectile(Projectile):
@@ -83,4 +80,4 @@ class PlayerProjectile(Projectile):
 
 
 class EnemyProjectile(Projectile):
-   ...
+    ...

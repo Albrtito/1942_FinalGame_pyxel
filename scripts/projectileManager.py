@@ -26,7 +26,7 @@ class ProjectileManager:
                 del elem
         # for enemy projectiles
         for elem in self.enemy_projectiles:
-            if elem.isalive:
+            if elem.is_alive:
                 elem.update()
             else:
                 del elem

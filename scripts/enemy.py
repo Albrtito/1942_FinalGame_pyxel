@@ -2,18 +2,17 @@ import random
 import time
 
 import pyxel
-from sprite import Sprite
-from projectile import EnemyProjectile
+from projectileManager import ProjectileManager
 
 
 # Enemy parent class.Contains all common attributes for all enemies
-class Enemy(Sprite):
+class Enemy:
     # Declaration of the Enemy init method with all the attributes from the class
 
-    def __init__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
+    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
         self.position_x = position_x
         self.position_y = position_y
-        self.projectile = projectile
+        self.projectile_manager = projectile_manager
 
     # Property and setter for position_x
     @property
@@ -43,15 +42,15 @@ class Enemy(Sprite):
 
     # Property and setter for projectile
     @property
-    def projectile(self):
-        return self.__projectile
+    def projectile_manager(self):
+        return self.__projectile_manager
 
-    @projectile.setter
-    def projectile(self, projectile: EnemyProjectile):
-        if type(projectile) != EnemyProjectile:
-            raise TypeError("Projectile must be an object of class EnemyProjectile")
+    @projectile_manager.setter
+    def projectile(self, projectile_manager: ProjectileManager):
+        if type(projectile_manager) != ProjectileManager:
+            raise TypeError("Projectile manager must be an object of class ProjectileManager")
         else:
-            self.__projectile = projectile
+            self.__projectile_manager = projectile_manager
 
     # Basic methods for the enemy class:
 
@@ -59,15 +58,17 @@ class Enemy(Sprite):
 
     # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
     def draw(self):
-        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
-                  colkey=self.transparent)
+        ...
+
+    def update(self):
+        ...
 
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __init__(self, position_x: float, position_y: float,projectile:EnemyProjectile,acceleration = 3,):
+    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager, acceleration=3, ):
+        super().__init__(position_x, position_y, projectile_manager)
         self.acceleration = acceleration
-        super().__init__(position_x, position_y, projectile)
 
     def update(self):
         self.position_x = self.acceleration * time
@@ -75,21 +76,21 @@ class RegularEnemy(Enemy):
 
 
 class RedEnemy(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
-        super().__init__(position_x, position_y, projectile)
+    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        super().__init__(position_x, position_y, projectile_manager)
 
 
 class Bombardier(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
-        super().__init__(position_x, position_y, projectile)
+    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        super().__init__(position_x, position_y, projectile_manager)
 
     def draw(self):
         pyxel.blt(30, 10, 0, 73, 3, 14, 11, colkey=0)
 
 
 class SuperBombardier(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile: EnemyProjectile):
-        super().__init__(position_x, position_y, projectile)
+    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        super().__init__(position_x, position_y, projectile_manager)
 
     def draw(self):
         pyxel.blt(10, 10, 0, 89, 0, 14, 16, colkey=0)
