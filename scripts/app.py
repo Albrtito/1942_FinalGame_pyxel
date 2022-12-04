@@ -8,8 +8,8 @@ from enemy import Enemy, RegularEnemy
 from background_manager import BackgroundManager
 
 # enemy_visible = False
-HEIGHT = 160
-WIDTH = 120
+HEIGHT = 128
+WIDTH = 128
 PLAYER_WIDTH = 16
 PLAYER_HEIGHT = 16
 x = 0
@@ -26,22 +26,24 @@ class App:
         self.enemies = []
 
         # Variables of the game loop:
-        self.game_loop = True
+        self.game_loop = False
         # Initialize pyxel
         pyxel.init(WIDTH, HEIGHT, title="Pyxel 1942")
         pyxel.load('../assets/App.pyxres')
         pyxel.run(self.update, self.draw)
 
+
+
     def update(self):
+        if pyxel.btnp(pyxel.KEY_RETURN):
+            self.background_manager.initial_screen = False
+            self.game_loop = True
         if self.game_loop:
             # The game will quit when Q is pressed
             if pyxel.btnp(pyxel.KEY_Q):
                 pyxel.quit()
             if pyxel.btnp(pyxel.KEY_G):
                 self.game_over()
-            if pyxel.btnp(pyxel.KEY_RETURN):
-                self.background_manager.initial_screen = False
-
             # Update of the game objects
             self.background_manager.update()
             self.player.update()
@@ -53,10 +55,11 @@ class App:
         if self.game_loop:
             # Draw background
             self.background_manager.draw()
-            # Draw player
-            self.player.draw()
             # Draw bullets
             self.projectile_manager.draw()
+            # Draw player
+            self.player.draw()
+
         else:
             self.background_manager.draw()
 

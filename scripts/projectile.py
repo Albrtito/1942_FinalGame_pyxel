@@ -68,7 +68,7 @@ class Projectile:
         # The position at wich a projectile has to be deleted will
         # vary when we are creating a movement in the background
         if self.position_y >= -10:
-            pyxel.blt(self.position_x, self.position_y, 0, 0, 16, 16, 16, colkey=8)
+            pyxel.blt(self.position_x, self.position_y, 0, 0, 16, 16, 16, colkey=0)
 
     def check_delete(self,lifespan,created_time):
         if (created_time + lifespan) <= time.time():

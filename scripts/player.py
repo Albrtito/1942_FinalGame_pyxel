@@ -1,30 +1,36 @@
 import time
 import pyxel
 from projectileManager import ProjectileManager
-
+from sprite import Sprite
 
 player = None
-HEIGHT = 160
-WIDTH = 120
+HEIGHT = 128
+WIDTH = 128
 PLAYER_WIDTH = 16
 PLAYER_HEIGHT = 16
 
 
+# Class player inherits from sprite, this means all basic characteristics of sprites,
+# are at first set to the general sprite
+
 class Player:
 
     def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
+
         # Position variables
         self.position_x = position_x
         self.position_y = position_y
         # The speed right now is constant but could be named as an attribute
         self.player_speed = 2
-        # self.player_projectiles = []
+        # Draw variables of the player -> make something so this works with class sprite
+        self.position_u = 0
         # The player can shoot every some ms(rate of fire)
         # The time_between_shots is a timer in order to shoot every rate of fire(ms)
         self.rate_of_fire = 500
         self.time_between_shots = 0
         # The projectile manager for the shots fired by the player
         self.projectile_manager = projectile_manager
+
     # Property and setter for position_x
     @property
     def position_x(self):
@@ -53,7 +59,7 @@ class Player:
 
     def update(self):
         # Calls a function that will move the player
-        self.move(self.position_x, self.position_y)
+        self.move()
 
         # code for the shooting of the player: If the time since the next shot is bigger than the time between shots
         # and the space key is pressed, shoot
@@ -62,16 +68,20 @@ class Player:
             self.shoot()
 
     def draw(self):
-        pyxel.blt(self.position_x, self.position_y, 0, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT, colkey=8)
+        self.player_animations()
+
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, 0, PLAYER_WIDTH, PLAYER_HEIGHT,
+                  colkey=8)
 
     # Methods for player class
 
     # Shoot method creates a player projectile in the projectileManager class
     def shoot(self):
-        self.projectile_manager.create_projectile(self.position_x, self.position_y, self.player_speed, "PlayerProjectile")
+        self.projectile_manager.create_projectile(self.position_x, self.position_y, self.player_speed,
+                                                  "PlayerProjectile")
 
     # This function moves the player given an input in the keyboard keys
-    def move(self, position_x, position_y):
+    def move(self):
         if pyxel.btn(pyxel.KEY_LEFT) and self.position_x != 0:
             self.position_x -= self.player_speed
         if pyxel.btn(pyxel.KEY_RIGHT) and self.position_x < WIDTH - PLAYER_WIDTH:
@@ -80,3 +90,13 @@ class Player:
             self.position_y += self.player_speed
         if pyxel.btn(pyxel.KEY_UP) and self.position_y != 0:
             self.position_y -= self.player_speed
+
+    # This functions changes the variables of self.position_u and self.position_v. This two variables determine which
+    # sprite to show, so changing these variables we can change the sprite of the plane that is showing depending on
+    # what the plane is doing
+    def player_animations(self):
+        # Update the helix movement every frame
+        if self.position_u == 0:
+            self.position_u = 16
+        else:
+            self.position_u = 0

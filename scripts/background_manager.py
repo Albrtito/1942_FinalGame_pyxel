@@ -15,6 +15,8 @@ class BackgroundManager:
         self.score = 0
         self.best_score = 20
 
+
+
     @property
     def game_over(self):
         return self.__game_over
@@ -50,7 +52,6 @@ class BackgroundManager:
         # The background only actualizes if we are not in the initial screen or the game has not reached to an end
         if (not self.initial_screen) and (not self.game_over):
             self.background_roll += 1
-            print(self.background_roll)
 
     def draw(self):
         # If not true that the game has ended, we go through the other different stages
@@ -59,7 +60,8 @@ class BackgroundManager:
             if self.initial_screen:
                 # Background: Initial screen
                 pyxel.cls(0)
-                pyxel.bltm(x=0, y=0, tm=0, u=0, v=232 * 8, w=self.screen_width, h=self.screen_height)
+                # Load images that are going to be used for the background
+                pyxel.bltm(x=0, y=0, tm=0, u=0, v=0, w=self.screen_width, h=self.screen_height)
                 pyxel.text(self.screen_width / 8, self.screen_height / 8, f"PRESS ENTER TO START:", 7)
             else:
                 # Background: The roll is not well done but works
@@ -73,5 +75,5 @@ class BackgroundManager:
 
     def when_game_over(self):
         pyxel.cls(0)
-        pyxel.bltm(x=0, y=0, tm=0, u=240 * 8, v=0, w=120, h=160)
+        pyxel.bltm(x=0, y=0, tm=0, u=240 * 8, v=0, w=self.screen_width, h=self.screen_height)
         # pyxel.text(30, 1, f"GAME OVER ", 7)

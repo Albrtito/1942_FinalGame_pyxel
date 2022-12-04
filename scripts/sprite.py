@@ -1,7 +1,7 @@
 class Sprite:
-    def __init__(self, position_u: int, position_v: int, width: int, height: int, transparent=8):
-        self.position_u = position_u
-        self.position_v = position_v
-        self.width = width
-        self.height = height
-        self.transparent = transparent
+    def __init__(self):
+        self.position_u = 0
+        self.position_v = 0
+        self.width = 16
+        self.height = 16
+        self.transparent = 8
