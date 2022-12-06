@@ -1,7 +1,7 @@
-import time
 
 import pyxel
 import constants
+import random
 from sprite import Sprite
 from player import Player
 from enemy import Enemy, RegularEnemy
@@ -37,14 +37,15 @@ class App:
             # The game will quit when Q is pressed
             if pyxel.btnp(pyxel.KEY_Q):
                 pyxel.quit()
-            if pyxel.btnp(pyxel.KEY_G):
+            if pyxel.btnp(pyxel.KEY_G) or constants.player_lives <= 0:
                 self.game_over()
             # Update of the game objects
+            self.collision_manager.update()
             self.background_manager.update()
             self.player.update()
             self.projectile_manager.update()
             self.enemy_manager.update()
-            self.collision_manager.update()
+
             self.dev_mode()
         else:
             self.background_manager.update()
@@ -73,7 +74,7 @@ class App:
 
     def dev_mode(self):
         if pyxel.btnp(pyxel.KEY_E):
-            self.enemy_manager.create_enemy(64, 0, self.projectile_manager)
+            self.enemy_manager.create_enemy(random.randint(5,123), random.randint(0,64), self.projectile_manager)
 
 
 App()

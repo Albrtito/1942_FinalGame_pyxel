@@ -8,7 +8,6 @@ class EnemyManager:
         self.enemy_list = []
 
     def update(self):
-        print(len(self.enemy_list))
         constants.update_list_and_delete(self.enemy_list)
 
     def draw(self):

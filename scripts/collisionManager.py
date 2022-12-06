@@ -40,36 +40,44 @@ class CollisionManager:
         self.__enemy_manager = enemy_manager
 
     # Methods of the class
-    def update(self):
 
-        self.enemy_with_player_projectile_2()
-        self.player_with_enemy_projectile_2()
-        self.player_with_enemies_2()
+    # Update all the possible collisions
+    def update(self):
+        self.enemy_with_player_projectile()
+        self.player_with_enemy_projectile()
+        self.player_with_enemies()
 
     # Methods for checking collisions: -> Right now checking collisions for points not squares
 
     # Player collisions with the rest
     def player_with_enemies(self):
-        for index in range(len(self.enemy_manager.enemy_list) - 1, -1):
-            if (self.player.position_x == self.enemy_manager.enemy_list[index].position_x) and \
-                    (self.player.position_y == self.enemy_manager.enemy_list[index].position_y):
-                constants.player_lives -= 1
+        for index in range(len(self.enemy_manager.enemy_list) - 1, -1, -1):
+            if self.collision(self.player, self.enemy_manager.enemy_list[index]):
+                # We only subtract a live if the player is not doing a loop, if the player is doing a loop then its
+                # kind of indestructible. Same happens with whatever should be destroyed but with the reversed logic
+                if not self.player.loop:
+                    constants.player_lives -= 1
+                    self.enemy_manager.enemy_list[index].is_alive = False
+                print(constants.player_lives)
 
     def player_with_enemy_projectile(self):
         for index in range(len(self.projectile_manager.enemy_projectiles) - 1, -1, -1):
-            if (self.player.position_x == self.projectile_manager.enemy_projectiles[index].position_x) and \
-                    (self.player.position_y == self.projectile_manager.enemy_projectiles[index].position_y):
-                constants.player_lives -= 1
+            if self.collision(self.player, self.projectile_manager.enemy_projectiles[index]):
+                # We only subtract a live if the player is not doing a loop, if the player is doing a loop then its
+                # kind of indestructible. Same happens with whatever should be destroyed but with the reversed logic
+                if not self.player.loop:
+                    constants.player_lives -= 1
 
-    # Enemy collisions with the player bullets
+                    self.projectile_manager.enemy_projectiles[index].is_alive = False
+
+    # Enemy collisions with the player projectiles
     def enemy_with_player_projectile(self):
         for player_index in range(len(self.projectile_manager.player_projectiles) - 1, -1, -1):
             for enemy_index in range(len(self.enemy_manager.enemy_list) - 1, -1, -1):
-                if (self.enemy_manager.enemy_list[enemy_index].position_x == self.projectile_manager.player_projectiles[
-                    player_index].position_x) \
-                        and (self.enemy_manager.enemy_list[enemy_index].position_y ==
-                             self.projectile_manager.player_projectiles[player_index].position_y):
-                    self.enemy_manager.enemy_list[enemy_index].is_alive = False
+                if self.collision(self.enemy_manager.enemy_list[enemy_index],
+                                  self.projectile_manager.player_projectiles[player_index]):
+                    self.enemy_manager.enemy_list[enemy_index].lives -= 1
+                    self.projectile_manager.player_projectiles[player_index].is_alive = False
                     constants.player_score += 10
 
     # Basic distance collision for any two objects:
@@ -77,24 +85,7 @@ class CollisionManager:
         distance = math.sqrt(((object_1.position_x - object_2.position_x) ** 2) +
                              ((object_1.position_y - object_2.position_y) ** 2))
         if distance < (object_1.width + object_2.width) / 2:
+            print("collision")
             return True
         else:
             return False
-
-    def player_with_enemies_2(self):
-        for index in range(len(self.enemy_manager.enemy_list) - 1, -1):
-            if self.collision(self.player, self.enemy_manager.enemy_list[index]):
-                constants.player_lives -= 1
-
-    def player_with_enemy_projectile_2(self):
-        for index in range(len(self.projectile_manager.enemy_projectiles) - 1, -1, -1):
-            if self.collision(self.player, self.projectile_manager.enemy_projectiles[index]):
-                constants.player_lives -= 1
-
-    def enemy_with_player_projectile_2(self):
-        for player_index in range(len(self.projectile_manager.player_projectiles) - 1, -1, -1):
-            for enemy_index in range(len(self.enemy_manager.enemy_list) - 1, -1, -1):
-                if self.collision(self.enemy_manager.enemy_list[enemy_index],
-                                  self.projectile_manager.player_projectiles[player_index]):
-                    self.enemy_manager.enemy_list[enemy_index].is_alive = False
-                    constants.player_score += 10

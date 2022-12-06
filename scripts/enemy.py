@@ -26,7 +26,9 @@ class Enemy:
         self.height = constants.normal_sprite_height
         # Other variables
         self.projectile_manager = projectile_manager
+        # In game important variables of each enemy
         self.is_alive = True
+        self.lives = 2
 
     # Property and setter for position_x
     @property
@@ -73,40 +75,35 @@ class Enemy:
 
     # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
     def draw(self):
-        pyxel.blt(64, 64, 0, 0, 32, constants.normal_sprite_width, constants.normal_sprite_height,
+        pyxel.blt(self.position_x, self.position_y, 0, 0, 32, constants.normal_sprite_width,
+                  constants.normal_sprite_height,
                   colkey=0)
 
     def update(self):
-        ...
+        self.is_alive = self.check_delete()
+        if pyxel.frame_count % random.randint(100, 200) == 0:
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
+
+    # Check if the enemy should be deleted (die)
+    def check_delete(self):
+        if self.lives <= 0:
+            return False
+        else:
+            return True
 
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager, acceleration=3, ):
-        super().__init__(position_x, position_y, projectile_manager)
-        self.acceleration = acceleration
-
-    def update(self):
-        self.position_x = self.acceleration * time
-        self.position_y = self.acceleration * time
+    ...
 
 
 class RedEnemy(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
-        super().__init__(position_x, position_y, projectile_manager)
+    ...
 
 
 class Bombardier(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
-        super().__init__(position_x, position_y, projectile_manager)
-
-    def draw(self):
-        pyxel.blt(30, 10, 0, 73, 3, 14, 11, colkey=0)
+    ...
 
 
 class SuperBombardier(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
-        super().__init__(position_x, position_y, projectile_manager)
-
-    def draw(self):
-        pyxel.blt(10, 10, 0, 89, 0, 14, 16, colkey=0)
+    ...

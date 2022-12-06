@@ -6,11 +6,14 @@ import constants
 # Mother class for all projectiles,both the enemy`s and the player`s
 class Projectile:
     def __init__(self, position_x: int, position_y: int):
+        # Sprite related variables of the projectile
+        self.position_u = 0
+        self.position_v = 16
+        self.width = constants.normal_sprite_width
+        self.height = constants.normal_sprite_height
         # Basic variables for projectile
         self.position_x = position_x
         self.position_y = position_y
-        self.width = constants.normal_sprite_width
-        self.height = constants.normal_sprite_height
         # Basic speed for all projectiles, can change for player and enemy projectiles
         self.speed = 3
         # Time until a projectile is deleted (seg)
@@ -64,12 +67,13 @@ class Projectile:
         self.position_y -= self.speed
         # Check if the projectile needs to be deleted
         self.is_alive = self.check_delete(self.lifespan, self.created_time)
-        # print("alive")
+        print("alive")
 
     def draw(self):
         # The position at which a projectile has to be deleted will
         # vary when we are creating a movement in the background
-        pyxel.blt(self.position_x, self.position_y, 0, 0, 16, 16, 16, colkey=0)
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v,
+                  self.width, self.height, colkey=0)
 
     def check_delete(self, lifespan, created_time):
         if (created_time + lifespan) <= time.time():
@@ -80,8 +84,25 @@ class Projectile:
 
 # Child classes of clss Projectile, difference is only in the sprite
 class PlayerProjectile(Projectile):
-    ...
+    def __init__(self, position_x: int, position_y: int):
+        super(PlayerProjectile, self).__init__(position_x, position_y)
+        self.speed = 4
+        # The sprite variables from projectile are the basic for playerProjectile
 
 
 class EnemyProjectile(Projectile):
-    ...
+    def __init__(self, position_x: int, position_y: int):
+        super(EnemyProjectile, self).__init__(position_x, position_y)
+        self.speed = -2
+        # We change sprite variables of projectile so that it shows the enemy projectile instead of the player
+        # and the hitbox is not as big
+        self.position_u = 16
+        self.width = 8
+        self.height = 8
+
+    # Because the position of the projectile in the image bank is not centered, so that the hitbox can be smaller,
+    # we need to rewrite the draw method
+    def draw(self):
+        # We offset the position of the draw method by 4 on the x-axis so its centered when drawn
+        pyxel.blt(self.position_x+4, self.position_y, 0, self.position_u, self.position_v,
+                  self.width, self.height, colkey=0)

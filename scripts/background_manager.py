@@ -70,7 +70,7 @@ class BackgroundManager:
                 pyxel.bltm(x=0, y=0, tm=0, u=0, v=240 * 8 - self.background_roll, w=self.screen_width,
                            h=self.screen_height)
                 pyxel.text(30, 1, f"Highest Score: {self.best_score}", 7)
-                pyxel.text(30, 7, f"Current Score: {self.score}", 7)
+                pyxel.text(30, 7, f"Current Score: {constants.player_score}", 7)
                 pyxel.text(30, 120, f"LIVES: {constants.player_lives}", 7)
         else:
             self.when_game_over()
