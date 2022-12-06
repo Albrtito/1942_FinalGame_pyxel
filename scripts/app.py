@@ -23,7 +23,7 @@ class App:
         self.background_manager = BackgroundManager(WIDTH, HEIGHT)
         self.projectile_manager = ProjectileManager()
         self.player = Player(int(WIDTH / 2), int(HEIGHT / 2), self.projectile_manager)
-        self.enemymanager = EnemyManager(0,20,"Regular",self.projectile_manager)
+        self.enemymanager = EnemyManager(0.0, 20.0, "Regular", self.projectile_manager)
 
         # Variables of the game loop:
         self.game_loop = False
@@ -48,8 +48,8 @@ class App:
             self.background_manager.update()
             self.player.update()
             self.projectile_manager.update()
-            self.enemies.update()
-            self.enemies.create_enemy()
+            self.enemymanager.update()
+            self.enemymanager.create_enemy()
         else:
             self.background_manager.update()
 
@@ -62,7 +62,7 @@ class App:
             # Draw player
             self.player.draw()
             # Draw Enemy
-            self.enemies.draw()
+            self.enemymanager.draw()
         else:
             self.background_manager.draw()
 
