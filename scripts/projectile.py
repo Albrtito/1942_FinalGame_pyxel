@@ -60,10 +60,10 @@ class Projectile:
         self.position_y -= self.speed
         # Check if the projectile needs to be deleted
         self.is_alive = self.check_delete(self.lifespan, self.created_time)
-        print("alive")
+        # print("alive")
 
     def draw(self):
-        # The position at wich a projectile has to be deleted will
+        # The position at which a projectile has to be deleted will
         # vary when we are creating a movement in the background
         pyxel.blt(self.position_x, self.position_y, 0, 0, 16, 16, 16, colkey=0)
 

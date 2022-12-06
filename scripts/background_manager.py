@@ -61,12 +61,12 @@ class BackgroundManager:
                 # Background: Initial screen
                 pyxel.cls(0)
                 # Load images that are going to be used for the background
-                pyxel.bltm(x=0, y=0, tm=0, u=0, v=0, w=self.screen_width, h=self.screen_height)
+                pyxel.bltm(x=0, y=0, tm=0, u=0, v=240*8, w=self.screen_width, h=self.screen_height)
                 pyxel.text(self.screen_width / 8, self.screen_height / 8, f"PRESS ENTER TO START:", 7)
             else:
                 # Background: The roll is not well done but works
                 pyxel.cls(0)
-                pyxel.bltm(x=0, y=0, tm=0, u=0, v=232 * 8 - self.background_roll, w=self.screen_width,
+                pyxel.bltm(x=0, y=0, tm=0, u=0, v=240 * 8 - self.background_roll, w=self.screen_width,
                            h=self.screen_height)
                 pyxel.text(30, 1, f"Highest Score: {self.best_score}", 7)
                 pyxel.text(30, 7, f"Current Score: {self.score}", 7)
