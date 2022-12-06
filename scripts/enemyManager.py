@@ -16,6 +16,12 @@ class EnemyManager:
         self.enemy_type = enemy_type
         self.projectile_manager = projectile_manager
         self.enemy_list = []
+        # asi es como lo estamos haciendo:
+        self.ejemplo = 2
+    # así es como se haría si ejemplo es un atributo q solo es leido
+    @property
+    def ejemplo(self):
+        return 2
     def update(self):
         # Update the projectiles in each player and enemy list. Delete the projectile
         # if more than 5 seconds have passed since its creation
