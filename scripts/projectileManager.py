@@ -30,7 +30,7 @@ class ProjectileManager:
                 del (self.player_projectiles[index])
 
         # for enemy projectiles
-        for index in range(len(self.enemy_projectiles)):
+        for index in range(len(self.enemy_projectiles - 1, -1, -1)):
             if self.enemy_projectiles[index].is_alive:
                 self.enemy_projectiles[index].update()
             else:
