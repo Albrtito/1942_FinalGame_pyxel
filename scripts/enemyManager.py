@@ -17,7 +17,7 @@ class EnemyManager:
         self.projectile_manager = projectile_manager
         self.enemy_list = []
     def update(self):
-        # Update the projectiles in each player and enemy list. Delete the projectile
+        # Update the projectiles in each player and enemy list. Delete the enemy
         # if more than 5 seconds have passed since its creation
         # for player projectiles
         for elem in self.enemy_list:
