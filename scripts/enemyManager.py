@@ -5,12 +5,12 @@ Enemy manager class, this class is created in order to manage all the enemies
 # from player import Player
 from enemy import Enemy, RegularEnemy, RedEnemy
 import resources
-
+from projectileManager import ProjectileManager
 
 class EnemyManager:
 
     # For future problems, this parameters should be properties, and be read only
-    def __init__(self, position_x: int, position_y: int, enemy_type: str):
+    def __init__(self, position_x: int, position_y: int, enemy_type: str,projectile_manager : ProjectileManager):
         self.position_x = position_x
         self.position_y = position_y
         self.enemy_type = enemy_type
