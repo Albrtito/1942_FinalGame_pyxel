@@ -81,18 +81,21 @@ class RegularEnemy(Enemy):
         self.position_v = 32
         self.height = 16
         self.width = 16
-        self.transparent_color = 0
+        self.transparent_color = 4
         super().__init__(position_x, position_y)
         ''', projectile_manager)'''
         self.acceleration = acceleration
 
     def update(self):
-        #
+        #Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
+        #momentaneamente de la pantalla
         if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
         else:
-            self.position_x += 5
-            self.position_y += 5
+            self.position_x += 1
+            # 0.02929 is the result so (x-64)**2 = 120 if x=0 not working now
+            self.position_y += int(0.02929*(self.position_x-constants.screen_width/2)**2)
+            print(self.position_y)
 
 
 class RedEnemy(Enemy):
@@ -101,7 +104,7 @@ class RedEnemy(Enemy):
         self.position_v = 48
         self.height = 16
         self.width = 16
-        self.transparent_color = 0
+        self.transparent_color = 6
         super().__init__(position_x, position_y)
         ''', projectile_manager)'''
 

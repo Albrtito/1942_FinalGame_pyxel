@@ -43,7 +43,6 @@ class App:
             self.background_manager.update()
             self.player.update()
             self.enemy_manager.update()
-            self.enemy_manager.create_enemy()
             self.projectile_manager.update()
             self.collision_manager.update()
         else:
