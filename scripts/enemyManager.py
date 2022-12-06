@@ -15,14 +15,15 @@ class EnemyManager:
         self.position_x = position_x
         self.position_y = position_y
         self.enemy_type = enemy_type
-        self.projectile_manager = projectile_manager
+        #self.projectile_manager = projectile_manager
         self.enemy_list = []
     def update(self):
         # Update the projectiles in each player and enemy list. Delete the enemy
         # if more than 5 seconds have passed since its creation
         # for player projectiles
         constants.update_list_and_delete(self.enemy_list)
-
+        print(len(self.enemy_list))
+        self.create_enemy()
     def draw(self):
         # Draw the projectiles in a list using the method from resources
         constants.draw_list(self.enemy_list)
@@ -30,11 +31,9 @@ class EnemyManager:
     # This method returns an object of class projectile, subclass PlayerProjectile or EnemyProjectile, depending on
     # the projectile_type attribute (must be a string)
     def create_enemy(self):
-        for e in range(3):
-            if self.enemy_type == "Regular":
-                self.enemy_list.append(RegularEnemy(self.position_x, self.position_y, self.projectile_manager))
-                print('yes',self.enemy_list)
-                self.position_x += 10
-                self.position_y += 10
-            if self.enemy_type == "Red":
-                self.enemy_projectiles.append(Enemy.RedEnemy(self.position_x, self.position_y))
+        if len(self.enemy_list) < 10:
+            for e in range(5):
+                if self.enemy_type == "Regular":
+                    self.enemy_list.append(RegularEnemy(self.position_x, self.position_y))
+                if self.enemy_type == "Red":
+                    self.enemy_projectiles.append(Enemy.RedEnemy(self.position_x, self.position_y))
