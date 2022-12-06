@@ -2,6 +2,8 @@
 Projectile manager class, this class is created in order to manage all the projectiles from the player and the enemies
 When anyone shoots, a method will call this class creating a projectile
 """
+import pyxel
+
 # We need to import the player class and the enemies classes+
 # from player import Player
 from projectile import Projectile, PlayerProjectile, EnemyProjectile
@@ -19,22 +21,27 @@ class ProjectileManager:
         # Update the projectiles in each player and enemy list. Delete the projectile
         # if more than 5 seconds have passed since its creation
         # for player projectiles
-        for elem in self.player_projectiles:
-            if elem.is_alive:
-                elem.update()
+        if pyxel.frame_count % 20 == 0:
+            print(len(self.player_projectiles))
+        for index in range(1, len(self.player_projectiles)):
+            if self.player_projectiles[index].is_alive:
+                print("updated: ", index)
+                self.player_projectiles[index].update()
             else:
-                del elem
+                del (self.player_projectiles[index])
+                print("deleted")
+
         # for enemy projectiles
-        for elem in self.enemy_projectiles:
-            if elem.is_alive:
-                elem.update()
+        for index in range(len(self.enemy_projectiles)):
+            if self.enemy_projectiles[index].is_alive:
+                self.enemy_projectiles[index].update()
             else:
-                del elem
+                del self.enemy_projectiles[index]
 
     def draw(self):
         # Draw the projectiles in a list using the method from resources
-        resources.draw_list(self.player_projectiles)
-        resources.draw_list(self.enemy_projectiles)
+        constants.draw_list(self.player_projectiles)
+        constants.draw_list(self.enemy_projectiles)
 
     # This method returns an object of class projectile, subclass PlayerProjectile or EnemyProjectile, depending on
     # the projectile_type attribute (must be a string)

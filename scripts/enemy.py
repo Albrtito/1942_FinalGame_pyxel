@@ -1,6 +1,14 @@
 import random
-import time
 
+"""Comentarios de Alberto que esta haciendo el detector de colisiones: 
++ Los enemigos necesitan tener una variable 
+booleana llamada is_alive, esta variable es True hasta q mueran y entonces es false 
++ Cuando is_alive es False el 
+enemyManager deberá de eliminar a ese enemigo de la lista de enemigos, prefeiblemente en el mismo loop q usa para 
+actualizar,(comprueba q este vivo y actualiza, sino no actualice) 
+
+"""
+import time
 import pyxel
 from projectileManager import ProjectileManager
 

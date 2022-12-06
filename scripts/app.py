@@ -1,34 +1,31 @@
 import time
 
 import pyxel
+import constants
 from sprite import Sprite
 from player import Player
-from projectileManager import ProjectileManager
 from enemy import Enemy, RegularEnemy
+from projectileManager import ProjectileManager
+from collisionManager import CollisionManager
+from enemyManager import EnemyManager
 from background_manager import BackgroundManager
 
-# enemy_visible = False
-HEIGHT = 128
-WIDTH = 128
-PLAYER_WIDTH = 16
-PLAYER_HEIGHT = 16
-x = 0
 
-
-# Cambios hechos, primera version
-# Esta es la version de alberto
 class App:
     def __init__(self):
         # Classes attribute
-        self.background_manager = BackgroundManager(WIDTH, HEIGHT)
+        self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height)
         self.projectile_manager = ProjectileManager()
-        self.player = Player(int(WIDTH / 2), int(HEIGHT / 2), self.projectile_manager)
+        self.enemy_manager = EnemyManager()
+        self.player = Player(int(constants.screen_width / 2), int(constants.screen_height / 2), self.projectile_manager)
+        self.collision_manager = CollisionManager(self.player,self.enemy_manager,self.projectile_manager)
+
         self.enemies = []
 
         # Variables of the game loop:
         self.game_loop = False
         # Initialize pyxel
-        pyxel.init(WIDTH, HEIGHT, title="Pyxel 1942")
+        pyxel.init(constants.screen_width, constants.screen_height, title="Pyxel 1942")
         pyxel.load('../assets/App.pyxres')
         pyxel.run(self.update, self.draw)
 
@@ -46,6 +43,7 @@ class App:
             self.background_manager.update()
             self.player.update()
             self.projectile_manager.update()
+            self.collision_manager.update()
         else:
             self.background_manager.update()
 
@@ -70,4 +68,7 @@ class App:
         self.game_loop = False
 
 
+    def dev_mode(self):
+        if pyxel.btnp(pyxel.KEY_E):
+            self.enemy_manager.create_enemy(64,0,self.projectile_manager)
 App()
