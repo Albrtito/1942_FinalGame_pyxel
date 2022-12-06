@@ -17,10 +17,11 @@ from projectileManager import ProjectileManager
 class Enemy:
     # Declaration of the Enemy init method with all the attributes from the class
 
-    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+    def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
         self.position_x = position_x
         self.position_y = position_y
         self.projectile_manager = projectile_manager
+        self.is_alive = True
 
     # Property and setter for position_x
     @property
@@ -28,10 +29,10 @@ class Enemy:
         return self.__position_x
 
     @position_x.setter
-    def position_x(self, position_x: float):
+    def position_x(self, position_x: int):
         # Only change the position_x to float values
-        if type(position_x) != float:
-            raise TypeError("The position must be a float")
+        if type(position_x) != int:
+            raise TypeError("The position must be an int")
         else:
             self.__position_x = position_x
 
@@ -41,10 +42,10 @@ class Enemy:
         return self.__position_y
 
     @position_y.setter
-    def position_y(self, position_y: float):
+    def position_y(self, position_y: int):
         # Only change the position_y to float values
-        if type(position_y) != float:
-            raise TypeError("The position must be a float")
+        if type(position_y) != int:
+            raise TypeError("The position must be an int")
         else:
             self.__position_y = position_y
 
@@ -74,7 +75,7 @@ class Enemy:
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager, acceleration=3, ):
+    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager, acceleration=3):
         self.position_u = 0
         self.position_v = 32
         self.height = 16
