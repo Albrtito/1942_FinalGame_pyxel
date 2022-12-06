@@ -10,7 +10,10 @@ player_run_score = 0
 screen_width = 128
 screen_height = 128
 normal_sprite_width = 16
-normal_sprite_height = 16
+normal_sprite_height = 163
+# Hit-box magnitudes for basic sprite
+hitbox_x = 16
+hitbox_y = 16
 
 
 def draw_list(list):

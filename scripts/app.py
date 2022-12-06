@@ -17,8 +17,8 @@ class App:
         self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height)
         self.projectile_manager = ProjectileManager()
         self.enemy_manager = EnemyManager()
-        self.player = Player(int(constants.screen_width / 2), int(constants.screen_height / 2), self.projectile_manager)
-        self.collision_manager = CollisionManager(self.player,self.enemy_manager,self.projectile_manager)
+        self.player = Player((constants.screen_width // 2), (constants.screen_height // 2), self.projectile_manager)
+        self.collision_manager = CollisionManager(self.player, self.enemy_manager, self.projectile_manager)
 
         self.enemies = []
 
@@ -43,7 +43,9 @@ class App:
             self.background_manager.update()
             self.player.update()
             self.projectile_manager.update()
+            self.enemy_manager.update()
             self.collision_manager.update()
+            self.dev_mode()
         else:
             self.background_manager.update()
 
@@ -53,6 +55,8 @@ class App:
             self.background_manager.draw()
             # Draw bullets
             self.projectile_manager.draw()
+            # Draw enemies
+            self.enemy_manager.draw()
             # Draw player
             self.player.draw()
 
@@ -67,8 +71,9 @@ class App:
         self.background_manager.game_over = True
         self.game_loop = False
 
-
     def dev_mode(self):
         if pyxel.btnp(pyxel.KEY_E):
-            self.enemy_manager.create_enemy(64,0,self.projectile_manager)
+            self.enemy_manager.create_enemy(64, 0, self.projectile_manager)
+
+
 App()

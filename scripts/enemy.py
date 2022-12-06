@@ -8,6 +8,7 @@ enemyManager deberá de eliminar a ese enemigo de la lista de enemigos, prefeibl
 actualizar,(comprueba q este vivo y actualiza, sino no actualice) 
 
 """
+import constants
 import time
 import pyxel
 from projectileManager import ProjectileManager
@@ -21,6 +22,7 @@ class Enemy:
         self.position_x = position_x
         self.position_y = position_y
         self.projectile_manager = projectile_manager
+        self.is_alive = True
 
     # Property and setter for position_x
     @property
@@ -28,10 +30,10 @@ class Enemy:
         return self.__position_x
 
     @position_x.setter
-    def position_x(self, position_x: float):
+    def position_x(self, position_x: int):
         # Only change the position_x to float values
-        if type(position_x) != float:
-            raise TypeError("The position must be a float")
+        if type(position_x) != int:
+            raise TypeError("The position must be a int")
         else:
             self.__position_x = position_x
 
@@ -41,24 +43,25 @@ class Enemy:
         return self.__position_y
 
     @position_y.setter
-    def position_y(self, position_y: float):
+    def position_y(self, position_y: int):
         # Only change the position_y to float values
-        if type(position_y) != float:
-            raise TypeError("The position must be a float")
+        if type(position_y) != int:
+            raise TypeError("The position must be a int")
         else:
             self.__position_y = position_y
 
     # Property and setter for projectile
+    """
     @property
     def projectile_manager(self):
         return self.__projectile_manager
-
+    
     @projectile_manager.setter
     def projectile(self, projectile_manager: ProjectileManager):
         if type(projectile_manager) != ProjectileManager:
             raise TypeError("Projectile manager must be an object of class ProjectileManager")
-        else:
-            self.__projectile_manager = projectile_manager
+        self.__projectile_manager = projectile_manager
+    """
 
     # Basic methods for the enemy class:
 
@@ -66,7 +69,8 @@ class Enemy:
 
     # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
     def draw(self):
-        ...
+        pyxel.blt(64, 64, 0, 0, 32, constants.normal_sprite_width, constants.normal_sprite_height,
+                  colkey=0)
 
     def update(self):
         ...

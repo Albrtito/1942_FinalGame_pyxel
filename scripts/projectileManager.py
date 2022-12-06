@@ -21,20 +21,10 @@ class ProjectileManager:
         # Update the projectiles in each player and enemy list. Delete the projectile
         # if more than 5 seconds have passed since its creation
         # for player projectiles
-        if pyxel.frame_count % 20 == 0:
-            print(len(self.player_projectiles))
-        for index in range(len(self.player_projectiles) - 1, -1, -1):
-            if self.player_projectiles[index].is_alive:
-                self.player_projectiles[index].update()
-            else:
-                del (self.player_projectiles[index])
+        constants.update_list_and_delete(self.player_projectiles)
 
         # for enemy projectiles
-        for index in range(len(self.enemy_projectiles - 1, -1, -1)):
-            if self.enemy_projectiles[index].is_alive:
-                self.enemy_projectiles[index].update()
-            else:
-                del self.enemy_projectiles[index]
+        constants.update_list_and_delete(self.enemy_projectiles)
 
     def draw(self):
         # Draw the projectiles in a list using the method from resources

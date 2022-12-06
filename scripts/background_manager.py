@@ -1,4 +1,5 @@
 import pyxel
+import constants
 
 
 class BackgroundManager:
@@ -70,6 +71,7 @@ class BackgroundManager:
                            h=self.screen_height)
                 pyxel.text(30, 1, f"Highest Score: {self.best_score}", 7)
                 pyxel.text(30, 7, f"Current Score: {self.score}", 7)
+                pyxel.text(30, 120, f"LIVES: {constants.player_lives}", 7)
         else:
             self.when_game_over()
 
