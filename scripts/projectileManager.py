@@ -23,13 +23,11 @@ class ProjectileManager:
         # for player projectiles
         if pyxel.frame_count % 20 == 0:
             print(len(self.player_projectiles))
-        for index in range(1, len(self.player_projectiles)):
+        for index in range(len(self.player_projectiles) - 1, -1, -1):
             if self.player_projectiles[index].is_alive:
-                print("updated: ", index)
                 self.player_projectiles[index].update()
             else:
                 del (self.player_projectiles[index])
-                print("deleted")
 
         # for enemy projectiles
         for index in range(len(self.enemy_projectiles)):
