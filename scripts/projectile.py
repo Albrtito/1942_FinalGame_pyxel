@@ -1,12 +1,16 @@
 import time
 import pyxel
+import constants
 
 
 # Mother class for all projectiles,both the enemy`s and the player`s
 class Projectile:
     def __init__(self, position_x: int, position_y: int):
+        # Basic variables for projectile
         self.position_x = position_x
         self.position_y = position_y
+        self.width = constants.normal_sprite_width
+        self.height = constants.normal_sprite_height
         # Basic speed for all projectiles, can change for player and enemy projectiles
         self.speed = 3
         # Time until a projectile is deleted (seg)

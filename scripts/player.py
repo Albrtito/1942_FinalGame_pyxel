@@ -1,12 +1,13 @@
 import time
 import pyxel
+import constants
 from projectileManager import ProjectileManager
 from sprite import Sprite
 
 HEIGHT = 128
 WIDTH = 128
-PLAYER_WIDTH = 16
-PLAYER_HEIGHT = 16
+
+
 
 
 # Class player inherits from sprite, this means all basic characteristics of sprites,
@@ -18,6 +19,8 @@ class Player:
         # Position variables
         self.position_x = position_x
         self.position_y = position_y
+        self.width = constants.normal_sprite_width
+        self.height = constants.normal_sprite_height
         # The speed right now is constant but could be named as an attribute
         self.player_speed = 2
         # Draw variables of the player -> make something so this works with class sprite
@@ -82,7 +85,7 @@ class Player:
             # Method for the animations of the player, changes the variable position_u
             self.player_animations()
 
-        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, 0, PLAYER_WIDTH, PLAYER_HEIGHT,
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, 0, self.width, self.height,
                   colkey=8)
 
     # Methods for player class
@@ -95,9 +98,9 @@ class Player:
     def move(self):
         if pyxel.btn(pyxel.KEY_LEFT) and self.position_x != 0:
             self.position_x -= self.player_speed
-        if pyxel.btn(pyxel.KEY_RIGHT) and self.position_x < WIDTH - PLAYER_WIDTH:
+        if pyxel.btn(pyxel.KEY_RIGHT) and self.position_x < constants.screen_width - self.width:
             self.position_x += self.player_speed
-        if pyxel.btn(pyxel.KEY_DOWN) and self.position_y < HEIGHT - PLAYER_HEIGHT:
+        if pyxel.btn(pyxel.KEY_DOWN) and self.position_y < constants.screen_height - self.height:
             self.position_y += self.player_speed
         if pyxel.btn(pyxel.KEY_UP) and self.position_y != 0:
             self.position_y -= self.player_speed

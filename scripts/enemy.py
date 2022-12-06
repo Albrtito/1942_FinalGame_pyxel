@@ -19,8 +19,12 @@ class Enemy:
     # Declaration of the Enemy init method with all the attributes from the class
 
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        # Basic variables of enemy
         self.position_x = position_x
         self.position_y = position_y
+        self.width = constants.normal_sprite_width
+        self.height = constants.normal_sprite_height
+        # Other variables
         self.projectile_manager = projectile_manager
         self.is_alive = True
 
