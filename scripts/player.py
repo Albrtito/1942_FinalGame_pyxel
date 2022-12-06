@@ -66,7 +66,7 @@ class Player:
             self.loop = True
 
         # When the player is in a loop we call the animate_move_method, which animates and moves the player in the loop.
-        if self.loop and (pyxel.frame_count % 10 == 0):
+        if self.loop and (pyxel.frame_count % 7 == 0):
             self.animate_move_loop()
 
         if not self.loop:
