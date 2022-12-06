@@ -14,6 +14,7 @@ class EnemyManager:
         self.position_x = position_x
         self.position_y = position_y
         self.enemy_type = enemy_type
+        self.projectile_manager = projectile_manager
         self.enemy_list = []
     def update(self):
         # Update the projectiles in each player and enemy list. Delete the projectile
@@ -34,7 +35,7 @@ class EnemyManager:
     def create_enemy(self):
         for e in range(3):
             if self.enemy_type == "Regular":
-                self.enemy_list.append(RegularEnemy(self.position_x, self.position_y, projectile_manager))
+                self.enemy_list.append(RegularEnemy(self.position_x, self.position_y, self.projectile_manager))
                 print('yes',self.enemy_list)
                 self.position_x += 10
                 self.position_y += 10
