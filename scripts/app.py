@@ -10,7 +10,7 @@ from collisionManager import CollisionManager
 from enemyManager import EnemyManager
 from background_manager import BackgroundManager
 
-
+# This version does not have the enemy implementation from ignacio
 class App:
     def __init__(self):
         # Classes attribute
