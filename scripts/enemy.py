@@ -81,7 +81,7 @@ class Enemy:
 
     def update(self):
         self.is_alive = self.check_delete()
-        if pyxel.frame_count % random.randint(100, 200) == 0:
+        if pyxel.frame_count % random.randint(50,100) == 0:
             self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
 
     # Check if the enemy should be deleted (die)
