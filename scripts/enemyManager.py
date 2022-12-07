@@ -4,7 +4,7 @@ Enemy manager class, this class is created in order to manage all the enemies
 # We need to import the player class and the enemies classes+
 # from player import Player
 from enemy import Enemy, RegularEnemy, RedEnemy
-import resources
+import constants
 from projectileManager import ProjectileManager
 
 class EnemyManager:
@@ -28,7 +28,7 @@ class EnemyManager:
 
     def draw(self):
         # Draw the projectiles in a list using the method from resources
-        resources.draw_list(self.enemy_list)
+        constants.draw_list(self.enemy_list)
 
     # This method returns an object of class projectile, subclass PlayerProjectile or EnemyProjectile, depending on
     # the projectile_type attribute (must be a string)
