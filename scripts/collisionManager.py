@@ -58,7 +58,6 @@ class CollisionManager:
                 if not self.player.loop:
                     constants.player_lives -= 1
                     self.enemy_manager.enemy_list[index].is_alive = False
-                print(constants.player_lives)
 
     def player_with_enemy_projectile(self):
         for index in range(len(self.projectile_manager.enemy_projectiles) - 1, -1, -1):
@@ -67,7 +66,6 @@ class CollisionManager:
                 # kind of indestructible. Same happens with whatever should be destroyed but with the reversed logic
                 if not self.player.loop:
                     constants.player_lives -= 1
-
                     self.projectile_manager.enemy_projectiles[index].is_alive = False
 
     # Enemy collisions with the player projectiles
