@@ -29,7 +29,7 @@ class Enemy:
         self.projectile_manager = projectile_manager
         # In game important variables of each enemy
         self.is_alive = True
-        self.lives = 2
+        self.lives = 1
 
     # Property and setter for position_x
     @property
@@ -94,14 +94,14 @@ class Enemy:
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __init__(self, position_x: int, position_y: int):
+    def __init__(self, position_x: int, position_y: int, projectile_manager:ProjectileManager):
+        super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 32
         self.height = 16
         self.width = 16
         self.transparent_color = 4
-        super().__init__(position_x, position_y)
-        ''', projectile_manager)'''
+
 
     def update(self):
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -122,14 +122,14 @@ class RegularEnemy(Enemy):
 
 
 class RedEnemy(Enemy):
-    def __init__(self, position_x: int, position_y: int):
+    def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
+        super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 48
         self.height = 16
         self.width = 16
         self.transparent_color = 11
-        super().__init__(position_x, position_y)
-        ''', projectile_manager)'''
+
 
     def update(self):
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -147,22 +147,23 @@ class RedEnemy(Enemy):
 
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 64
         self.height = 16
         self.width = 16
         self.transparent_color = 0
-        super().__init__(position_x, position_y)
-        '''', projectile_manager)
+
 
 
 class SuperBombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+        super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 80
         self.height = 32
         self.width = 16
         self.transparent_color = 0
-        super().__init__(position_x, position_y, projectile_manager)
 
-'''
+
+

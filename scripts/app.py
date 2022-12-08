@@ -8,16 +8,17 @@ from player import Player
 from projectileManager import ProjectileManager
 from collisionManager import CollisionManager
 from background_manager import BackgroundManager
-
+from enemyManager import EnemyManager
 
 class App:
     def __init__(self):
         # Classes attribute
         self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height)
         self.projectile_manager = ProjectileManager()
-        self.wave_manager = WaveManager(self.projectile_manager)
+        self.enemy_manager = EnemyManager(self.projectile_manager)
+        self.wave_manager = WaveManager(self.enemy_manager)
         self.player = Player(int(constants.screen_width / 2), int(constants.screen_height / 2), self.projectile_manager)
-        self.collision_manager = CollisionManager(self.player, self.wave_manager, self.projectile_manager)
+        self.collision_manager = CollisionManager(self.player, self.enemy_manager, self.projectile_manager)
         # Variables of the game loop:
         self.game_loop = False
         # Initialize pyxel
@@ -39,10 +40,13 @@ class App:
             self.collision_manager.update()
             self.background_manager.update()
             self.player.update()
+            # Update of the enemies
+            self.enemy_manager.update()
+            # Creation of the enemies
             self.wave_manager.update()
             self.projectile_manager.update()
             self.collision_manager.update()
-            self.dev_mode()
+            # self.dev_mode()
         else:
             self.background_manager.update()
 
@@ -54,8 +58,8 @@ class App:
             self.projectile_manager.draw()
             # Draw player
             self.player.draw()
-            # Draw an enemy wave
-            self.wave_manager.draw()
+            # Draw all enemies
+            self.enemy_manager.draw()
         else:
             self.background_manager.draw()
 

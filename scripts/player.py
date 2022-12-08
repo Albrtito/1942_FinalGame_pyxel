@@ -107,7 +107,7 @@ class Player:
     # This functions changes the variables of self.position_u and self.position_v. This two variables determine which
     # sprite to show, so changing these variables we can change the sprite of the plane that is showing depending on
     # what the plane is doing
-        print(self.position_x,self.position_y)
+        #print(self.position_x,self.position_y)
     def player_animations(self):
         # Update the helix movement every frame
         if self.position_u == 0:

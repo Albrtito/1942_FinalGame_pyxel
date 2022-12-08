@@ -67,7 +67,6 @@ class Projectile:
         self.position_y -= self.speed
         # Check if the projectile needs to be deleted
         self.is_alive = self.check_delete(self.lifespan, self.created_time)
-        print("alive")
 
     def draw(self):
         # The position at which a projectile has to be deleted will

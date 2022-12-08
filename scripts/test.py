@@ -1,46 +1,19 @@
-import math
+enemy_1 = [1, 2, 3, 4]
+enemy_2 = [1, 2]
+enemy_3 = [3, 4]
+enemy_4 = [5, 7]
+enemy_global = [enemy_1, enemy_2, enemy_3, enemy_4]
+iterations_1 = 0
+for index_global in enemy_global:
+    iterations_1 += 1
+    for index_local in index_global:
+        iterations_1 += 1
 
 
-class Sprite:
-    def __init__(self):
-        self.__velocidad2 = 2
 
+enemy_global_2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+iterations_2 = 0
+for index in enemy_global_2:
+    iterations_2 += 1
 
-class Circle():
-    def __init__(self, velocidad):
-        super().__init__(velocidad)
-        self._radius = 3
-        self._area = None
-
-    @property
-    def radius(self):
-        return self._radius
-
-    """
-    @radius.setter
-    def radius(self, value):
-        if value < 0:
-            raise ValueError('Radius must be positive')
-
-        if value != self._radius:
-            self._radius = value
-            self._area = None
-    """
-
-    @property
-    def area(self):
-        if self._area is None:
-            self._area = math.pi * self.radius ** 2
-
-        return self._area
-
-
-class CircleTwo(Circle, Sprite):
-    def __init__(self):
-        super(Circle, self).__init__(4)
-        super(Sprite, self).__init__()
-
-
-circle = Circle()
-circle.radius = 3
-print(circle.area)
+print(iterations_1, ":1: vs :2: ", iterations_2)
