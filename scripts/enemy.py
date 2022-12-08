@@ -76,11 +76,12 @@ class Enemy:
 
     # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
     def draw(self):
-        pyxel.blt(self.position_x,self.position_y,0,self.position_u,self.position_v,self.width,self.height,self.transparent_color)
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  self.transparent_color)
 
     def update(self):
         self.is_alive = self.check_delete()
-        if pyxel.frame_count % random.randint(50,100) == 0:
+        if pyxel.frame_count % random.randint(50, 100) == 0:
             self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
 
     # Check if the enemy should be deleted (die)
@@ -103,18 +104,22 @@ class RegularEnemy(Enemy):
         ''', projectile_manager)'''
 
     def update(self):
-        #Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
-        #momentaneamente de la pantalla
-        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+        # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
+        # momentaneamente de la pantalla
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 \
+                or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
         else:
             self.position_x += 1
-            # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola whe can adjust m for the width and 64 for the centre
-            self.position_y = int(self.position_x*(2-self.position_x/64))
-            #self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
+            # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola
+            # whe can adjust m for the width and 64 for the centre
+            self.position_y = int(self.position_x * (2 - self.position_x / 64))
+            # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
+
     def draw(self):
         if self.position_y <= 45:
             ...
+
 
 class RedEnemy(Enemy):
     def __init__(self, position_x: int, position_y: int):
@@ -125,17 +130,19 @@ class RedEnemy(Enemy):
         self.transparent_color = 11
         super().__init__(position_x, position_y)
         ''', projectile_manager)'''
+
     def update(self):
-        #Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
-        #momentaneamente de la pantalla
-        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+        # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
+        # momentaneamente de la pantalla
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 \
+                or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
         else:
             self.position_y += 1
-            # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola whe can adjust m for the width and 64 for the centre
-            self.position_x = int(0.005*self.position_y**3-0.05*self.position_y**2)
-            #self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
-
+            # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola
+            # whe can adjust m for the width and 64 for the centre
+            self.position_x = int(0.005 * self.position_y ** 3 - 0.05 * self.position_y ** 2)
+            # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
 
 
 class Bombardier(Enemy):

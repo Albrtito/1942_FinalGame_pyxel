@@ -1,14 +1,12 @@
 import time
+from sprite import Sprite
+import random
 import pyxel
 import constants
-import random
-from Waves import Waves
-from sprite import Sprite
+from wave_manager import WaveManager
 from player import Player
-from enemy import Enemy, RegularEnemy
 from projectileManager import ProjectileManager
 from collisionManager import CollisionManager
-from enemyManager import EnemyManager
 from background_manager import BackgroundManager
 
 
@@ -17,13 +15,9 @@ class App:
         # Classes attribute
         self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height)
         self.projectile_manager = ProjectileManager()
-        self.wave1 = Waves(self.projectile_manager)
+        self.wave_manager = WaveManager(self.projectile_manager)
         self.player = Player(int(constants.screen_width / 2), int(constants.screen_height / 2), self.projectile_manager)
-        self.enemy_manager = EnemyManager()
-        self.collision_manager = CollisionManager(self.player, self.enemy_manager, self.projectile_manager)
-
-        self.enemies = []
-
+        self.collision_manager = CollisionManager(self.player, self.wave_manager, self.projectile_manager)
         # Variables of the game loop:
         self.game_loop = False
         # Initialize pyxel
@@ -45,7 +39,7 @@ class App:
             self.collision_manager.update()
             self.background_manager.update()
             self.player.update()
-            self.wave1.update()
+            self.wave_manager.update()
             self.projectile_manager.update()
             self.collision_manager.update()
             self.dev_mode()
@@ -61,7 +55,7 @@ class App:
             # Draw player
             self.player.draw()
             # Draw an enemy wave
-            self.wave1.draw()
+            self.wave_manager.draw()
         else:
             self.background_manager.draw()
 
@@ -73,10 +67,10 @@ class App:
         self.background_manager.game_over = True
         self.game_loop = False
 
-
+    """
     def dev_mode(self):
         if pyxel.btnp(pyxel.KEY_E):
             self.enemy_manager.create_enemy(random.randint(5,123), random.randint(0,64), self.projectile_manager)
 
-
+    """
 App()

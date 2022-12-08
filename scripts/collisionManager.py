@@ -3,7 +3,7 @@ import math
 import constants
 
 from player import Player
-from enemyManager import EnemyManager
+from wave_manager import WaveManager
 from projectileManager import ProjectileManager
 
 """This clas manages the collisions between the player and the enemies, it does so by checking if any of the enemies, 
@@ -12,9 +12,9 @@ the enemies """
 
 
 class CollisionManager:
-    def __init__(self, player: Player, enemy_manager: EnemyManager, projectile_manager: ProjectileManager):
+    def __init__(self, player: Player, wave_manager: WaveManager, projectile_manager: ProjectileManager):
         self.player = player
-        self.enemy_manager = enemy_manager
+        self.wave_manager = wave_manager
         self.projectile_manager = projectile_manager
 
     # Creation of attributes, setter as they will be given every time it's called the class(as it going to be called
@@ -30,13 +30,13 @@ class CollisionManager:
         self.__player = player
 
     @property
-    def enemy_manager(self):
+    def wave_manager(self):
         return self.__enemy_manager
 
-    @enemy_manager.setter
-    def enemy_manager(self, enemy_manager):
-        if type(enemy_manager) != EnemyManager:
-            raise TypeError("player must be an object of class EnemyManger")
+    @wave_manager.setter
+    def wave_manager(self, enemy_manager):
+        if type(enemy_manager) != WaveManager:
+            raise TypeError("player must be an object of class WaveManager")
         self.__enemy_manager = enemy_manager
 
     # Methods of the class
@@ -51,13 +51,13 @@ class CollisionManager:
 
     # Player collisions with the rest
     def player_with_enemies(self):
-        for index in range(len(self.enemy_manager.enemy_list) - 1, -1, -1):
-            if self.collision(self.player, self.enemy_manager.enemy_list[index]):
+        for index in range(len(self.wave_manager.enemy_list) - 1, -1, -1):
+            if self.collision(self.player, self.wave_manager.enemy_list[index]):
                 # We only subtract a live if the player is not doing a loop, if the player is doing a loop then its
                 # kind of indestructible. Same happens with whatever should be destroyed but with the reversed logic
                 if not self.player.loop:
                     constants.player_lives -= 1
-                    self.enemy_manager.enemy_list[index].is_alive = False
+                    self.wave_manager.enemy_list[index].is_alive = False
 
     def player_with_enemy_projectile(self):
         for index in range(len(self.projectile_manager.enemy_projectiles) - 1, -1, -1):
@@ -71,10 +71,10 @@ class CollisionManager:
     # Enemy collisions with the player projectiles
     def enemy_with_player_projectile(self):
         for player_index in range(len(self.projectile_manager.player_projectiles) - 1, -1, -1):
-            for enemy_index in range(len(self.enemy_manager.enemy_list) - 1, -1, -1):
-                if self.collision(self.enemy_manager.enemy_list[enemy_index],
+            for enemy_index in range(len(self.wave_manager.enemy_list) - 1, -1, -1):
+                if self.collision(self.wave_manager.enemy_list[enemy_index],
                                   self.projectile_manager.player_projectiles[player_index]):
-                    self.enemy_manager.enemy_list[enemy_index].lives -= 1
+                    self.wave_manager.enemy_list[enemy_index].lives -= 1
                     self.projectile_manager.player_projectiles[player_index].is_alive = False
                     constants.player_score += 10
 
