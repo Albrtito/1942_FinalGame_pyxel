@@ -1,4 +1,5 @@
 import random
+import math
 
 """Comentarios de Alberto que esta haciendo el detector de colisiones: 
 + Los enemigos necesitan tener una variable 
@@ -76,7 +77,7 @@ class Enemy:
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __init__(self, position_x: float, position_y: float, acceleration=3):
+    def __init__(self, position_x: int, position_y: int):
         self.position_u = 0
         self.position_v = 32
         self.height = 16
@@ -84,7 +85,6 @@ class RegularEnemy(Enemy):
         self.transparent_color = 4
         super().__init__(position_x, position_y)
         ''', projectile_manager)'''
-        self.acceleration = acceleration
 
     def update(self):
         #Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -93,21 +93,29 @@ class RegularEnemy(Enemy):
             self.is_alive = False
         else:
             self.position_x += 1
-            # 0.02929 is the result so (x-64)**2 = 120 if x=0 not working now
-            self.position_y += int(0.02929*(self.position_x-constants.screen_width/2)**2)
-            print(self.position_y)
-
+            # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola whe can adjust m for the width and 64 for the centre
+            self.position_y = int(self.position_x*(2-self.position_x/64))
+            #self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
 
 class RedEnemy(Enemy):
-    def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
+    def __init__(self, position_x: int, position_y: int):
         self.position_u = 0
         self.position_v = 48
         self.height = 16
         self.width = 16
-        self.transparent_color = 6
+        self.transparent_color = 11
         super().__init__(position_x, position_y)
         ''', projectile_manager)'''
-
+    def update(self):
+        #Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
+        #momentaneamente de la pantalla
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+            self.is_alive = False
+        else:
+            self.position_y += 1
+            # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola whe can adjust m for the width and 64 for the centre
+            self.position_x = int(math.tan(self.position_y)*10)
+            #self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
 
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):

@@ -2,11 +2,12 @@ import time
 
 import pyxel
 import constants
+from Waves import Waves
 from sprite import Sprite
 from player import Player
 from enemy import Enemy, RegularEnemy
 from projectileManager import ProjectileManager
-from collisionManager import CollisionManager
+#from collisionManager import CollisionManager
 from enemyManager import EnemyManager
 from background_manager import BackgroundManager
 
@@ -16,9 +17,9 @@ class App:
         # Classes attribute
         self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height)
         self.projectile_manager = ProjectileManager()
-        self.enemy_manager = EnemyManager(0,0,"Regular",self.projectile_manager)
+        self.wave1 = Waves(self.projectile_manager)
         self.player = Player(int(constants.screen_width / 2), int(constants.screen_height / 2), self.projectile_manager)
-        self.collision_manager = CollisionManager(self.player,self.enemy_manager,self.projectile_manager)
+        #self.collision_manager = CollisionManager(self.player,self.wave1,self.projectile_manager)
 
         self.enemies = []
 
@@ -42,9 +43,9 @@ class App:
             # Update of the game objects
             self.background_manager.update()
             self.player.update()
-            self.enemy_manager.update()
+            self.wave1.update()
             self.projectile_manager.update()
-            self.collision_manager.update()
+            #self.collision_manager.update()
         else:
             self.background_manager.update()
 
@@ -57,7 +58,7 @@ class App:
             # Draw player
             self.player.draw()
             # Draw an enemy wave
-            self.enemy_manager.draw()
+            self.wave1.draw()
         else:
             self.background_manager.draw()
 
