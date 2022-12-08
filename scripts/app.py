@@ -1,7 +1,8 @@
-
+import time
 import pyxel
 import constants
 import random
+from Waves import Waves
 from sprite import Sprite
 from player import Player
 from enemy import Enemy, RegularEnemy
@@ -10,14 +11,15 @@ from collisionManager import CollisionManager
 from enemyManager import EnemyManager
 from background_manager import BackgroundManager
 
-# This version does not have the enemy implementation from ignacio
+
 class App:
     def __init__(self):
         # Classes attribute
         self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height)
         self.projectile_manager = ProjectileManager()
+        self.wave1 = Waves(self.projectile_manager)
+        self.player = Player(int(constants.screen_width / 2), int(constants.screen_height / 2), self.projectile_manager)
         self.enemy_manager = EnemyManager()
-        self.player = Player((constants.screen_width // 2), (constants.screen_height // 2), self.projectile_manager)
         self.collision_manager = CollisionManager(self.player, self.enemy_manager, self.projectile_manager)
 
         self.enemies = []
@@ -43,9 +45,9 @@ class App:
             self.collision_manager.update()
             self.background_manager.update()
             self.player.update()
+            self.wave1.update()
             self.projectile_manager.update()
-            self.enemy_manager.update()
-
+            self.collision_manager.update()
             self.dev_mode()
         else:
             self.background_manager.update()
@@ -56,11 +58,10 @@ class App:
             self.background_manager.draw()
             # Draw bullets
             self.projectile_manager.draw()
-            # Draw enemies
-            self.enemy_manager.draw()
             # Draw player
             self.player.draw()
-
+            # Draw an enemy wave
+            self.wave1.draw()
         else:
             self.background_manager.draw()
 
@@ -71,6 +72,7 @@ class App:
     def game_over(self):
         self.background_manager.game_over = True
         self.game_loop = False
+
 
     def dev_mode(self):
         if pyxel.btnp(pyxel.KEY_E):
