@@ -16,4 +16,4 @@ class WaveManager:
     def wave_1(self):
         if pyxel.frame_count % 200 == 0:
             print("created")
-            self.enemy_manager.create_enemy(0,0,"RedEnemy")
+            self.enemy_manager.create_enemy(0,0,"Red")

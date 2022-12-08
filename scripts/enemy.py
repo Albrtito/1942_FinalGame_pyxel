@@ -80,16 +80,16 @@ class Enemy:
                   self.transparent_color)
 
     def update(self):
-        self.is_alive = self.check_delete()
+        self.check_delete()
         if pyxel.frame_count % random.randint(50, 100) == 0:
             self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
 
     # Check if the enemy should be deleted (die)
     def check_delete(self):
         if self.lives <= 0:
-            return False
+            self.is_alive = False
         else:
-            return True
+            self.is_alive = True
 
 
 # Enemy child classes. Each will contain a sprite specific for each class.
@@ -104,6 +104,8 @@ class RegularEnemy(Enemy):
 
 
     def update(self):
+        # Check if the enemy has to be deleted -> All enemy update methods need to have this:
+        self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
         # momentaneamente de la pantalla
         if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 \
@@ -132,6 +134,8 @@ class RedEnemy(Enemy):
 
 
     def update(self):
+        # Check if the enemy has to be deleted -> All enemy update methods need to have this:
+        self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
         # momentaneamente de la pantalla
         if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 \

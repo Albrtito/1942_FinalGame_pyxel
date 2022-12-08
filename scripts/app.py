@@ -46,7 +46,7 @@ class App:
             self.wave_manager.update()
             self.projectile_manager.update()
             self.collision_manager.update()
-            # self.dev_mode()
+            self.dev_mode()
         else:
             self.background_manager.update()
 
@@ -71,10 +71,10 @@ class App:
         self.background_manager.game_over = True
         self.game_loop = False
 
-    """
+
     def dev_mode(self):
         if pyxel.btnp(pyxel.KEY_E):
-            self.enemy_manager.create_enemy(random.randint(5,123), random.randint(0,64), self.projectile_manager)
+            self.enemy_manager.create_enemy(0,0, "Red")
 
-    """
+
 App()
