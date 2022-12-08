@@ -114,8 +114,11 @@ class RedEnemy(Enemy):
         else:
             self.position_y += 1
             # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola whe can adjust m for the width and 64 for the centre
-            self.position_x = int(math.tan(self.position_y)*10)
+            self.position_x = int(0.005*self.position_y**3-0.05*self.position_y**2)
             #self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
+    def draw(self):
+        if self.position_y:
+            ...
 
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
