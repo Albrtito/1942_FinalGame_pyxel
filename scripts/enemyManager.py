@@ -4,7 +4,7 @@ Enemy manager class, this class is created in order to manage all the enemies
 # We need to import the player class and the enemies classes+
 # from player import Player
 import time
-from enemy import Enemy, RegularEnemy, RedEnemy, Bombardier
+from enemy import Enemy, RegularEnemy, RedEnemy, Bombardier, SuperBombardier
 import constants
 from projectileManager import ProjectileManager
 
