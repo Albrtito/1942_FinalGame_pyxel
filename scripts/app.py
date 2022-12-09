@@ -10,7 +10,7 @@ from collisionManager import CollisionManager
 from background_manager import BackgroundManager
 from enemyManager import EnemyManager
 
-# main version, only enemies and final touches needed
+# main version: Added pyxres and waves
 class App:
     def __init__(self):
         # Classes attribute
