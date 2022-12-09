@@ -6,17 +6,16 @@ class BackgroundManager:
     def __init__(self, screen_width: int, screen_height: int):
         self.screen_width = screen_width
         self.screen_height = screen_height
+        self.position_v = 240 * 8
         # Variables for the different stages of the game
         self.initial_screen = True
         self.game_over = False
         self.level = 0
         # Variables for the movement of the background and graphics
-        self.background_roll = 0
+        self.background_roll_step = 1
         # Screen attributes
         self.score = 0
         self.best_score = 20
-
-
 
     @property
     def game_over(self):
@@ -52,7 +51,9 @@ class BackgroundManager:
     def update(self):
         # The background only actualizes if we are not in the initial screen or the game has not reached to an end
         if (not self.initial_screen) and (not self.game_over):
-            self.background_roll += 1
+            self.position_v -= self.background_roll_step
+        if self.position_v == 0:
+            self.position_v = 240 * 8
 
     def draw(self):
         # If not true that the game has ended, we go through the other different stages
@@ -62,21 +63,30 @@ class BackgroundManager:
                 # Background: Initial screen
                 pyxel.cls(0)
                 # Load images that are going to be used for the background
-                pyxel.bltm(x=0, y=0, tm=0, u=0, v=240*8, w=self.screen_width, h=self.screen_height)
+                pyxel.bltm(x=0, y=0, tm=0, u=0, v=240 * 8, w=self.screen_width, h=self.screen_height)
+                pyxel.bltm(x=0, y=0, tm=0, u=32 * 8, v=240 * 8, w=self.screen_width, h=self.screen_height, colkey= 2)
                 pyxel.text(self.screen_width / 8, self.screen_height / 8, f"PRESS ENTER TO START:", 7)
+                pyxel.text(8, 130, f"High Score: {constants.high_score}", 7)
             else:
                 # Background: The roll is not well done but works
                 pyxel.cls(0)
-                pyxel.bltm(x=0, y=0, tm=0, u=0, v=240 * 8 - self.background_roll, w=self.screen_width,
+                pyxel.bltm(x=0, y=0, tm=0, u=0, v=self.position_v, w=self.screen_width,
                            h=self.screen_height)
-                pyxel.text(30, 1, f"Highest Score: {constants.high_score}", 7)
-                pyxel.text(30, 7, f"Current Score: {constants.player_score}", 7)
-                pyxel.text(30, 120, f"LIVES: {constants.player_lives}", 7)
+
+                pyxel.bltm(x=0, y=0, tm=0, u=16 * 8, v= 239 * 8, w=self.screen_width,
+                           h=self.screen_height + 1, colkey=2)
+                self.paint_lives()
+                pyxel.text(90, 130, f"Score: {constants.player_score}", 7)
         else:
             self.when_game_over()
 
     def when_game_over(self):
         pyxel.cls(0)
         pyxel.bltm(x=0, y=0, tm=0, u=240 * 8, v=0, w=self.screen_width, h=self.screen_height)
-        pyxel.text(30, 1, f"GAME OVER ", 7)
         pyxel.text(30, 30, f"Highest Score: {constants.high_score}", 7)
+
+    def paint_lives(self):
+        position_x = 0
+        for i in range(constants.player_lives):
+            pyxel.blt(position_x, 128, 1, 0, 64, 8, 8, colkey=0)
+            position_x += 16

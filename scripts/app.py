@@ -23,7 +23,7 @@ class App:
         # Variables of the game loop:
         self.game_loop = False
         # Initialize pyxel
-        pyxel.init(constants.screen_width, constants.screen_height, title="Pyxel 1942")
+        pyxel.init(constants.screen_width, constants.screen_height + 8, title="Pyxel 1942")
         pyxel.load('../assets/App.pyxres')
         pyxel.run(self.update, self.draw)
 
@@ -43,6 +43,7 @@ class App:
             if self.player.explosion_done:
                 if constants.player_lives <= 0:
                     self.game_over()
+                self.background_manager.position_v = 240 * 8
                 self.background_manager.initial_screen = True
                 self.game_loop = False
             # Update of the game objects
