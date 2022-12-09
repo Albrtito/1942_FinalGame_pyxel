@@ -75,9 +75,6 @@ class Enemy:
     # Update method -> Has to be called every frame -> Is update method inside a class used as the move method??
 
     # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
-    def draw(self):
-        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
-                  self.transparent_color)
 
     def update(self):
         self.check_delete()
@@ -215,14 +212,41 @@ class Bombardier(Enemy):
         self.position_v = 64
         self.height = 16
         self.width = 16
-        self.transparent_color = 0
+        self.transparent_color = 4
+        self.direction = 1
+        self.change_direction = 0
     def update(self):
         if self.position_y != 50:
-            self.position_y -= 1
+            self.position_y -= self.direction
         if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
             self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
-            self.position_y -= 1
+            if (pyxel.frame_count % 2 ==0):
+                self.direction = -1
+            else:
+                self.direction = 1
+            self.position_y -= self.direction
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+            self.is_alive = False
 
+    def draw(self):
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  self.transparent_color)
+        if self.direction < 0:
+            self.position_v = 64
+            if self.change_direction % 2 == 0:
+                self.position_u = 32
+                self.change_direction += 1
+            else:
+                self.position_u = 48
+                self.change_direction += 1
+        elif self.direction > 0:
+            self.position_v = 64
+            if self.change_direction % 2 == 0:
+                self.position_u = 0
+                self.change_direction += 1
+            else:
+                self.position_u =16
+                self.change_direction += 1
 class SuperBombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
@@ -230,8 +254,9 @@ class SuperBombardier(Enemy):
         self.position_v = 80
         self.height = 16
         self.width = 32
-        self.transparent_color = 11
+        self.transparent_color = 4
         self.direction = 1
+        self.change_direction = 0
     def update(self):
         if self.position_y != 50:
             self.position_y += self.direction
@@ -244,3 +269,22 @@ class SuperBombardier(Enemy):
             self.direction = 1
         if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
+    def draw(self):
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  self.transparent_color)
+        if self.direction < 0:
+            self.position_v = 80
+            if self.change_direction % 2 == 0:
+                self.position_u = 0
+                self.change_direction += 1
+            else:
+                self.position_u = 32
+                self.change_direction += 1
+        elif self.direction > 0:
+            self.position_v = 96
+            if self.change_direction % 2 == 0:
+                self.position_u = 0
+                self.change_direction += 1
+            else:
+                self.position_u =32
+                self.change_direction += 1

@@ -13,6 +13,7 @@ class WaveManager:
         self.wave_list = []
         self.wave = 1
         self.wave_appear = False
+        self.bombardier = False
         self.super_bombardier = False
         self.player_invincible = False
 
@@ -61,15 +62,17 @@ class WaveManager:
             self.enemy_manager.create_enemy(0,0,"Regular")
         if (pyxel.frame_count % 20 == 0):
             self.enemy_manager.create_enemy(0,0,"Red")
-        if len(self.enemy_manager.enemy_list) <= 5:
+        if not self.bombardier:
             self.enemy_manager.create_enemy(random.randint(10,120),100,"Bombardier")
+            self.bombardier = True
     def wave_3(self):
         if (pyxel.frame_count % 10 == 0):
             self.enemy_manager.create_enemy(0,0,"Regular")
         if (pyxel.frame_count % 20 == 0):
             self.enemy_manager.create_enemy(0,0,"Red")
-        if (pyxel.frame_count % 70 == 0):
+        if not self.bombardier:
             self.enemy_manager.create_enemy(random.randint(10,120),100,"Bombardier")
+            self.bombardier = True
         if not self.super_bombardier:
             self.enemy_manager.create_enemy(constants.screen_width//2,0,"Superbombardier")
             self.super_bombardier = True
@@ -78,7 +81,7 @@ class WaveManager:
             self.enemy_manager.create_enemy(0,0,"Regular")
         if (pyxel.frame_count % 20 == 0):
             self.enemy_manager.create_enemy(0,0,"Red")
-        if (pyxel.frame_count % 70 == 0):
+        if (pyxel.frame_count % 100 == 0):
             self.enemy_manager.create_enemy(random.randint(10,120),100,"Bombardier")
         if not self.super_bombardier:
             self.enemy_manager.create_enemy(constants.screen_width//2,0,"Superbombardier")

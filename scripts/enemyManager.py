@@ -33,4 +33,5 @@ class EnemyManager:
         if enemy_type == "Bombardier":
             self.enemy_list.append(Bombardier(position_x, position_y, self.projectile_manager))
         if enemy_type == "Superbombardier":
+            print('')
             self.enemy_list.append(SuperBombardier(position_x, position_y, self.projectile_manager))
