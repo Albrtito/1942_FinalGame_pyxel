@@ -24,17 +24,22 @@ class WaveManager:
                 self.wave_2()
             if len(self.enemy_manager.enemy_list) >= 20:
                 self.wave = 3
-        print(len(self.enemy_manager.enemy_list),self.wave)
+        print(len(self.enemy_manager.enemy_list), self.wave)
+
+        if not constants.player_is_alive:
+            self.wave -= 1
+            self.enemy_manager.enemy_list.clear()
 
     def wave_1(self):
-        if (pyxel.frame_count % 10 == 0):
-            self.enemy_manager.create_enemy(0,0,"Regular")
-        if (pyxel.frame_count % 20 == 0):
-            self.enemy_manager.create_enemy(0,0,"Red")
+        if pyxel.frame_count % 10 == 0:
+            self.enemy_manager.create_enemy(0, 0, "Regular")
+        if pyxel.frame_count % 20 == 0:
+            self.enemy_manager.create_enemy(0, 0, "Red")
+
     def wave_2(self):
-        if (pyxel.frame_count % 10 == 0):
-            self.enemy_manager.create_enemy(0,0,"Regular")
-        if (pyxel.frame_count % 20 == 0):
-            self.enemy_manager.create_enemy(0,0,"Red")
+        if pyxel.frame_count % 10 == 0:
+            self.enemy_manager.create_enemy(0, 0, "Regular")
+        if pyxel.frame_count % 20 == 0:
+            self.enemy_manager.create_enemy(0, 0, "Red")
         if len(self.enemy_manager.enemy_list) <= 5:
-            self.enemy_manager.create_enemy(0,100,"Bombardier")
+            self.enemy_manager.create_enemy(0, 100, "Bombardier")
