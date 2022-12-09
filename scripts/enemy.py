@@ -101,6 +101,9 @@ class RegularEnemy(Enemy):
         self.height = 16
         self.width = 16
         self.transparent_color = 4
+        self.change_sprite = 0
+        self.change_sprite_2 = 0
+        self.direction = 1
 
 
     def update(self):
@@ -108,19 +111,46 @@ class RegularEnemy(Enemy):
         self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
         # momentaneamente de la pantalla
-        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 \
-                or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
         else:
-            self.position_x += 1
+            if self.position_x >= 120:
+                self.direction = -1
+                self.change_sprite = 0
+                self.change_sprite_2 = 0
+            elif self.position_x <= 0:
+                self.direction = 1
+                self.change_sprite = 0
+                self.change_sprite_2 = 0
+            self.position_x += self.direction
             # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola
             # whe can adjust m for the width and 64 for the centre
+
             self.position_y = int(self.position_x * (2 - self.position_x / 64))
             # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
 
     def draw(self):
-        if self.position_y <= 45:
-            ...
+        self.position_v = 32
+        if self.position_y < 45:
+            if self.change_sprite % 2 ==0:
+                self.position_u = 0
+                self.change_sprite += 1
+            else:
+                self.position_u = 16
+                self.change_sprite += 1
+        if 62 > self.position_y >= 60 and self.change_sprite_2 == 0:
+            self.position_u = 32
+            self.change_sprite = 1
+        elif 64 > self.position_y > 62 and self.change_sprite == 1:
+            self.position_u = 48
+            self.change_sprite = 2
+        elif 64 > self.position_y > 62 and self.change_sprite == 2:
+            self.position_u = 64
+            self.change_sprite_2 = 1
+        elif 62 > self.position_y >= 60 and self.change_sprite_2 == 1:
+            self.position_u = 80
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  self.transparent_color)
 
 
 class RedEnemy(Enemy):
@@ -142,12 +172,35 @@ class RedEnemy(Enemy):
                 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
         else:
-            self.position_y += 1
+            # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola
+            if self.position_x >= 120:
+                self.direction = -1
+                self.change_sprite = 0
+                self.change_sprite_2 = 0
+            elif self.position_x <= 0:
+                self.direction = 1
+                self.change_sprite = 0
+                self.change_sprite_2 = 0
+            self.position_y += self.direction
             # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola
             # whe can adjust m for the width and 64 for the centre
-            self.position_x = int(0.005 * self.position_y ** 3 - 0.05 * self.position_y ** 2)
-            # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
 
+            self.position_x = int(self.position_y * (2 - self.position_y / 64))
+            # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
+    def draw(self):
+        if 62 > self.position_y >= 60 and self.change_sprite_2 == 0:
+            self.position_u = 32
+            self.change_sprite = 1
+        elif 64 > self.position_y > 62 and self.change_sprite == 1:
+            self.position_u = 48
+            self.change_sprite = 2
+        elif 64 > self.position_y > 62 and self.change_sprite == 2:
+            self.position_u = 64
+            self.change_sprite_2 = 1
+        elif 62 > self.position_y >= 60 and self.change_sprite_2 == 1:
+            self.position_u = 80
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  self.transparent_color)
 
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
