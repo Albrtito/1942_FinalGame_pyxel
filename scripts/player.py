@@ -25,6 +25,7 @@ class Player:
         self.position_u = 0
         self.position_v = 0
         self.loop = False
+        self.explosion_done = False
         # The player can shoot every some ms(rate of fire)
         # The time_between_shots is a timer in order to shoot every rate of fire(ms)
         self.rate_of_fire = 500
@@ -65,7 +66,8 @@ class Player:
                 print("loop")
                 self.loop = True
 
-            # When the player is in a loop we call the animate_move_method, which animates and moves the player in the loop.
+            # When the player is in a loop we call the animate_move_method, which animates and moves the player in
+            # the loop.
             if self.loop and (pyxel.frame_count % 7 == 0):
                 self.animate_move_loop()
 
@@ -73,8 +75,8 @@ class Player:
                 # Calls a function that will move the player
                 self.move()
 
-                # code for the shooting of the player: If the time since the next shot is bigger than the time between shots
-                # and the space key is pressed, shoot
+                # code for the shooting of the player: If the time since the next shot is bigger than the time
+                # between shots and the space key is pressed, shoot
                 if time.time() > self.time_between_shots and pyxel.btn(pyxel.KEY_SPACE):
                     self.time_between_shots = time.time() + self.rate_of_fire / 1000
                     self.shoot()
@@ -85,13 +87,12 @@ class Player:
             if not self.loop:
                 # Method for the animations of the player, changes the variable position_u
                 self.player_animations()
-
-
         else:
             self.animate_explosion_restart()
 
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   colkey=8)
+
     # Methods for player class
 
     # Shoot method creates a player projectile in the projectileManager class
@@ -143,4 +144,13 @@ class Player:
             self.loop = False
 
     def animate_explosion_restart(self):
-        ...
+        if pyxel.frame_count % 3 == 0:
+            self.position_v = 128
+            if self.position_u < 96:
+                print("exploding")
+                self.position_u += 16
+            else:
+                self.explosion_done = True
+                self.position_u = 0
+                self.position_v = 0
+

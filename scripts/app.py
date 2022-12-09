@@ -28,9 +28,7 @@ class App:
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        if pyxel.btnp(pyxel.KEY_RETURN):
-            self.background_manager.initial_screen = False
-            self.game_loop = True
+
         if self.game_loop:
             # The game will quit when Q is pressed
             if pyxel.btnp(pyxel.KEY_Q):
@@ -48,8 +46,18 @@ class App:
             self.projectile_manager.update()
             self.collision_manager.update()
             self.dev_mode()
+            if self.player.explosion_done:
+                self.background_manager.initial_screen = True
+                self.game_loop = False
         else:
+            if pyxel.btnp(pyxel.KEY_RETURN):
+                self.game_loop = True
+                constants.player_is_alive = True
+                self.player.explosion_done = False
+                self.background_manager.initial_screen = False
+
             self.background_manager.update()
+
 
     def draw(self):
         if self.game_loop:
@@ -57,8 +65,11 @@ class App:
             self.background_manager.draw()
             # Draw bullets
             self.projectile_manager.draw()
+            # Draw the player
+            self.player.draw()
             # Draw all enemies
             self.enemy_manager.draw()
+
         else:
             self.background_manager.draw()
 
@@ -73,6 +84,7 @@ class App:
     def dev_mode(self):
         if pyxel.btnp(pyxel.KEY_E):
             self.enemy_manager.create_enemy(0, 0, "Red")
-
+        if pyxel.btnp(pyxel.KEY_P):
+            constants.player_is_alive = False
 
 App()
