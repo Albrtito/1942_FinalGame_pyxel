@@ -3,6 +3,9 @@ This class is used to save methods that are used in more than one class
 
 """
 # Player variables throughout the game
+# The player_is_alive variable changes every time a life of the player is taken away.
+# When the lives reach 0, then its game over
+player_is_alive = True
 player_lives = 3
 player_score = 0
 player_run_score = 0

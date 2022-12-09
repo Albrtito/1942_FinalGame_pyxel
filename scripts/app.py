@@ -10,6 +10,7 @@ from collisionManager import CollisionManager
 from background_manager import BackgroundManager
 from enemyManager import EnemyManager
 
+
 class App:
     def __init__(self):
         # Classes attribute
@@ -56,8 +57,6 @@ class App:
             self.background_manager.draw()
             # Draw bullets
             self.projectile_manager.draw()
-            # Draw player
-            self.player.draw()
             # Draw all enemies
             self.enemy_manager.draw()
         else:
@@ -71,10 +70,9 @@ class App:
         self.background_manager.game_over = True
         self.game_loop = False
 
-
     def dev_mode(self):
         if pyxel.btnp(pyxel.KEY_E):
-            self.enemy_manager.create_enemy(0,0, "Red")
+            self.enemy_manager.create_enemy(0, 0, "Red")
 
 
 App()

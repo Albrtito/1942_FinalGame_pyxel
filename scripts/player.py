@@ -8,8 +8,6 @@ HEIGHT = 128
 WIDTH = 128
 
 
-
-
 # Class player inherits from sprite, this means all basic characteristics of sprites,
 # are at first set to the general sprite
 
@@ -25,6 +23,7 @@ class Player:
         self.player_speed = 2
         # Draw variables of the player -> make something so this works with class sprite
         self.position_u = 0
+        self.position_v = 0
         self.loop = False
         # The player can shoot every some ms(rate of fire)
         # The time_between_shots is a timer in order to shoot every rate of fire(ms)
@@ -60,34 +59,39 @@ class Player:
             self.__position_y = position_y
 
     def update(self):
-        # If the key Z is pressed, then the player is in a loop, everything else stops
-        if pyxel.btnp(pyxel.KEY_Z):
-            print("loop")
-            self.loop = True
+        if constants.player_is_alive:
+            # If the key Z is pressed, then the player is in a loop, everything else stops
+            if pyxel.btnp(pyxel.KEY_Z):
+                print("loop")
+                self.loop = True
 
-        # When the player is in a loop we call the animate_move_method, which animates and moves the player in the loop.
-        if self.loop and (pyxel.frame_count % 7 == 0):
-            self.animate_move_loop()
+            # When the player is in a loop we call the animate_move_method, which animates and moves the player in the loop.
+            if self.loop and (pyxel.frame_count % 7 == 0):
+                self.animate_move_loop()
 
-        if not self.loop:
-            # Calls a function that will move the player
-            self.move()
+            if not self.loop:
+                # Calls a function that will move the player
+                self.move()
 
-            # code for the shooting of the player: If the time since the next shot is bigger than the time between shots
-            # and the space key is pressed, shoot
-            if time.time() > self.time_between_shots and pyxel.btn(pyxel.KEY_SPACE):
-                self.time_between_shots = time.time() + self.rate_of_fire / 1000
-                self.shoot()
+                # code for the shooting of the player: If the time since the next shot is bigger than the time between shots
+                # and the space key is pressed, shoot
+                if time.time() > self.time_between_shots and pyxel.btn(pyxel.KEY_SPACE):
+                    self.time_between_shots = time.time() + self.rate_of_fire / 1000
+                    self.shoot()
 
     def draw(self):
-        # If the player is not in the loop, then the animations for its movement are normal
-        if not self.loop:
-            # Method for the animations of the player, changes the variable position_u
-            self.player_animations()
+        if constants.player_is_alive:
+            # If the player is not in the loop, then the animations for its movement are normal
+            if not self.loop:
+                # Method for the animations of the player, changes the variable position_u
+                self.player_animations()
 
-        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, 0, self.width, self.height,
+
+        else:
+            self.animate_explosion_restart()
+
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   colkey=8)
-
     # Methods for player class
 
     # Shoot method creates a player projectile in the projectileManager class
@@ -104,10 +108,11 @@ class Player:
             self.position_y += self.player_speed
         if pyxel.btn(pyxel.KEY_UP) and self.position_y != 0:
             self.position_y -= self.player_speed
+
     # This functions changes the variables of self.position_u and self.position_v. This two variables determine which
     # sprite to show, so changing these variables we can change the sprite of the plane that is showing depending on
     # what the plane is doing
-        #print(self.position_x,self.position_y)
+    # print(self.position_x,self.position_y)
     def player_animations(self):
         # Update the helix movement every frame
         if self.position_u == 0:
@@ -136,3 +141,5 @@ class Player:
         # When the loop is done, we end it by setting the variable loop to false, everything goes back to normal
         else:
             self.loop = False
+
+    def animate_explosion_restart(self):
