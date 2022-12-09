@@ -29,6 +29,7 @@ class WaveManager:
         if not constants.player_is_alive:
             self.wave -= 1
             self.enemy_manager.enemy_list.clear()
+            self.enemy_manager.projectile_manager.enemy_projectiles.clear()
 
     def wave_1(self):
         if pyxel.frame_count % 10 == 0:
