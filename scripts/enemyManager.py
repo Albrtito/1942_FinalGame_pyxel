@@ -4,7 +4,7 @@ Enemy manager class, this class is created in order to manage all the enemies
 # We need to import the player class and the enemies classes+
 # from player import Player
 import time
-from enemy import Enemy, RegularEnemy, RedEnemy
+from enemy import Enemy, RegularEnemy, RedEnemy, Bombardier
 import constants
 from projectileManager import ProjectileManager
 
@@ -30,3 +30,7 @@ class EnemyManager:
             self.enemy_list.append(RegularEnemy(position_x, position_y,self.projectile_manager))
         if enemy_type == "Red":
             self.enemy_list.append(RedEnemy(position_x, position_y,self.projectile_manager))
+        if enemy_type == "Bombardier":
+            self.enemy_list.append(Bombardier(position_x, position_y, self.projectile_manager))
+        if enemy_type == "Superbombardier":
+            self.enemy_list.append(SuperBombardier(position_x, position_y, self.projectile_manager))

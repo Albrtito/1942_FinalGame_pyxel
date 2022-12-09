@@ -18,7 +18,7 @@ class App:
         self.projectile_manager = ProjectileManager()
         self.enemy_manager = EnemyManager(self.projectile_manager)
         self.wave_manager = WaveManager(self.enemy_manager)
-        self.player = Player(int(constants.screen_width / 2), int(constants.screen_height / 2), self.projectile_manager)
+        self.player = Player(int(120), int(120), self.projectile_manager)
         self.collision_manager = CollisionManager(self.player, self.enemy_manager, self.projectile_manager)
         # Variables of the game loop:
         self.game_loop = False

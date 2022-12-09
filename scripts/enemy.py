@@ -107,6 +107,8 @@ class RegularEnemy(Enemy):
 
 
     def update(self):
+        if (pyxel.frame_count % random.randint(50,100) == 0):
+            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -161,9 +163,13 @@ class RedEnemy(Enemy):
         self.height = 16
         self.width = 16
         self.transparent_color = 11
-
+        self.change_sprite = 0
+        self.change_sprite_2 = 0
+        self.direction = 1
 
     def update(self):
+        if (pyxel.frame_count % random.randint(50,100) == 0):
+            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -173,11 +179,11 @@ class RedEnemy(Enemy):
             self.is_alive = False
         else:
             # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola
-            if self.position_x >= 120:
+            if self.position_y >= 120:
                 self.direction = -1
                 self.change_sprite = 0
                 self.change_sprite_2 = 0
-            elif self.position_x <= 0:
+            elif self.position_y <= 0:
                 self.direction = 1
                 self.change_sprite = 0
                 self.change_sprite_2 = 0
@@ -210,8 +216,12 @@ class Bombardier(Enemy):
         self.height = 16
         self.width = 16
         self.transparent_color = 0
-
-
+    def update(self):
+        if self.position_y != 50:
+            self.position_y -= 1
+        if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
+            self.position_y -= 1
 
 class SuperBombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
@@ -221,6 +231,8 @@ class SuperBombardier(Enemy):
         self.height = 32
         self.width = 16
         self.transparent_color = 0
-
+    def update(self):
+        if self.position_y == 50 and (pyxel.frame_count % 100 != 0):
+            self.position_y -= 1
 
 
