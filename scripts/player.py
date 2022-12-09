@@ -143,3 +143,4 @@ class Player:
             self.loop = False
 
     def animate_explosion_restart(self):
+        ...
