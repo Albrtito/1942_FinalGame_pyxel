@@ -228,11 +228,19 @@ class SuperBombardier(Enemy):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 80
-        self.height = 32
-        self.width = 16
-        self.transparent_color = 0
+        self.height = 16
+        self.width = 32
+        self.transparent_color = 11
+        self.direction = 1
     def update(self):
-        if self.position_y == 50 and (pyxel.frame_count % 100 != 0):
-            self.position_y -= 1
-
-
+        if self.position_y != 50:
+            self.position_y += self.direction
+        if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
+            self.position_y += self.direction
+        if self.position_y == 100:
+            self.direction = -1
+        elif self.position_y <= 0:
+            self.direction = 1
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+            self.is_alive = False
