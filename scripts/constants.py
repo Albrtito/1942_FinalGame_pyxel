@@ -9,6 +9,9 @@ player_is_alive = True
 player_lives = 3
 player_score = 0
 player_run_score = 0
+f = open("../assets/high_score.txt", "r")
+high_score = f.read()
+f.close()
 # Game variables: App variables
 screen_width = 128
 screen_height = 128
@@ -17,8 +20,11 @@ normal_sprite_height = 16
 # Hit-box magnitudes for basic sprite
 hitbox_x = 16
 hitbox_y = 16
-
-
+# The file saving the high-score
+"""
+high_score_file_write = open('high_score.txt', "w")
+high_score_file_read = open("high_score.txt","r")
+"""
 def draw_list(list):
     for i in range(len(list)):
         list[i].draw()

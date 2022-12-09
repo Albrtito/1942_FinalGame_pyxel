@@ -28,13 +28,23 @@ class App:
         pyxel.run(self.update, self.draw)
 
     def update(self):
-
+        print(self.game_loop)
+        """
+        If the variable game loop is true, the main game loop will be executed, in this loop all objects are
+        updated. The quit key is checked and the game over function is checked if the player lives are 0
+        and the explosion is done
+        """
         if self.game_loop:
             # The game will quit when Q is pressed
             if pyxel.btnp(pyxel.KEY_Q):
                 pyxel.quit()
-            if pyxel.btnp(pyxel.KEY_G) or constants.player_lives <= 0:
-                self.game_over()
+            # The player explosion variable determines when the explosion of the player is done and
+            # the game can go through with the game over screen or starting with one less live
+            if self.player.explosion_done:
+                if constants.player_lives <= 0:
+                    self.game_over()
+                self.background_manager.initial_screen = True
+                self.game_loop = False
             # Update of the game objects
             self.collision_manager.update()
             self.background_manager.update()
@@ -45,16 +55,24 @@ class App:
             self.wave_manager.update()
             self.projectile_manager.update()
             self.collision_manager.update()
+            # The dev mode is a way of easily checking for mistakes in game during development.
             self.dev_mode()
-            if self.player.explosion_done:
-                self.background_manager.initial_screen = True
-                self.game_loop = False
+
         else:
-            if pyxel.btnp(pyxel.KEY_RETURN):
-                self.game_loop = True
-                constants.player_is_alive = True
-                self.player.explosion_done = False
-                self.background_manager.initial_screen = False
+            """
+            This state of the game is reached in two occasions: 
+            + At the start of the game the initial screen will disappear once return is pressed. The game loop starts.
+            + This also checks if that we are at the post-game over moment, 
+                 the player has lost a live but has not died yet, the game is set back into the initial screen and shows
+                 that a live has been lost
+            """
+            if constants.player_lives > 0:
+                # When the player looses a live
+                if pyxel.btnp(pyxel.KEY_RETURN):
+                    self.game_loop = True
+                    constants.player_is_alive = True
+                    self.player.explosion_done = False
+                    self.background_manager.initial_screen = False
 
             self.background_manager.update()
 
@@ -78,6 +96,22 @@ class App:
 
     # When the game ends, everything but the background stops ( game_loop = False )
     def game_over(self):
+        """
+        We now open the high-score file and check if the high score obtained during the game is greater than the max
+        high score ever played, if that's the case, the in-game score is written in the file as the new high score.
+        """
+        # Open the file as read only
+        r = open("../assets/high_score.txt", "r")
+        # Evaluate the file high score vs the in-game actual high score
+        if int(r.read()) < constants.player_score:
+            # If the actual high score is grater, se that as the new high score in constants in order to present it
+            # later in the game-over background
+            constants.high_score = constants.player_score
+            # Write the new high score in the .txt file
+            w = open("../assets/high_score.txt", "w")
+            w.write(str(constants.player_score))
+            w.close()
+        r.close()
         self.background_manager.game_over = True
         self.game_loop = False
 
@@ -86,5 +120,8 @@ class App:
             self.enemy_manager.create_enemy(0, 0, "Red")
         if pyxel.btnp(pyxel.KEY_P):
             constants.player_is_alive = False
+        if pyxel.btnp(pyxel.KEY_G):
+            constants.player_lives = 0
+            self.game_over()
 
 App()
