@@ -43,9 +43,10 @@ class CollisionManager:
 
     # Update all the possible collisions
     def update(self):
-        self.enemy_with_player_projectile()
-        self.player_with_enemy_projectile()
-        self.player_with_enemies()
+        if constants.player_is_alive:
+            self.enemy_with_player_projectile()
+            self.player_with_enemy_projectile()
+            self.player_with_enemies()
 
     # Methods for checking collisions: -> Right now checking collisions for points not squares
 

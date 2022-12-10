@@ -94,7 +94,7 @@ class Enemy:
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __init__(self, position_x: int, position_y: int, projectile_manager:ProjectileManager):
+    def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 32
@@ -105,10 +105,9 @@ class RegularEnemy(Enemy):
         self.change_sprite_2 = 0
         self.direction = 1
 
-
     def update(self):
-        if (pyxel.frame_count % random.randint(50,100) == 0):
-            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
+        if (pyxel.frame_count % random.randint(50, 100) == 0):
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -134,7 +133,7 @@ class RegularEnemy(Enemy):
     def draw(self):
         self.position_v = 32
         if self.position_y < 45:
-            if self.change_sprite % 2 ==0:
+            if self.change_sprite % 2 == 0:
                 self.position_u = 0
                 self.change_sprite += 1
             else:
@@ -168,8 +167,8 @@ class RedEnemy(Enemy):
         self.direction = 1
 
     def update(self):
-        if (pyxel.frame_count % random.randint(50,100) == 0):
-            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
+        if (pyxel.frame_count % random.randint(50, 100) == 0):
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -193,6 +192,7 @@ class RedEnemy(Enemy):
 
             self.position_x = int(self.position_y * (2 - self.position_y / 64))
             # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
+
     def draw(self):
         if 62 > self.position_y >= 60 and self.change_sprite_2 == 0:
             self.position_u = 32
@@ -208,6 +208,7 @@ class RedEnemy(Enemy):
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
 
+
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
@@ -216,12 +217,14 @@ class Bombardier(Enemy):
         self.height = 16
         self.width = 16
         self.transparent_color = 0
+
     def update(self):
         if self.position_y != 50:
             self.position_y -= 1
         if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
             self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
             self.position_y -= 1
+
 
 class SuperBombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
@@ -231,8 +234,7 @@ class SuperBombardier(Enemy):
         self.height = 32
         self.width = 16
         self.transparent_color = 0
+
     def update(self):
         if self.position_y == 50 and (pyxel.frame_count % 100 != 0):
             self.position_y -= 1
-
-
