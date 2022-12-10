@@ -115,8 +115,8 @@ class RegularEnemy(Enemy):
         else:
             if self.position_x >= 120:
                 self.direction = -1
-                self.change_sprite = 0
-                self.change_sprite_2 = 0
+                self.change_sprite = 1
+                self.change_sprite_2 = 1
             elif self.position_x <= 0:
                 self.direction = 1
                 self.change_sprite = 0
@@ -129,25 +129,28 @@ class RegularEnemy(Enemy):
             # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
 
     def draw(self):
-        self.position_v = 32
         if self.position_y < 45:
-            if self.change_sprite % 2 ==0:
-                self.position_u = 0
-                self.change_sprite += 1
-            else:
-                self.position_u = 16
-                self.change_sprite += 1
-        if 62 > self.position_y >= 60 and self.change_sprite_2 == 0:
-            self.position_u = 32
-            self.change_sprite = 1
-        elif 64 > self.position_y > 62 and self.change_sprite == 1:
-            self.position_u = 48
-            self.change_sprite = 2
-        elif 64 > self.position_y > 62 and self.change_sprite == 2:
+            if self.change_sprite == 1:
+                if self.change_sprite % 2 ==0:
+                    self.position_u = 0
+                else:
+                    self.position_u = 16
+                    self.change_sprite += 1
+            elif self.change_sprite == 0:
+                if self.change_sprite % 2 ==0:
+                    self.position_u = 32
+                else:
+                    self.position_u = 48
+                    self.change_sprite += 1
+
+        if 50 > self.position_x >= 45 and self.change_sprite == 0:
             self.position_u = 64
-            self.change_sprite_2 = 1
-        elif 62 > self.position_y >= 60 and self.change_sprite_2 == 1:
+            self.change_sprite = 1
+        elif self.position_x >= 50:
             self.position_u = 80
+        elif 50 > self.position_x >= 45 and self.change_sprite == 1:
+            self.position_u = 96
+            self.change_sprite = 0
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
 
@@ -179,7 +182,7 @@ class RedEnemy(Enemy):
             if self.position_y >= 120:
                 self.direction = -1
                 self.change_sprite = 0
-                self.change_sprite_2 = 0
+                self.change_sprite_2 = 1
             elif self.position_y <= 0:
                 self.direction = 1
                 self.change_sprite = 0
@@ -191,17 +194,22 @@ class RedEnemy(Enemy):
             self.position_x = int(self.position_y * (2 - self.position_y / 64))
             # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
     def draw(self):
-        if 62 > self.position_y >= 60 and self.change_sprite_2 == 0:
-            self.position_u = 32
+        if self.position_x < 55:
+            if self.change_sprite == 1:
+                self.position_u = 64
+            elif self.change_sprite == 0:
+                self.position_u = 0
+        if 58 > self.position_x >= 55 and self.change_sprite == 0:
+            self.position_u = 16
             self.change_sprite = 1
-        elif 64 > self.position_y > 62 and self.change_sprite == 1:
+        elif self.position_x >= 58 and self.change_sprite == 1:
+            if self.change_sprite_2 == 1:
+                self.position_u = 80
+            elif self.change_sprite_2 ==0:
+                self.position_u = 32
+        elif 58 > self.position_x >= 55 and self.change_sprite == 1:
             self.position_u = 48
-            self.change_sprite = 2
-        elif 64 > self.position_y > 62 and self.change_sprite == 2:
-            self.position_u = 64
-            self.change_sprite_2 = 1
-        elif 62 > self.position_y >= 60 and self.change_sprite_2 == 1:
-            self.position_u = 80
+
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
 
