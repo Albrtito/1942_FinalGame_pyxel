@@ -18,22 +18,16 @@ class ProjectileManager:
         self.enemy_projectiles = []
 
     def update(self):
-        # Update the projectiles in each player and enemy list. Delete the projectile
-        # if more than 5 seconds have passed since its creation
-        # for player projectiles
+        """This function updates every frame"""
+        # Update the projectiles in each player and enemy list.
         constants.update_list_and_delete(self.player_projectiles)
-
-        # for enemy projectiles
         constants.update_list_and_delete(self.enemy_projectiles)
-
     def draw(self):
-        # Draw the projectiles in a list using the method from resources
+        """Draw the projectiles in a list using the method from resources"""
         constants.draw_list(self.player_projectiles)
         constants.draw_list(self.enemy_projectiles)
-
-    # This method returns an object of class projectile, subclass PlayerProjectile or EnemyProjectile, depending on
-    # the projectile_type attribute (must be a string)
     def create_projectile(self, position_x: int, position_y: int, projectile_type: str):
+        """This method returns an object of class projectile, subclass PlayerProjectile or EnemyProjectile"""
         if projectile_type == "PlayerProjectile":
             self.player_projectiles.append(PlayerProjectile(position_x, position_y))
         if projectile_type == "EnemyProjectile":
