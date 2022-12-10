@@ -6,7 +6,7 @@ import pyxel
 
 # We need to import the player class and the enemies classes+
 # from player import Player
-from projectile import Projectile, PlayerProjectile, EnemyProjectile, BombardierProjectile
+from projectile import Projectile, PlayerProjectile, EnemyProjectile
 import constants
 
 
@@ -37,6 +37,13 @@ class ProjectileManager:
         if projectile_type == "PlayerProjectile":
             self.player_projectiles.append(PlayerProjectile(position_x, position_y))
         if projectile_type == "EnemyProjectile":
-            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,3))
         if projectile_type == "BombardierProjectile":
-            self.enemy_projectiles.append(BombardierProjectile(position_x, position_y))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,2))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,-2))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,2,-2))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,-2,-2))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,2,2))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,-2,2))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,0,-2))
+            self.enemy_projectiles.append(EnemyProjectile(position_x, position_y,0,-2))

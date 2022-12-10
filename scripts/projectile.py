@@ -90,9 +90,11 @@ class PlayerProjectile(Projectile):
 
 
 class EnemyProjectile(Projectile):
-    def __init__(self, position_x: int, position_y: int):
+    def __init__(self, position_x: int, position_y: int, speed_y: int, speed_x =0):
         super(EnemyProjectile, self).__init__(position_x, position_y)
-        self.speed = -2
+        self.speed_x = speed_x
+        self.speed_y = speed_y
+        self.position_x = position_x + 4
         # We change sprite variables of projectile so that it shows the enemy projectile instead of the player
         # and the hitbox is not as big
         self.position_u = 16
@@ -105,45 +107,6 @@ class EnemyProjectile(Projectile):
         # We offset the position of the draw method by 4 on the x-axis so its centered when drawn
         pyxel.blt(self.position_x + 4, self.position_y, 0, self.position_u, self.position_v,
                   self.width, self.height, colkey=0)
-
-
-class BombardierProjectile(Projectile):
-    def __init__(self, position_x: int, position_y: int):
-        super(BombardierProjectile, self).__init__(position_x, position_y)
-        self.position_x = position_x + 4
-        self.speed = -2
-        self.position_u = 16
-        self.width = 8
-        self.height = 8
-        self.position_y_1 ,self.position_y_2, self.position_y_3, self.position_y_4, self.position_y_5, self.position_y_6, self.position_y_7, self.position_y_8= position_y,position_y,position_y,position_y,position_y,position_y,position_y,position_y
-        self.position_x_1, self.position_x_2, self.position_x_3, self.position_x_4, self.position_x_5, self.position_x_6, self.position_x_7, self.position_x_8 = position_x + 12, position_x + 12, position_x + 12, position_x + 12, position_x + 12, position_x + 12, position_x + 12, position_x + 12
     def update(self):
-        self.position_y_1 -= self.speed
-        self.position_y_2 += self.speed
-        self.position_x_3 -= self.speed
-        self.position_x_4 += self.speed
-        self.position_y_3 += self.speed
-        self.position_y_4 -= self.speed
-        self.position_x_5 -= self.speed
-        self.position_x_6 += self.speed
-        self.position_y_5 -= self.speed
-        self.position_y_6 += self.speed
-        self.position_x_7 -= self.speed
-        self.position_x_8 += self.speed
-    def draw(self):
-        pyxel.blt(self.position_x_1, self.position_y_1, 0, self.position_u, self.position_v,
-                  self.width, self.height, colkey=0)
-        pyxel.blt(self.position_x_2, self.position_y_2, 0, self.position_u, self.position_v,
-                  self.width, self.height, colkey=0)
-        pyxel.blt(self.position_x_3, self.position_y_3, 0, self.position_u, self.position_v,
-                  self.width, self.height, colkey=0)
-        pyxel.blt(self.position_x_4, self.position_y_4, 0, self.position_u, self.position_v,
-                  self.width, self.height, colkey=0)
-        pyxel.blt(self.position_x_5, self.position_y_5, 0, self.position_u, self.position_v,
-                  self.width, self.height, colkey=0)
-        pyxel.blt(self.position_x_6, self.position_y_6, 0, self.position_u, self.position_v,
-                  self.width, self.height, colkey=0)
-        pyxel.blt(self.position_x_7, self.position_y_7, 0, self.position_u, self.position_v,
-                  self.width, self.height, colkey=0)
-        pyxel.blt(self.position_x_8, self.position_y_8, 0, self.position_u, self.position_v,
-                  self.width, self.height, colkey=0)
+        self.position_x += self.speed_x
+        self.position_y += self.speed_y
