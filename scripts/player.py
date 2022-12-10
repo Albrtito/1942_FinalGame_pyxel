@@ -17,13 +17,12 @@ class Player:
         # Position variables
         self.position_x = position_x
         self.position_y = position_y
-        self.width = constants.normal_sprite_width
         self.height = constants.normal_sprite_height
-        # The speed right now is constant but could be named as an attribute
-        self.player_speed = 2
+        # The speed right now is constant, is named as a private property
+        self.__player_speed = 2
         # Draw variables of the player -> make something so this works with class sprite
-        self.position_u = 0
-        self.position_v = 0
+        self.__position_u = 0
+        self.__position_v = 0
         self.loop = False
         self.explosion_done = False
         # The player can shoot every some ms(rate of fire)
@@ -59,7 +58,26 @@ class Player:
         else:
             self.__position_y = position_y
 
+    # Property and setter for projectile_manager
+    @property
+    def projectile_manager(self):
+        return self.__projectile_manager
+
+    @projectile_manager.setter
+    def projectile_manager(self, projectile_manger: ProjectileManager):
+        # Only change to type objects of ProjectileManger class
+        if type(projectile_manger) != ProjectileManager:
+            raise TypeError("Projectile_manager must be an object of class ProjectileManager")
+        else:
+            self.__projectile_manager = projectile_manger
+
+    # Read only attribute, for the width
+    @property
+    def width(self):
+        return constants.normal_sprite_width
+
     def update(self):
+        """ Somthing about the update method """
         if constants.player_is_alive:
             # If the key Z is pressed, then the player is in a loop, everything else stops
             if pyxel.btnp(pyxel.KEY_Z):
@@ -90,7 +108,7 @@ class Player:
         else:
             self.animate_explosion_restart()
 
-        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+        pyxel.blt(self.position_x, self.position_y, 0, self.__position_u, self.__position_v, self.width, self.height,
                   colkey=8)
 
     # Methods for player class
@@ -102,13 +120,13 @@ class Player:
     # This function moves the player given an input in the keyboard keys
     def move(self):
         if pyxel.btn(pyxel.KEY_LEFT) and self.position_x != 0:
-            self.position_x -= self.player_speed
+            self.position_x -= self.__player_speed
         if pyxel.btn(pyxel.KEY_RIGHT) and self.position_x < constants.screen_width - self.width:
-            self.position_x += self.player_speed
+            self.position_x += self.__player_speed
         if pyxel.btn(pyxel.KEY_DOWN) and self.position_y < constants.screen_height - self.height:
-            self.position_y += self.player_speed
+            self.position_y += self.__player_speed
         if pyxel.btn(pyxel.KEY_UP) and self.position_y != 0:
-            self.position_y -= self.player_speed
+            self.position_y -= self.__player_speed
 
     # This functions changes the variables of self.position_u and self.position_v. This two variables determine which
     # sprite to show, so changing these variables we can change the sprite of the plane that is showing depending on
@@ -116,41 +134,40 @@ class Player:
     # print(self.position_x,self.position_y)
     def player_animations(self):
         # Update the helix movement every frame
-        if self.position_u == 0:
-            self.position_u = 16
+        if self.__position_u == 0:
+            self.__position_u = 16
         else:
-            self.position_u = 0
+            self.__position_u = 0
 
     # Function for the animation and movement of a player when its inside a loop
     def animate_move_loop(self):
         # We set the player to the starting position(it starts in the movement animation)
-        if self.position_u == 16:
-            self.position_u += 16
+        if self.__position_u == 16:
+            self.__position_u += 16
         # We pass through each of the animations, one every x frames, stated in the update method
         # Each animation changes the position of the plane by some amount. The plane ends up in the same position
         # so it doesn´t go off-screen
-        if self.position_u < 80:
-            if self.position_u == 32:
+        if self.__position_u < 80:
+            if self.__position_u == 32:
                 self.position_y -= 10
-            elif self.position_u == 48:
+            elif self.__position_u == 48:
                 self.position_y -= 10
-            elif self.position_u == 64:
+            elif self.__position_u == 64:
                 self.position_y += 20
-            elif self.position_u == 80:
+            elif self.__position_u == 80:
                 self.position_y -= 20
-            self.position_u += 16
+            self.__position_u += 16
         # When the loop is done, we end it by setting the variable loop to false, everything goes back to normal
         else:
             self.loop = False
 
     def animate_explosion_restart(self):
         if pyxel.frame_count % 3 == 0:
-            self.position_v = 128
-            if self.position_u < 96:
+            self.__position_v = 128
+            if self.__position_u < 96:
                 print("exploding")
-                self.position_u += 16
+                self.__position_u += 16
             else:
                 self.explosion_done = True
-                self.position_u = 0
-                self.position_v = 0
-
+                self.__position_u = 0
+                self.__position_v = 0

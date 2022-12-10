@@ -16,6 +16,7 @@ class EnemyManager:
         self.projectile_manager = projectile_manager
         self.enemy_list = []
 
+
     def update(self):
         constants.update_list_and_delete(self.enemy_list)
 

@@ -46,7 +46,7 @@ class WaveManager:
                 self.wave_appear = False
             if not constants.player_is_alive and not self.player_invincible:
                 self.wave -= 1
-                self.enemy_manager.enemy_list.clear()
+                self.when_player_explodes()
                 self.player_invincible = True
             elif constants.player_is_alive:
                 self.player_invincible = False
@@ -86,3 +86,7 @@ class WaveManager:
         if not self.super_bombardier:
             self.enemy_manager.create_enemy(constants.screen_width//2,0,"Superbombardier")
             self.super_bombardier = True
+
+    def when_player_explodes(self):
+        self.enemy_manager.enemy_list.clear()
+        self.enemy_manager.projectile_manager.enemy_projectiles.clear()
