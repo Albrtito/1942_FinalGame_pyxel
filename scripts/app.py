@@ -77,7 +77,6 @@ class App:
 
             self.background_manager.update()
 
-
     def draw(self):
         if self.game_loop:
             # Draw background
@@ -124,5 +123,6 @@ class App:
         if pyxel.btnp(pyxel.KEY_G):
             constants.player_lives = 0
             self.game_over()
+
 
 App()

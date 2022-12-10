@@ -75,9 +75,6 @@ class Enemy:
     # Update method -> Has to be called every frame -> Is update method inside a class used as the move method??
 
     # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
-    def draw(self):
-        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
-                  self.transparent_color)
 
     def update(self):
         self.check_delete()
@@ -94,7 +91,7 @@ class Enemy:
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
+    def __init__(self, position_x: int, position_y: int, projectile_manager:ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 32
@@ -105,9 +102,10 @@ class RegularEnemy(Enemy):
         self.change_sprite_2 = 0
         self.direction = 1
 
+
     def update(self):
-        if (pyxel.frame_count % random.randint(50, 100) == 0):
-            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
+        if (pyxel.frame_count % random.randint(80,150) == 0):
+            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -117,8 +115,8 @@ class RegularEnemy(Enemy):
         else:
             if self.position_x >= 120:
                 self.direction = -1
-                self.change_sprite = 0
-                self.change_sprite_2 = 0
+                self.change_sprite = 1
+                self.change_sprite_2 = 1
             elif self.position_x <= 0:
                 self.direction = 1
                 self.change_sprite = 0
@@ -131,25 +129,28 @@ class RegularEnemy(Enemy):
             # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
 
     def draw(self):
-        self.position_v = 32
         if self.position_y < 45:
-            if self.change_sprite % 2 == 0:
-                self.position_u = 0
-                self.change_sprite += 1
-            else:
-                self.position_u = 16
-                self.change_sprite += 1
-        if 62 > self.position_y >= 60 and self.change_sprite_2 == 0:
-            self.position_u = 32
-            self.change_sprite = 1
-        elif 64 > self.position_y > 62 and self.change_sprite == 1:
-            self.position_u = 48
-            self.change_sprite = 2
-        elif 64 > self.position_y > 62 and self.change_sprite == 2:
+            if self.change_sprite_2 == 1:
+                if self.change_sprite % 2 ==0:
+                    self.position_u = 0
+                else:
+                    self.position_u = 16
+                    self.change_sprite += 1
+            elif self.change_sprite_2 == 0:
+                if self.change_sprite % 2 ==0:
+                    self.position_u = 32
+                else:
+                    self.position_u = 48
+                    self.change_sprite += 1
+
+        if 50 > self.position_x >= 45 and self.change_sprite == 0:
             self.position_u = 64
-            self.change_sprite_2 = 1
-        elif 62 > self.position_y >= 60 and self.change_sprite_2 == 1:
+            self.change_sprite = 1
+        elif self.position_x >= 50:
             self.position_u = 80
+        elif 50 > self.position_x >= 45 and self.change_sprite == 1:
+            self.position_u = 96
+            self.change_sprite = 0
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
 
@@ -167,8 +168,8 @@ class RedEnemy(Enemy):
         self.direction = 1
 
     def update(self):
-        if (pyxel.frame_count % random.randint(50, 100) == 0):
-            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
+        if (pyxel.frame_count % random.randint(80,150) == 0):
+            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Detecta que el enmigo este 10 pixeles fuera de la pantalla, para que haya la opcion de que un enemigo salga
@@ -181,7 +182,7 @@ class RedEnemy(Enemy):
             if self.position_y >= 120:
                 self.direction = -1
                 self.change_sprite = 0
-                self.change_sprite_2 = 0
+                self.change_sprite_2 = 1
             elif self.position_y <= 0:
                 self.direction = 1
                 self.change_sprite = 0
@@ -192,22 +193,25 @@ class RedEnemy(Enemy):
 
             self.position_x = int(self.position_y * (2 - self.position_y / 64))
             # self.position_y = int(-self.position_x**2/16+8*self.position_x-192)
-
     def draw(self):
-        if 62 > self.position_y >= 60 and self.change_sprite_2 == 0:
-            self.position_u = 32
+        if self.position_x < 55:
+            if self.change_sprite == 1:
+                self.position_u = 64
+            elif self.change_sprite == 0:
+                self.position_u = 0
+        if 58 > self.position_x >= 55 and self.change_sprite == 0:
+            self.position_u = 16
             self.change_sprite = 1
-        elif 64 > self.position_y > 62 and self.change_sprite == 1:
+        elif self.position_x >= 58 and self.change_sprite == 1:
+            if self.change_sprite_2 == 1:
+                self.position_u = 80
+            elif self.change_sprite_2 ==0:
+                self.position_u = 32
+        elif 58 > self.position_x >= 55 and self.change_sprite == 1:
             self.position_u = 48
-            self.change_sprite = 2
-        elif 64 > self.position_y > 62 and self.change_sprite == 2:
-            self.position_u = 64
-            self.change_sprite_2 = 1
-        elif 62 > self.position_y >= 60 and self.change_sprite_2 == 1:
-            self.position_u = 80
+
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
-
 
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
@@ -216,25 +220,79 @@ class Bombardier(Enemy):
         self.position_v = 64
         self.height = 16
         self.width = 16
-        self.transparent_color = 0
-
+        self.transparent_color = 4
+        self.direction = 1
+        self.change_direction = 0
     def update(self):
         if self.position_y != 50:
-            self.position_y -= 1
+            self.position_y -= self.direction
         if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
-            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
-            self.position_y -= 1
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "BombardierProjectile")
+            if (pyxel.frame_count % 2 ==0):
+                self.direction = -1
+            else:
+                self.direction = 1
+            self.position_y -= self.direction
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+            self.is_alive = False
 
-
+    def draw(self):
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  self.transparent_color)
+        if self.direction < 0:
+            self.position_v = 64
+            if self.change_direction % 2 == 0:
+                self.position_u = 32
+                self.change_direction += 1
+            else:
+                self.position_u = 48
+                self.change_direction += 1
+        elif self.direction > 0:
+            self.position_v = 64
+            if self.change_direction % 2 == 0:
+                self.position_u = 0
+                self.change_direction += 1
+            else:
+                self.position_u =16
+                self.change_direction += 1
 class SuperBombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 80
-        self.height = 32
-        self.width = 16
-        self.transparent_color = 0
-
+        self.height = 16
+        self.width = 32
+        self.transparent_color = 4
+        self.direction = 1
+        self.change_direction = 0
     def update(self):
-        if self.position_y == 50 and (pyxel.frame_count % 100 != 0):
-            self.position_y -= 1
+        if self.position_y != 50:
+            self.position_y += self.direction
+        if self.position_y == 50 and (pyxel.frame_count % 400 == 0):
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "BombardierProjectile")
+            self.position_y += self.direction
+        if self.position_y == 100:
+            self.direction = -1
+        elif self.position_y <= 0:
+            self.direction = 1
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+            self.is_alive = False
+    def draw(self):
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  self.transparent_color)
+        if self.direction < 0:
+            self.position_v = 80
+            if self.change_direction % 2 == 0:
+                self.position_u = 0
+                self.change_direction += 1
+            else:
+                self.position_u = 32
+                self.change_direction += 1
+        elif self.direction > 0:
+            self.position_v = 96
+            if self.change_direction % 2 == 0:
+                self.position_u = 0
+                self.change_direction += 1
+            else:
+                self.position_u =32
+                self.change_direction += 1
