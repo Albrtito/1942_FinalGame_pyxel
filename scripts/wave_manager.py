@@ -11,7 +11,7 @@ class WaveManager:
     def __init__(self, enemy_manager: EnemyManager):
         self.enemy_manager = enemy_manager
         self.wave_list = []
-        self.wave = 1
+        self.wave = 3
         self.wave_appear = False
         self.bombardier = False
         self.super_bombardier = False

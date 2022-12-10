@@ -104,7 +104,7 @@ class RegularEnemy(Enemy):
 
 
     def update(self):
-        if (pyxel.frame_count % random.randint(50,100) == 0):
+        if (pyxel.frame_count % random.randint(80,150) == 0):
             self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
@@ -165,7 +165,7 @@ class RedEnemy(Enemy):
         self.direction = 1
 
     def update(self):
-        if (pyxel.frame_count % random.randint(50,100) == 0):
+        if (pyxel.frame_count % random.randint(80,150) == 0):
             self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
@@ -219,7 +219,7 @@ class Bombardier(Enemy):
         if self.position_y != 50:
             self.position_y -= self.direction
         if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
-            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "BombardierProjectile")
             if (pyxel.frame_count % 2 ==0):
                 self.direction = -1
             else:
@@ -260,8 +260,8 @@ class SuperBombardier(Enemy):
     def update(self):
         if self.position_y != 50:
             self.position_y += self.direction
-        if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
-            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
+        if self.position_y == 50 and (pyxel.frame_count % 400 == 0):
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "BombardierProjectile")
             self.position_y += self.direction
         if self.position_y == 100:
             self.direction = -1
