@@ -76,12 +76,7 @@ class Enemy:
 
     # Enemy inherits from Sprite, so we can draw it using all the attributes of sprite
 
-    def update(self):
-        self.check_delete()
-        if pyxel.frame_count % random.randint(50, 100) == 0:
-            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
-
-    # Check if the enemy should be deleted (die)
+   # Check if the enemy should be deleted (die)
     def check_delete(self):
         if self.lives <= 0:
             self.is_alive = False
@@ -98,13 +93,13 @@ class RegularEnemy(Enemy):
         self.height = 16
         self.width = 16
         self.transparent_color = 4
-        self.change_sprite = 0
+        self.change_sprite = 1
         self.change_sprite_2 = 0
         self.direction = 1
 
 
     def update(self):
-        if (pyxel.frame_count % random.randint(80,150) == 0):
+        if (pyxel.frame_count % random.randint(120,180) == 0):
             self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
@@ -116,10 +111,10 @@ class RegularEnemy(Enemy):
             if self.position_x >= 120:
                 self.direction = -1
                 self.change_sprite = 1
-                self.change_sprite_2 = 1
+                self.change_sprite_2 = 0
             elif self.position_x <= 0:
                 self.direction = 1
-                self.change_sprite = 0
+                self.change_sprite = 1
                 self.change_sprite_2 = 0
             self.position_x += self.direction
             # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola
@@ -130,31 +125,31 @@ class RegularEnemy(Enemy):
 
     def draw(self):
         if self.position_y < 45:
-            if self.change_sprite_2 == 1:
+            if self.change_sprite_2 == 0:
                 if self.change_sprite % 2 ==0:
                     self.position_u = 0
+                    self.change_sprite += 1
                 else:
                     self.position_u = 16
                     self.change_sprite += 1
-            elif self.change_sprite_2 == 0:
+            elif self.change_sprite == 0:
                 if self.change_sprite % 2 ==0:
                     self.position_u = 32
+                    self.change_sprite += 1
                 else:
                     self.position_u = 48
                     self.change_sprite += 1
 
-        if 50 > self.position_x >= 45 and self.change_sprite == 0:
+        if 62 > self.position_y >= 58 and self.change_sprite_2 == 0:
             self.position_u = 64
-            self.change_sprite = 1
-        elif self.position_x >= 50:
+            self.change_sprite_2 = 1
+        elif self.position_y >= 62:
             self.position_u = 80
-        elif 50 > self.position_x >= 45 and self.change_sprite == 1:
+        elif 62 > self.position_y >= 58 and self.change_sprite_2 == 1:
             self.position_u = 96
-            self.change_sprite = 0
+            self.change_sprite =0
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
-
-
 class RedEnemy(Enemy):
     def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
@@ -168,7 +163,7 @@ class RedEnemy(Enemy):
         self.direction = 1
 
     def update(self):
-        if (pyxel.frame_count % random.randint(80,150) == 0):
+        if (pyxel.frame_count % random.randint(100,200) == 0):
             self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
@@ -212,7 +207,6 @@ class RedEnemy(Enemy):
 
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
-
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
@@ -223,16 +217,24 @@ class Bombardier(Enemy):
         self.transparent_color = 4
         self.direction = 1
         self.change_direction = 0
+        self.lives = 3
     def update(self):
+        # Check if the enemy has to be deleted -> All enemy update methods need to have this:
+        self.check_delete()
         if self.position_y != 50:
             self.position_y -= self.direction
         if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
-            self.projectile_manager.create_projectile(self.position_x, self.position_y, "BombardierProjectile")
-            if (pyxel.frame_count % 2 ==0):
+            if (pyxel.frame_count % 400 ==0):
+                self.projectile_manager.create_projectile(self.position_x, self.position_y, "BombardierProjectile")
+            if (pyxel.frame_count % 3 ==0):
                 self.direction = -1
             else:
                 self.direction = 1
             self.position_y -= self.direction
+        if self.position_y == 100:
+            self.direction = 1
+        elif self.position_y <= 0:
+            self.direction = -1
         if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
 
@@ -265,7 +267,10 @@ class SuperBombardier(Enemy):
         self.transparent_color = 4
         self.direction = 1
         self.change_direction = 0
+        self.lives = 5
     def update(self):
+        # Check if the enemy has to be deleted -> All enemy update methods need to have this:
+        self.check_delete()
         if self.position_y != 50:
             self.position_y += self.direction
         if self.position_y == 50 and (pyxel.frame_count % 400 == 0):
@@ -278,6 +283,7 @@ class SuperBombardier(Enemy):
         if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
     def draw(self):
+        """"This method will draw and animate the superbombardier"""
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
         if self.direction < 0:

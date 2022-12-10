@@ -11,7 +11,7 @@ class WaveManager:
     def __init__(self, enemy_manager: EnemyManager):
         self.enemy_manager = enemy_manager
         self.wave_list = []
-        self.wave = 3
+        self.wave = 1
         self.wave_appear = False
         self.bombardier = False
         self.super_bombardier = False
@@ -27,7 +27,7 @@ class WaveManager:
                 self.wave_appear = True
             if self.wave_appear:
                 self.wave_2()
-            if len(self.enemy_manager.enemy_list) >= 20:
+            if len(self.enemy_manager.enemy_list) >= 15:
                 self.wave = 3
                 self.wave_appear = True
         elif constants.player_lives > 0 and self.wave == 3:
@@ -35,7 +35,7 @@ class WaveManager:
                 self.wave_appear = True
             if self.wave_appear:
                 self.wave_3()
-            if len(self.enemy_manager.enemy_list) >= 30:
+            if len(self.enemy_manager.enemy_list) >= 20:
                 self.wave = 4
         elif constants.player_lives > 0 and self.wave == 4:
             if len(self.enemy_manager.enemy_list) <= 5:
