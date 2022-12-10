@@ -130,13 +130,13 @@ class RegularEnemy(Enemy):
 
     def draw(self):
         if self.position_y < 45:
-            if self.change_sprite == 1:
+            if self.change_sprite_2 == 1:
                 if self.change_sprite % 2 ==0:
                     self.position_u = 0
                 else:
                     self.position_u = 16
                     self.change_sprite += 1
-            elif self.change_sprite == 0:
+            elif self.change_sprite_2 == 0:
                 if self.change_sprite % 2 ==0:
                     self.position_u = 32
                 else:
