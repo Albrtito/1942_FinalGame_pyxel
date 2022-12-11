@@ -1,5 +1,3 @@
-import time
-from sprite import Sprite
 import random
 import pyxel
 import constants
@@ -13,14 +11,16 @@ from enemyManager import EnemyManager
 
 # main version: Added pyxres and waves
 class App:
+    """App: main class of the project, handles all the game using objects from other classes"""
     def __init__(self):
+        """app.innit: This method declares variables for the app class"""
         # Parameters: No need for properties or setters as the app class only takes values, it doesn`t give any.
 
         # Objects:
-        self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height)
         self.projectile_manager = ProjectileManager()
         self.enemy_manager = EnemyManager(self.projectile_manager)
         self.wave_manager = WaveManager(self.enemy_manager)
+        self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height, self.wave_manager)
         self.player = Player(int(120), int(120), self.projectile_manager)
         self.collision_manager = CollisionManager(self.player, self.enemy_manager, self.projectile_manager)
 

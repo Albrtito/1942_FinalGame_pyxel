@@ -31,7 +31,7 @@ class Enemy:
         self.is_alive = True
         self.lives = 1
 
-    # Property and setter for position_x
+        # Property and setter for position_x
         @property
         def position_x(self):
             return self.__position_x
@@ -44,7 +44,7 @@ class Enemy:
             else:
                 self.__position_x = position_x
 
-    # Property and setter for position_y
+        # Property and setter for position_y
         @property
         def position_y(self):
             return self.__position_y
@@ -57,7 +57,7 @@ class Enemy:
             else:
                 self.__position_y = position_y
 
-    # Property and setter for projectile
+        # Property and setter for projectile
 
         @property
         def projectile_manager(self):
@@ -69,7 +69,7 @@ class Enemy:
                 raise TypeError("Projectile manager must be an object of class ProjectileManager")
             self.__projectile_manager = projectile_manager
 
-   # Check if the enemy should be deleted (die)
+    # Check if the enemy should be deleted (die)
     def check_delete(self):
         if self.lives <= 0:
             self.is_alive = False
@@ -79,7 +79,7 @@ class Enemy:
 
 # Enemy child classes. Each will contain a sprite specific for each class.
 class RegularEnemy(Enemy):
-    def __init__(self, position_x: int, position_y: int, projectile_manager:ProjectileManager):
+    def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 32
@@ -89,11 +89,12 @@ class RegularEnemy(Enemy):
         self.change_sprite = 1
         self.change_sprite_2 = 0
         self.direction = 1
+
     def update(self):
         """This function will update every frame"""
-        #This if the way the Regular enemies will shot creating a proyectile at a random time
-        if (pyxel.frame_count % random.randint(120,180) == 0):
-            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
+        # This if the way the Regular enemies will shot creating a proyectile at a random time
+        if (pyxel.frame_count % random.randint(120, 180) == 0):
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Si se acerca al extremo del mapa cambia su direccion
@@ -109,6 +110,7 @@ class RegularEnemy(Enemy):
         # Whe take a formula m(x-64)**2 + n=Y making a parabola with centre in x=64 if we make a full parabola
         # whe can adjust m for the width and 64 for the centre
         self.position_y = int(self.position_x * (2 - self.position_x / 64))
+
     def draw(self):
         """This function draws and animates the regular enemy"""
         # We have two states when doing a loop it will change according to the parabola
@@ -116,14 +118,14 @@ class RegularEnemy(Enemy):
         # Animate off the loop
         if self.position_y < 45:
             if self.change_sprite_2 == 0:
-                if self.change_sprite % 2 ==0:
+                if self.change_sprite % 2 == 0:
                     self.position_u = 0
                     self.change_sprite += 1
                 else:
                     self.position_u = 16
                     self.change_sprite += 1
             elif self.change_sprite == 0:
-                if self.change_sprite % 2 ==0:
+                if self.change_sprite % 2 == 0:
                     self.position_u = 32
                     self.change_sprite += 1
                 else:
@@ -137,9 +139,12 @@ class RegularEnemy(Enemy):
             self.position_u = 80
         elif 62 > self.position_y >= 58 and self.change_sprite_2 == 1:
             self.position_u = 96
-            self.change_sprite =0
+            self.change_sprite = 0
             # Draw the plane
-        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,self.transparent_color)
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
+                  self.transparent_color)
+
+
 class RedEnemy(Enemy):
     def __init__(self, position_x: int, position_y: int, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
@@ -154,9 +159,9 @@ class RedEnemy(Enemy):
 
     def update(self):
         """This function will update every frame"""
-        #This if the way the Regular enemies will shot creating a proyectile at a random time
-        if (pyxel.frame_count % random.randint(100,200) == 0):
-            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
+        # This if the way the Regular enemies will shot creating a proyectile at a random time
+        if (pyxel.frame_count % random.randint(100, 200) == 0):
+            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Si se acerca al extremo del mapa cambia su direccion
@@ -172,30 +177,33 @@ class RedEnemy(Enemy):
         # Whe take a formula m(y-64)**2 + n=X making a parabola with centre in x=64 if we make a full parabola
         # whe can adjust m for the width and 64 for the centre
         self.position_x = int(self.position_y * (2 - self.position_y / 64))
+
     def draw(self):
         """This function draws and animates the red enemy"""
         # We have two states when doing a loop it will change according to the parabola
         # When not in loop it will alternate between both sprites of the plane moving the helices
-        #Animation off the loop
+        # Animation off the loop
         if self.position_x < 55:
             if self.change_sprite == 1:
                 self.position_u = 64
             elif self.change_sprite == 0:
                 self.position_u = 0
-        #Animation on the loop
+        # Animation on the loop
         if 58 > self.position_x >= 55 and self.change_sprite == 0:
             self.position_u = 16
             self.change_sprite = 1
         elif self.position_x >= 58 and self.change_sprite == 1:
             if self.change_sprite_2 == 1:
                 self.position_u = 80
-            elif self.change_sprite_2 ==0:
+            elif self.change_sprite_2 == 0:
                 self.position_u = 32
         elif 58 > self.position_x >= 55 and self.change_sprite == 1:
             self.position_u = 48
-        #Draw the plane
+        # Draw the plane
         pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v, self.width, self.height,
                   self.transparent_color)
+
+
 class Bombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
@@ -207,6 +215,7 @@ class Bombardier(Enemy):
         self.direction = 1
         self.change_direction = 0
         self.lives = 3
+
     def update(self):
         """This function will update every frame"""
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
@@ -216,9 +225,9 @@ class Bombardier(Enemy):
         if self.position_y != 50:
             self.position_y -= self.direction
         if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
-            if (pyxel.frame_count % 400 ==0):
+            if (pyxel.frame_count % 400 == 0):
                 self.projectile_manager.create_projectile(self.position_x, self.position_y, "BombardierProjectile")
-            if (pyxel.frame_count % 3 ==0):
+            if (pyxel.frame_count % 3 == 0):
                 self.direction = -1
             else:
                 self.direction = 1
@@ -251,8 +260,10 @@ class Bombardier(Enemy):
                 self.position_u = 0
                 self.change_direction += 1
             else:
-                self.position_u =16
+                self.position_u = 16
                 self.change_direction += 1
+
+
 class SuperBombardier(Enemy):
     def __init__(self, position_x: float, position_y: float, projectile_manager: ProjectileManager):
         super().__init__(position_x, position_y, projectile_manager)
@@ -264,6 +275,7 @@ class SuperBombardier(Enemy):
         self.direction = 1
         self.change_direction = 0
         self.lives = 5
+
     def update(self):
         """This function will update every frame"""
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
@@ -281,6 +293,7 @@ class SuperBombardier(Enemy):
             self.direction = 1
         if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
+
     def draw(self):
         """This function draws and animates the super bombardier"""
         # It will alternate between both sprites of the plane moving the helices
@@ -302,5 +315,5 @@ class SuperBombardier(Enemy):
                 self.position_u = 0
                 self.change_direction += 1
             else:
-                self.position_u =32
+                self.position_u = 32
                 self.change_direction += 1
