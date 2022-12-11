@@ -1,16 +1,16 @@
 import math
 
 import constants
-from enemy import Enemy, RegularEnemy, RedEnemy, SuperBombardier, Bombardier
+from enemy import RegularEnemy, RedEnemy, SuperBombardier, Bombardier
 from player import Player
 from enemyManager import EnemyManager
 from projectileManager import ProjectileManager
 
 
 class CollisionManager:
-    """This clas manages the collisions between the player and the enemies, it does so by checking if any of the enemies,
-    or it`s bullets are at the position of the player. It also checks if any of the player bullets are at the position of
-    the enemies """
+    """This clas manages the collisions between the player and the enemies, it does so by checking if any of the
+    enemies, or it`s bullets are at the position of the player. It also checks if any of the player bullets are at
+    the position of the enemies """
 
     def __init__(self, player: Player, enemy_manager: EnemyManager, projectile_manager: ProjectileManager):
         """CollisionManager.innit : This method declares the parameters for the CollisionManager class."""
