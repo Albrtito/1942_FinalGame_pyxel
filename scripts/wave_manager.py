@@ -62,13 +62,13 @@ class WaveManager:
         """"The first wave will have Regular and Red planes"""
         if (pyxel.frame_count % 10 == 0):
             self.enemy_manager.create_enemy(0,0,"Regular")
-        if (pyxel.frame_count % 20 == 0):
+        if (pyxel.frame_count % 30 == 0):
             self.enemy_manager.create_enemy(0,0,"Red")
     def wave_2(self):
         """"The first wave will have Regular and Red planes and a Bombardier"""
         if (pyxel.frame_count % 10 == 0):
             self.enemy_manager.create_enemy(0,0,"Regular")
-        if (pyxel.frame_count % 20 == 0):
+        if (pyxel.frame_count % 30 == 0):
             self.enemy_manager.create_enemy(0,0,"Red")
         if not self.bombardier:
             self.enemy_manager.create_enemy(random.randint(10,120),100,"Bombardier")
@@ -77,7 +77,7 @@ class WaveManager:
         """"The first wave will have Regular and Red planes and a Bombardier and a SuperBombardier"""
         if (pyxel.frame_count % 10 == 0):
             self.enemy_manager.create_enemy(0,0,"Regular")
-        if (pyxel.frame_count % 20 == 0):
+        if (pyxel.frame_count % 30 == 0):
             self.enemy_manager.create_enemy(0,0,"Red")
         if not self.bombardier:
             self.enemy_manager.create_enemy(random.randint(10,120),100,"Bombardier")
@@ -89,7 +89,7 @@ class WaveManager:
         """"The first wave will have Regular and Red planes and a Bombardier and a SuperBombardier"""
         if (pyxel.frame_count % 10 == 0):
             self.enemy_manager.create_enemy(0,0,"Regular")
-        if (pyxel.frame_count % 20 == 0):
+        if (pyxel.frame_count % 30 == 0):
             self.enemy_manager.create_enemy(0,0,"Red")
         if (pyxel.frame_count % 100 == 0):
             self.enemy_manager.create_enemy(random.randint(10,120),100,"Bombardier")

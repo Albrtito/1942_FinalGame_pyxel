@@ -91,9 +91,6 @@ class RegularEnemy(Enemy):
         self.direction = 1
     def update(self):
         """This function will update every frame"""
-        #This if the way the Regular enemies will shot creating a proyectile at a random time
-        if (pyxel.frame_count % random.randint(120,180) == 0):
-            self.projectile_manager.create_projectile(self.position_x,self.position_y,"EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Si se acerca al extremo del mapa cambia su direccion
