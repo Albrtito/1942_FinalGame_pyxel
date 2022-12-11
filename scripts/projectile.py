@@ -93,7 +93,7 @@ class PlayerProjectile(Projectile):
 
 
 class EnemyProjectile(Projectile):
-    def __init__(self, position_x: int, position_y: int, speed_y: int, speed_x =0):
+    def __init__(self, position_x: int, position_y: int, speed_y: int, speed_x=0):
         super(EnemyProjectile, self).__init__(position_x, position_y)
         self.speed_x = speed_x
         self.speed_y = speed_y
