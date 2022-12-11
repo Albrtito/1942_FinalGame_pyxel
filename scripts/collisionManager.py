@@ -1,7 +1,7 @@
 import math
 
 import constants
-from enemy import Enemy,RegularEnemy,RedEnemy,SuperBombardier,Bombardier
+from enemy import Enemy, RegularEnemy, RedEnemy, SuperBombardier, Bombardier
 from player import Player
 from enemyManager import EnemyManager
 from projectileManager import ProjectileManager
@@ -28,6 +28,7 @@ class CollisionManager:
             self.enemy_with_player_projectile()
             self.player_with_enemy_projectile()
             self.player_with_enemies()
+            self.player_projectiles_enemy_projectiles()
 
     # Methods for checking collisions: All based in the standard collision method defined at the end of this class
 
@@ -74,6 +75,17 @@ class CollisionManager:
                     elif type(self.__enemy_manager.enemy_list[enemy_index]) == SuperBombardier:
                         constants.player_score += 80
 
+    def player_projectiles_enemy_projectiles(self):
+        """Player_projectiles_enemy_projectiles: Checks collisions between the projectiles of the player and the ones
+        of the enemy"""
+        for player_index in range(len(self.__projectile_manager.player_projectiles) - 1, -1, -1):
+            for enemy_index in range(len(self.__projectile_manager.enemy_projectiles) - 1, -1, -1):
+                if self.collision(self.__projectile_manager.enemy_projectiles[enemy_index],
+                                  self.__projectile_manager.player_projectiles[player_index]):
+                    # If the projectiles of the player and the ones of the enemy collide they are both deleted
+                    self.__projectile_manager.enemy_projectiles[enemy_index].is_alive = False
+                    self.__projectile_manager.player_projectiles[player_index].is_alive = False
+
     def collision(self, object_1, object_2):
         """Collision: Checks collision of two objects using their positions (x and y) and their sprite dimensions.
         Uses pitagoras theorem to compute the distance between them, if that distance is equal or smaller than the sum
@@ -83,7 +95,6 @@ class CollisionManager:
         distance = math.sqrt(((object_1.position_x - object_2.position_x) ** 2) +
                              ((object_1.position_y - object_2.position_y) ** 2))
         if distance < (object_1.width + object_2.width) / 2:
-            print("collision")
             return True
         else:
             return False

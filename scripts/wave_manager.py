@@ -56,7 +56,8 @@ class WaveManager:
             self.player_invincible = True
         elif constants.player_is_alive:
             self.player_invincible = False
-        print(len(self.enemy_manager.enemy_list), self.wave, constants.player_lives)
+
+       # print(len(self.enemy_manager.enemy_list), self.wave, constants.player_lives)
 
     def wave_1(self):
         """"The first wave will have Regular and Red planes"""

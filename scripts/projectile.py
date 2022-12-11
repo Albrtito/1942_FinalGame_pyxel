@@ -21,45 +21,45 @@ class Projectile:
         self.created_time = time.time()
         self.is_alive = True
 
-        # Property and setter for the direction_x
-        @property
-        def position_x(self):
-            return self.__position_x
+    # Property and setter for the direction_x
+    @property
+    def position_x(self):
+        return self.__position_x
 
-        @position_x.setter
-        def position_x(self, position_x: int):
-            # Only change the direction_x to float values
-            if type(position_x) != int:
-                raise TypeError("The position must be a int")
-            else:
-                self.__position_x = position_x
+    @position_x.setter
+    def position_x(self, position_x: int):
+        # Only change the direction_x to float values
+        if type(position_x) != int:
+            raise TypeError("The position must be a int")
+        else:
+            self.__position_x = position_x
 
-        # Property and setter for the direction_y
-        @property
-        def position_y(self):
-            return self.__position_y
+    # Property and setter for the direction_y
+    @property
+    def position_y(self):
+        return self.__position_y
 
-        @position_y.setter
-        def position_y(self, position_y: int):
-            # Only change the direction_y to float values
-            if type(position_y) != int:
-                raise TypeError("The position must be a int")
-            else:
-                self.__position_y = position_y
+    @position_y.setter
+    def position_y(self, position_y: int):
+        # Only change the direction_y to float values
+        if type(position_y) != int:
+            raise TypeError("The position must be a int")
+        else:
+            self.__position_y = position_y
 
-        # Property and setter for the speed
-        @property
-        def speed(self):
-            return self.__speed
+    # Property and setter for the speed
+    @property
+    def speed(self):
+        return self.__speed
 
-        # This setter is only for the case that the speed changes in player and enemies projectiles
-        @speed.setter
-        def speed(self, speed: int):
-            # Only change the direction_y to float values
-            if type(speed) != int:
-                raise TypeError("The speed must be a int")
-            else:
-                self.__speed = speed
+    # This setter is only for the case that the speed changes in player and enemies projectiles
+    @speed.setter
+    def speed(self, speed: int):
+        # Only change the direction_y to float values
+        if type(speed) != int:
+            raise TypeError("The speed must be a int")
+        else:
+            self.__speed = speed
 
     # Methods for the Projectile mother class, things all projectiles do
     def update(self):
