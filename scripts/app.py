@@ -85,19 +85,23 @@ class App:
                  the player has lost a live but has not died yet, the game is set back into the initial screen and shows
                  that a live has been lost
             """
-
             # When the player looses a live, if the player looses a live, but It's still alive we allow the restart
             # by pressing return
-            if constants.player_lives > 0:
-                if pyxel.btnp(pyxel.KEY_RETURN):
-                    # When pressed return, the game loop is activated, the player is alive and the explosion is set to
-                    # false, we enter the game screen instead of the initial one
-                    self.__game_loop = True
-                    constants.player_is_alive = True
-                    self.player.explosion_done = False
-                    self.background_manager.initial_screen = False
-            # At any moment during the game the background needs to be showing, so its update is always happening
-            self.background_manager.update()
+            if self.background_manager.first_screen:
+                if pyxel.btnp(pyxel.KEY_I):
+                    self.background_manager.first_screen = False
+                    self.background_manager.initial_screen = True
+            else:
+                if constants.player_lives > 0:
+                    if pyxel.btnp(pyxel.KEY_RETURN):
+                        # When pressed return, the game loop is activated, the player is alive and the explosion is
+                        # set to false, we enter the game screen instead of the initial one
+                        self.__game_loop = True
+                        constants.player_is_alive = True
+                        self.player.explosion_done = False
+                        self.background_manager.initial_screen = False
+                # At any moment during the game the background needs to be showing, so its update is always happening
+                self.background_manager.update()
 
     def draw(self):
         """Draw: This method is repeated every frame, in it all the objects are drawn in screen"""

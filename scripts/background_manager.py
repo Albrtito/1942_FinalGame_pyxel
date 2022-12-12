@@ -12,7 +12,8 @@ class BackgroundManager:
 
         # Variables for the different stages of the game
         self.game_over = False
-        self.initial_screen = True
+        self.first_screen = True
+        self.initial_screen = False
         # Wave manager is only used inside the class -> private
         self.__wave_manager = wave_manager
 
@@ -93,7 +94,18 @@ class BackgroundManager:
         # If not true that the game has ended, we go through the other different stages
         if not self.game_over:
             # Check if we are at the initial screen, if we are, draw it
-            if self.initial_screen:
+            if self.first_screen:
+                pyxel.bltm(x=0, y=0, tm=0, u=0, v=110 * 8, w=self.screen_width, h=self.screen_height)
+                pyxel.bltm(x=0, y=0, tm=0, u=48 * 8, v=240 * 8, w=self.screen_width, h=self.screen_height, colkey=2)
+                if pyxel.frame_count % 5 == 0:
+                    pyxel.text(40, 129, f"Insert coin (press i)", 10)
+                else:
+                    pyxel.text(40, 129, f"Insert coin (press i)", 9)
+                pyxel.text(40, 70, f"Controls: ", 0)
+                pyxel.text(25, 80, f" * Move: Arrow keys ", 0)
+                pyxel.text(25, 90, f" * Shoot: Space ", 0)
+                pyxel.text(25, 100, f" * Loop: Z key ", 0)
+            elif self.initial_screen:
                 # Background: Initial screen
                 pyxel.cls(0)
                 # Draw the initial screen and the text boxes on top of that in order to see the text when displayed
