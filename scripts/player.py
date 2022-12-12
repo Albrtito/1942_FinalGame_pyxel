@@ -168,6 +168,8 @@ class Player:
     #
     # print(self.position_x,self.position_y)
     def player_animations(self):
+        if constants.cheats:
+            self.__position_v = 144
         """Player animations: This functions changes the variables of self.position_u and self.position_v. This two
         variables determine which sprite to show, so changing these variables we can change the sprite of the plane
         that is showing depending on what the plane is doing """
@@ -178,6 +180,8 @@ class Player:
             self.__position_u = 0
 
     def animate_move_loop(self):
+        if constants.cheats:
+            self.__position_v = 0
         """Animate_move_loop: Moves and animates the player to do a loop, changes position_x, position_y, position_v
         and position_u"""
         # We set the player to the starting position(it starts in the movement animation)

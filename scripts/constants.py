@@ -21,11 +21,9 @@ normal_sprite_height = 16
 # Hit-box magnitudes for basic sprite
 hitbox_x = 16
 hitbox_y = 16
-# The file saving the high-score
-"""
-high_score_file_write = open('high_score.txt', "w")
-high_score_file_read = open("high_score.txt","r")
-"""
+# Variables to cheat
+cheats = False
+
 
 
 # Takes a list and draws all the elements

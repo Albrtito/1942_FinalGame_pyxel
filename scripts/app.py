@@ -70,12 +70,14 @@ class App:
             self.projectile_manager.update()
             # Update of the collisions from the collision manager
             self.collision_manager.update()
-            """ The dev mode is a way of easily checking for mistakes in game during development.When active: 
+            """ The dev mode is a way of easily checking for mistakes in game during development.When active  
                     + Press E to create an enemy in 0,0 
                     + Press P to make the player explode and see the animation
                     + Press G to enter the game over screen
+                    + Press C to enter cheat mode: Invincibility 
             """
             self.dev_mode()
+
 
         else:
             """
@@ -161,6 +163,9 @@ class App:
         if pyxel.btnp(pyxel.KEY_G):
             constants.player_lives = 0
             self.game_over()
+        if pyxel.btnp(pyxel.KEY_C):
+            constants.cheats = True
+
 
 
 App()

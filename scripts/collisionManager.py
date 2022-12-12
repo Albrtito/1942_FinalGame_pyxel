@@ -38,10 +38,13 @@ class CollisionManager:
             if self.collision(self.__player, self.__enemy_manager.enemy_list[index]):
                 # We only subtract a live if the player is not doing a loop, if the player is doing a loop then its
                 # kind of indestructible. Same happens with whatever should be destroyed but with the reversed logic
-                if not self.__player.loop:
-                    constants.player_lives -= 1
-                    constants.player_is_alive = False
-                    self.__enemy_manager.enemy_list[index].is_alive = False
+                if not constants.cheats:
+                    if not self.__player.loop:
+                        constants.player_lives -= 1
+                        constants.player_is_alive = False
+                        self.__enemy_manager.enemy_list[index].is_alive = False
+                    else:
+                        self.__enemy_manager.enemy_list[index].is_alive = False
 
     # This method is altered so the player is invincible
     def player_with_enemy_projectile(self):
@@ -50,9 +53,12 @@ class CollisionManager:
             if self.collision(self.__player, self.__projectile_manager.enemy_projectiles[index]):
                 # We only subtract a live if the player is not doing a loop, if the player is doing a loop then its
                 # kind of indestructible. Same happens with whatever should be destroyed but with the reversed logic
-                if not self.__player.loop:
-                    constants.player_lives -= 1
-                    constants.player_is_alive = True
+                if not constants.cheats:
+                    if not self.__player.loop:
+                        constants.player_lives -= 1
+                        constants.player_is_alive = True
+                        self.__projectile_manager.enemy_projectiles[index].is_alive = False
+                else:
                     self.__projectile_manager.enemy_projectiles[index].is_alive = False
 
     def enemy_with_player_projectile(self):
