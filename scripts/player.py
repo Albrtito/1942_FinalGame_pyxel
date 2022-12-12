@@ -35,6 +35,7 @@ class Player:
         self.__projectile_manager = projectile_manager
         # Loop cooldown in seconds: Defines the time between loops
         self.__loop_cooldown = 2
+        self.__last_loop = 0
 
     # Property and setter for position_x: It can only be given an int.
     @property
@@ -105,7 +106,7 @@ class Player:
         # If the player is in the alive state it can move,shoot and do loops.
         if constants.player_is_alive:
             # If the key Z is pressed, then the player is in a loop, everything else stops
-            if pyxel.btnp(pyxel.KEY_Z):
+            if pyxel.btnp(pyxel.KEY_Z) and time.time() > self.__last_loop:
                 print("loop")
                 self.loop = True
 
@@ -207,6 +208,7 @@ class Player:
                 self.__position_u += 16
             # When the loop is done, we end it by setting the variable loop to false, everything goes back to normal
             else:
+                self.__last_loop = time.time() + self.__loop_cooldown
                 self.loop = False
 
     def animate_explosion_restart(self):
