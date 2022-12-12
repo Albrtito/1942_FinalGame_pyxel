@@ -51,7 +51,7 @@ class CollisionManager:
                 # We only subtract a live if the player is not doing a loop, if the player is doing a loop then its
                 # kind of indestructible. Same happens with whatever should be destroyed but with the reversed logic
                 if not self.__player.loop:
-                    constants.player_lives -= 0
+                    constants.player_lives -= 1
                     constants.player_is_alive = True
                     self.__projectile_manager.enemy_projectiles[index].is_alive = False
 

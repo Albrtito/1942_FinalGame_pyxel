@@ -48,15 +48,15 @@ class WaveManager:
             if len(self.enemy_manager.enemy_list) >= 30:
                 self.wave_appear = False
         # This will make the player invincible when he looses a live
-        if not constants.player_is_alive and not self.player_invincible:
+        if not constants.player_is_alive and not self.__player_invincible:
             if self.wave != 0:
                 self.wave -= 1
             self.enemy_manager.enemy_list.clear()
-            self.bombardier = False
-            self.super_bombardier = False
-            self.player_invincible = True
+            self.__bombardier = False
+            self.__super_bombardier = False
+            self.__player_invincible = True
         elif constants.player_is_alive:
-            self.player_invincible = False
+            self.__player_invincible = False
         print(len(self.enemy_manager.enemy_list), self.wave, constants.player_lives)
 
     def wave_1(self):
@@ -72,9 +72,9 @@ class WaveManager:
             self.enemy_manager.create_enemy(0, 0, "Regular")
         if pyxel.frame_count % 30 == 0:
             self.enemy_manager.create_enemy(0, 0, "Red")
-        if not self.bombardier:
+        if not self.__bombardier:
             self.enemy_manager.create_enemy(random.randint(10, 120), 100, "Bombardier")
-            self.bombardier = True
+            self.__bombardier = True
 
     def wave_3(self):
         """"The first wave will have Regular and Red planes and a Bombardier and a SuperBombardier"""
@@ -82,12 +82,12 @@ class WaveManager:
             self.enemy_manager.create_enemy(0, 0, "Regular")
         if pyxel.frame_count % 30 == 0:
             self.enemy_manager.create_enemy(0, 0, "Red")
-        if not self.bombardier:
+        if not self.__bombardier:
             self.enemy_manager.create_enemy(random.randint(10, 120), 100, "Bombardier")
-            self.bombardier = True
-        if not self.super_bombardier:
+            self.__bombardier = True
+        if not self.__super_bombardier:
             self.enemy_manager.create_enemy(constants.screen_width // 2, 0, "Superbombardier")
-            self.super_bombardier = True
+            self.__super_bombardier = True
 
     def wave_4(self):
         """"The first wave will have Regular and Red planes and a Bombardier and a SuperBombardier"""
@@ -97,6 +97,6 @@ class WaveManager:
             self.enemy_manager.create_enemy(0, 0, "Red")
         if pyxel.frame_count % 100 == 0:
             self.enemy_manager.create_enemy(random.randint(10, 120), 100, "Bombardier")
-        if not self.super_bombardier:
+        if not self.__super_bombardier:
             self.enemy_manager.create_enemy(constants.screen_width // 2, 0, "Superbombardier")
-            self.super_bombardier = True
+            self.__super_bombardier = True
