@@ -53,6 +53,8 @@ class WaveManager:
             if self.wave != 0:
                 self.wave -= 1
             self.enemy_manager.enemy_list.clear()
+            self.bombardier = False
+            self.super_bombardier  = False
             self.player_invincible = True
         elif constants.player_is_alive:
             self.player_invincible = False

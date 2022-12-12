@@ -31,6 +31,34 @@ class Enemy:
         self.is_alive = True
         self.lives = 1
 
+        @property
+        def lives(self):
+            return 1
+
+        @lives.setter
+        def lives(self, lives: int):
+            # Only change the position_x to float values
+            if type(lives) != int:
+                raise TypeError("The position must be an int")
+            else:
+                self.__lives = 1
+        @property
+        def is_alive(self):
+            return True
+        @is_alive.setter
+        def is_alive(self, is_alive: bool):
+            # Only change the position_x to float values
+            if type(is_alive) != bool:
+                raise TypeError("The position must be a bool")
+            else:
+                self.__is_alive = True
+    # Property for height and width
+        @property
+        def height(self):
+            return self.__height
+        @property
+        def width(self):
+            return self.__width
     # Property and setter for position_x
         @property
         def position_x(self):
