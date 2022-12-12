@@ -31,7 +31,35 @@ class Enemy:
         self.is_alive = True
         self.lives = 1
 
-        # Property and setter for position_x
+        @property
+        def lives(self):
+            return 1
+
+        @lives.setter
+        def lives(self, lives: int):
+            # Only change the position_x to float values
+            if type(lives) != int:
+                raise TypeError("The lives must be an int")
+            else:
+                self.__lives = 1
+        @property
+        def is_alive(self):
+            return True
+        @is_alive.setter
+        def is_alive(self, is_alive: bool):
+            # Only change the position_x to float values
+            if type(is_alive) != bool:
+                raise TypeError("The is alive must be a bool")
+            else:
+                self.__is_alive = True
+    # Property for height and width
+        @property
+        def height(self):
+            return self.__height
+        @property
+        def width(self):
+            return self.__width
+    # Property and setter for position_x
         @property
         def position_x(self):
             return self.__position_x
@@ -92,9 +120,6 @@ class RegularEnemy(Enemy):
 
     def update(self):
         """This function will update every frame"""
-        # This if the way the Regular enemies will shot creating a proyectile at a random time
-        if (pyxel.frame_count % random.randint(120, 180) == 0):
-            self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()
         # Si se acerca al extremo del mapa cambia su direccion
@@ -159,8 +184,8 @@ class RedEnemy(Enemy):
 
     def update(self):
         """This function will update every frame"""
-        # This if the way the Regular enemies will shot creating a proyectile at a random time
-        if (pyxel.frame_count % random.randint(100, 200) == 0):
+        # This if the way the Regular enemies will shoot creating a projectile at a random time
+        if pyxel.frame_count % random.randint(100, 200) == 0:
             self.projectile_manager.create_projectile(self.position_x, self.position_y, "EnemyProjectile")
         # Check if the enemy has to be deleted -> All enemy update methods need to have this:
         self.check_delete()

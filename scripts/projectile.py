@@ -15,12 +15,60 @@ class Projectile:
         self.position_x = position_x
         self.position_y = position_y
         # Basic speed for all projectiles, can change for player and enemy projectiles
-        self.speed = 3
+        self.__speed = 3
         # Time until a projectile is deleted (seg)
         self.lifespan = 3
         self.created_time = time.time()
         self.is_alive = True
 
+    # Property and setter for the position u
+    @property
+    def position_u(self):
+        return 16
+
+    @position_u.setter
+    def position_u(self, position_u: int):
+        # Only change the direction_y to float values
+        if type(position_u) != int:
+            raise TypeError("The u position must be an int")
+        else:
+            self.__position_u = 16
+    # Property and setter for the position v
+    @property
+    def position_v(self):
+        return 16
+
+    @position_v.setter
+    def position_v(self, position_v: int):
+        # Only change the direction_y to float values
+        if type(position_v) != int:
+            raise TypeError("The v position must be an int")
+        else:
+            self.__position_v = 16
+    # Property and setter for the life span
+    @property
+    def lifespan(self):
+        return 3
+
+    @lifespan.setter
+    def lifespan(self, lifespan: int):
+        # Only change the direction_y to float values
+        if type(lifespan) != int:
+            raise TypeError("The lifespan must be an int")
+        else:
+            self.__lifespan = 3
+    # Property and setter for the created time
+    @property
+    def created_time(self):
+        return time.time()
+
+    @created_time.setter
+    def created_time(self, created_time: float):
+        # Only change the direction_y to float values
+        if type(created_time) != float:
+            raise TypeError("The created time must be a float")
+        else:
+            self.__created_time = time.time()
     # Property and setter for the direction_x
     @property
     def position_x(self):
@@ -30,7 +78,7 @@ class Projectile:
     def position_x(self, position_x: int):
         # Only change the direction_x to float values
         if type(position_x) != int:
-            raise TypeError("The position must be a int")
+            raise TypeError("The x position must be a int")
         else:
             self.__position_x = position_x
 
@@ -43,29 +91,28 @@ class Projectile:
     def position_y(self, position_y: int):
         # Only change the direction_y to float values
         if type(position_y) != int:
-            raise TypeError("The position must be a int")
+            raise TypeError("The y position must be a int")
         else:
             self.__position_y = position_y
 
-    # Property and setter for the speed
+    # Property and setter for the is alive
     @property
-    def speed(self):
-        return self.__speed
+    def is_alive(self):
+        return True
 
-    # This setter is only for the case that the speed changes in player and enemies projectiles
-    @speed.setter
-    def speed(self, speed: int):
+    @is_alive.setter
+    def is_alive(self, is_alive: bool):
         # Only change the direction_y to float values
-        if type(speed) != int:
-            raise TypeError("The speed must be a int")
+        if type(is_alive) != bool:
+            raise TypeError("The is alive must be a bool")
         else:
-            self.__speed = speed
+            self.__is_alive = True
 
     # Methods for the Projectile mother class, things all projectiles do
     def update(self):
         """This function will update every frame"""
         # Update method, changes the position of the projectile
-        self.position_y -= self.speed
+        self.position_y -= self.__speed
         # Check if the projectile needs to be deleted
         self.is_alive = self.check_delete(self.lifespan, self.created_time)
 
@@ -88,7 +135,7 @@ class Projectile:
 class PlayerProjectile(Projectile):
     def __init__(self, position_x: int, position_y: int):
         super(PlayerProjectile, self).__init__(position_x, position_y)
-        self.speed = 4
+        self.__speed = 4
         # The sprite variables from projectile are the basic for playerProjectile
 
 
