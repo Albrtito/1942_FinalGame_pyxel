@@ -16,30 +16,29 @@ class ProjectileManager:
     def __init__(self):
         self.player_projectiles = []
         self.enemy_projectiles = []
-    """
     # Setter and Property for the enemy_projectiles list
     @property
     def enemy_projectiles(self):
-        return []
+        return self.__enemy_projectiles
     @enemy_projectiles.setter
     def enemy_projectiles(self, enemy_projectiles: list):
         # Only change the position_x to float values
         if type(enemy_projectiles) != list:
             raise TypeError("The enemy_projectiles must be a list")
         else:
-            self.__enemy_projectiles = []
+            self.__enemy_projectiles = enemy_projectiles
     # Setter and Property for the player_projectiles list
     @property
     def player_projectiles(self):
-        return []
+        return self.__player_projectiles
     @player_projectiles.setter
     def player_projectiles(self, player_projectiles: list):
         # Only change the position_x to float values
         if type(player_projectiles) != list:
             raise TypeError("The player_projectiles must be a list")
         else:
-            self.__player_projectiles = []
-    """
+            self.__player_projectiles = player_projectiles
+
     def update(self):
         """This function updates every frame"""
         # Update the projectiles in each player and enemy list.

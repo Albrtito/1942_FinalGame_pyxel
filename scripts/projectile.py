@@ -8,7 +8,7 @@ class Projectile:
     def __init__(self, position_x: int, position_y: int):
         # Sprite related variables of the projectile
         self.position_u = 0
-        self.position_v = 16
+        self.__position_v = 16
         self.width = constants.normal_sprite_width
         self.height = constants.normal_sprite_height
         # Basic variables for projectile
@@ -24,41 +24,15 @@ class Projectile:
     # Property and setter for the position u
     @property
     def position_u(self):
-        return 16
+        return self.__position_u
 
     @position_u.setter
     def position_u(self, position_u: int):
-        # Only change the direction_y to float values
+        # Only change the direction_u to int values
         if type(position_u) != int:
             raise TypeError("The u position must be an int")
         else:
-            self.__position_u = 16
-
-    # Property and setter for the position v
-    @property
-    def position_v(self):
-        return 16
-
-    @position_v.setter
-    def position_v(self, position_v: int):
-        # Only change the direction_y to float values
-        if type(position_v) != int:
-            raise TypeError("The v position must be an int")
-        else:
-            self.__position_v = 16
-
-    # Property and setter for the life span
-    @property
-    def lifespan(self):
-        return 3
-
-    @lifespan.setter
-    def lifespan(self, lifespan: int):
-        # Only change the direction_y to float values
-        if type(lifespan) != int:
-            raise TypeError("The lifespan must be an int")
-        else:
-            self.__lifespan = 3
+            self.__position_u = position_u
 
     # Property and setter for the created time
     @property
@@ -82,7 +56,7 @@ class Projectile:
     def position_x(self, position_x: int):
         # Only change the direction_x to float values
         if type(position_x) != int:
-            raise TypeError("The x position must be a int")
+            raise TypeError("The x position must be an int")
         else:
             self.__position_x = position_x
 
@@ -102,7 +76,7 @@ class Projectile:
     # Property and setter for the is alive
     @property
     def is_alive(self):
-        return True
+        return self.__is_alive
 
     @is_alive.setter
     def is_alive(self, is_alive: bool):
@@ -110,7 +84,7 @@ class Projectile:
         if type(is_alive) != bool:
             raise TypeError("The is alive must be a bool")
         else:
-            self.__is_alive = True
+            self.__is_alive = is_alive
 
     # Methods for the Projectile mother class, things all projectiles do
     def update(self):
@@ -124,7 +98,7 @@ class Projectile:
         """This function draws the projectiles"""
         # The position at which a projectile has to be deleted will
         # vary when we are creating a movement in the background
-        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.position_v,
+        pyxel.blt(self.position_x, self.position_y, 0, self.position_u, self.__position_v,
                   self.width, self.height, colkey=0)
 
     def check_delete(self, lifespan, created_time):

@@ -10,12 +10,11 @@ from enemyManager import EnemyManager
 class WaveManager:
     def __init__(self, enemy_manager: EnemyManager):
         self.enemy_manager = enemy_manager
-        self.wave_list = []
         self.wave = 1
         self.wave_appear = False
-        self.bombardier = False
-        self.super_bombardier = False
-        self.player_invincible = False
+        self.__bombardier = False
+        self.__super_bombardier = False
+        self.__player_invincible = False
 
     def update(self):
         """This function updates every frame"""
