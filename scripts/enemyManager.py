@@ -13,23 +13,7 @@ class EnemyManager:
     def __init__(self, projectile_manager: ProjectileManager):
         """The init function of the class that will manage all the enemy objects"""
         self.enemy_list = []
-        self.projectile_manager = projectile_manager
-
-    """
-    Estas lineas no son necesarias
-    # Property and Setter for the projectile manager
-    @property
-    def projectile_manager(self):
-            return self.__projectile_manager
-
-    @projectile_manager.setter
-    def projectile(self, projectile_manager: ProjectileManager):
-        if type(projectile_manager) != ProjectileManager:
-            raise TypeError("Projectile manager must be an object of class ProjectileManager")
-
         self.__projectile_manager = projectile_manager
-    """
-
 
     def update(self):
         """This function will execute every frame"""
@@ -44,10 +28,10 @@ class EnemyManager:
     def create_enemy(self, position_x, position_y, enemy_type: str):
         """This method will create the enemy of the class determined by the enemy_type string"""
         if enemy_type == "Regular":
-            self.enemy_list.append(RegularEnemy(position_x, position_y, self.projectile_manager))
+            self.enemy_list.append(RegularEnemy(position_x, position_y, self.__projectile_manager))
         if enemy_type == "Red":
-            self.enemy_list.append(RedEnemy(position_x, position_y, self.projectile_manager))
+            self.enemy_list.append(RedEnemy(position_x, position_y, self.__projectile_manager))
         if enemy_type == "Bombardier":
-            self.enemy_list.append(Bombardier(position_x, position_y, self.projectile_manager))
+            self.enemy_list.append(Bombardier(position_x, position_y, self.__projectile_manager))
         if enemy_type == "Superbombardier":
-            self.enemy_list.append(SuperBombardier(position_x, position_y, self.projectile_manager))
+            self.enemy_list.append(SuperBombardier(position_x, position_y, self.__projectile_manager))

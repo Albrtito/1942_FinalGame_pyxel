@@ -24,78 +24,77 @@ class Enemy:
         self.position_x = position_x
         self.position_y = position_y
         self.width = constants.normal_sprite_width
-        self.height = constants.normal_sprite_height
         # Other variables
         self.projectile_manager = projectile_manager
         # In game important variables of each enemy
         self.is_alive = True
         self.lives = 1
 
-        @property
-        def lives(self):
-            return 1
+    @property
+    def lives(self):
+        return self.__lives
 
-        @lives.setter
-        def lives(self, lives: int):
-            # Only change the position_x to float values
-            if type(lives) != int:
-                raise TypeError("The lives must be an int")
-            else:
-                self.__lives = 1
-        @property
-        def is_alive(self):
-            return True
-        @is_alive.setter
-        def is_alive(self, is_alive: bool):
-            # Only change the position_x to float values
-            if type(is_alive) != bool:
-                raise TypeError("The is alive must be a bool")
-            else:
-                self.__is_alive = True
+    @lives.setter
+    def lives(self, lives: int):
+        # Only change the position_x to float values
+        if type(lives) != int:
+            raise TypeError("The lives must be an int")
+        else:
+            self.__lives = lives
+
+    @property
+    def is_alive(self):
+        return self.__is_alive
+
+    @is_alive.setter
+    def is_alive(self, is_alive: bool):
+        # Only change the position_x to float values
+        if type(is_alive) != bool:
+            raise TypeError("The is alive must be a bool")
+        else:
+            self.__is_alive = is_alive
+
     # Property for height and width
-        @property
-        def height(self):
-            return self.__height
-        @property
-        def width(self):
-            return self.__width
+    @property
+    def height(self):
+        return constants.normal_sprite_height
+
+    @property
+    def width(self):
+        return self.__width
+
+    @width.setter
+    def width(self,width):
+        if type(width) != int:
+            raise TypeError("Width must be an int")
+        else:
+            self.__width = width
+
     # Property and setter for position_x
-        @property
-        def position_x(self):
-            return self.__position_x
+    @property
+    def position_x(self):
+        return self.__position_x
 
-        @position_x.setter
-        def position_x(self, position_x: int):
-            # Only change the position_x to float values
-            if type(position_x) != int:
-                raise TypeError("The position must be an int")
-            else:
-                self.__position_x = position_x
+    @position_x.setter
+    def position_x(self, position_x: int):
+        # Only change the position_x to float values
+        if type(position_x) != int:
+            raise TypeError("The position must be an int")
+        else:
+            self.__position_x = position_x
 
-        # Property and setter for position_y
-        @property
-        def position_y(self):
-            return self.__position_y
+    # Property and setter for position_y
+    @property
+    def position_y(self):
+        return self.__position_y
 
-        @position_y.setter
-        def position_y(self, position_y: int):
-            # Only change the position_y to float values
-            if type(position_y) != int:
-                raise TypeError("The position must be an int")
-            else:
-                self.__position_y = position_y
-
-        # Property and setter for projectile
-
-        @property
-        def projectile_manager(self):
-            return self.__projectile_manager
-
-        @projectile_manager.setter
-        def projectile(self, projectile_manager: ProjectileManager):
-            if type(projectile_manager) != ProjectileManager:
-                raise TypeError("Projectile manager must be an object of class ProjectileManager")
-            self.__projectile_manager = projectile_manager
+    @position_y.setter
+    def position_y(self, position_y: int):
+        # Only change the position_y to float values
+        if type(position_y) != int:
+            raise TypeError("The position must be an int")
+        else:
+            self.__position_y = position_y
 
     # Check if the enemy should be deleted (die)
     def check_delete(self):
@@ -111,8 +110,6 @@ class RegularEnemy(Enemy):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 32
-        self.height = 16
-        self.width = 16
         self.transparent_color = 4
         self.change_sprite = 1
         self.change_sprite_2 = 0
@@ -175,8 +172,6 @@ class RedEnemy(Enemy):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 48
-        self.height = 16
-        self.width = 16
         self.transparent_color = 11
         self.change_sprite = 0
         self.change_sprite_2 = 0
@@ -234,8 +229,6 @@ class Bombardier(Enemy):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 64
-        self.height = 16
-        self.width = 16
         self.transparent_color = 4
         self.direction = 1
         self.change_direction = 0
@@ -250,9 +243,9 @@ class Bombardier(Enemy):
         if self.position_y != 50:
             self.position_y -= self.direction
         if self.position_y == 50 and (pyxel.frame_count % 100 == 0):
-            if (pyxel.frame_count % 400 == 0):
+            if pyxel.frame_count % 400 == 0:
                 self.projectile_manager.create_projectile(self.position_x, self.position_y, "BombardierProjectile")
-            if (pyxel.frame_count % 3 == 0):
+            if pyxel.frame_count % 3 == 0:
                 self.direction = -1
             else:
                 self.direction = 1
@@ -261,7 +254,8 @@ class Bombardier(Enemy):
             self.direction = 1
         elif self.position_y <= 0:
             self.direction = -1
-        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= constants.screen_height + constants.normal_sprite_height + 10:
+        if self.position_x >= constants.screen_width + constants.normal_sprite_width + 10 or self.position_y >= \
+                constants.screen_height + constants.normal_sprite_height + 10:
             self.is_alive = False
 
     def draw(self):
@@ -294,7 +288,6 @@ class SuperBombardier(Enemy):
         super().__init__(position_x, position_y, projectile_manager)
         self.position_u = 0
         self.position_v = 80
-        self.height = 16
         self.width = 32
         self.transparent_color = 4
         self.direction = 1

@@ -33,6 +33,7 @@ class Projectile:
             raise TypeError("The u position must be an int")
         else:
             self.__position_u = 16
+
     # Property and setter for the position v
     @property
     def position_v(self):
@@ -45,6 +46,7 @@ class Projectile:
             raise TypeError("The v position must be an int")
         else:
             self.__position_v = 16
+
     # Property and setter for the life span
     @property
     def lifespan(self):
@@ -57,6 +59,7 @@ class Projectile:
             raise TypeError("The lifespan must be an int")
         else:
             self.__lifespan = 3
+
     # Property and setter for the created time
     @property
     def created_time(self):
@@ -69,6 +72,7 @@ class Projectile:
             raise TypeError("The created time must be a float")
         else:
             self.__created_time = time.time()
+
     # Property and setter for the direction_x
     @property
     def position_x(self):
