@@ -100,6 +100,7 @@ class Enemy:
     def check_delete(self):
         if self.lives <= 0:
             self.is_alive = False
+            constants.enemies_killed += 1
         else:
             self.is_alive = True
 

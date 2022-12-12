@@ -21,7 +21,7 @@ class App:
         self.enemy_manager = EnemyManager(self.projectile_manager)
         self.wave_manager = WaveManager(self.enemy_manager)
         self.background_manager = BackgroundManager(constants.screen_width, constants.screen_height, self.wave_manager)
-        self.player = Player(int(120), int(120), self.projectile_manager)
+        self.player = Player(60, 110, self.projectile_manager)
         self.collision_manager = CollisionManager(self.player, self.enemy_manager, self.projectile_manager)
 
         # Variables of the game loop: Game loop is true when player is moving and playing. Its private as it`s only used
@@ -135,6 +135,7 @@ class App:
         r = open("../assets/high_score.txt", "r")
         # Evaluate the file high score vs the in-game actual high score
         if int(r.read()) < constants.player_score:
+            constants.new_highscore = True
             # If the actual high score is grater, se that as the new high score in constants in order to present it
             # later in the game-over background
             constants.high_score = constants.player_score

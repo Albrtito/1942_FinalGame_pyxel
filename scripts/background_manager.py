@@ -98,9 +98,9 @@ class BackgroundManager:
                 pyxel.bltm(x=0, y=0, tm=0, u=0, v=110 * 8, w=self.screen_width, h=self.screen_height)
                 pyxel.bltm(x=0, y=0, tm=0, u=48 * 8, v=240 * 8, w=self.screen_width, h=self.screen_height, colkey=2)
                 if pyxel.frame_count % 5 == 0:
-                    pyxel.text(40, 129, f"Insert coin (press i)", 10)
+                    pyxel.text(23, 129, f"Insert coin (press i)", 10)
                 else:
-                    pyxel.text(40, 129, f"Insert coin (press i)", 9)
+                    pyxel.text(23, 129, f"Insert coin (press i)", 9)
                 pyxel.text(40, 70, f"Controls: ", 0)
                 pyxel.text(25, 80, f" * Move: Arrow keys ", 0)
                 pyxel.text(25, 90, f" * Shoot: Space ", 0)
@@ -111,8 +111,20 @@ class BackgroundManager:
                 # Draw the initial screen and the text boxes on top of that in order to see the text when displayed
                 pyxel.bltm(x=0, y=0, tm=0, u=0, v=240 * 8, w=self.screen_width, h=self.screen_height)
                 pyxel.bltm(x=0, y=0, tm=0, u=32 * 8, v=240 * 8, w=self.screen_width, h=self.screen_height, colkey=2)
-                pyxel.text(self.screen_width / 8, self.screen_height / 8, f"PRESS ENTER TO START:", 7)
-                pyxel.text(8, 130, f"High Score: {constants.high_score}", 7)
+                if pyxel.frame_count % 20 == 0:
+                    if constants.player_lives == 3:
+                        pyxel.text(20, 17, f"PRESS ENTER TO START:", 7)
+                    else:
+                        pyxel.text(40, 17, f"Start again", 7)
+                else:
+                    if constants.player_lives == 3:
+                        pyxel.text(20, 17, f"PRESS ENTER TO START:", 0)
+                    else:
+                        pyxel.text(40, 17, f"Start again", 0)
+                pyxel.text(45, 55, f" Score:{constants.player_score} ", 0)
+                pyxel.text(25, 65, f" Enemies killed: {constants.enemies_killed} ", 0)
+                pyxel.text(35,75, f"High Score: {constants.high_score}", 0)
+                self.paint_lives()
             # If we are not in the initial screen  we draw the background of the game
             else:
                 # The background roll is changed in the update method.
@@ -137,9 +149,13 @@ class BackgroundManager:
         """When_game_over: Displays the game over screen with the high score and your score"""
         pyxel.cls(0)
         pyxel.bltm(x=0, y=0, tm=0, u=240 * 8, v=0, w=self.screen_width, h=self.screen_height)
-        pyxel.text(30, 70, f"Your Score: {constants.player_score}", 7)
-        pyxel.text(30, 30, f"Highest Score: {constants.high_score}", 7)
-
+        pyxel.text(40, 55, f" Score:{constants.player_score} ", 7)
+        pyxel.text(25, 65, f" Enemies killed: {constants.enemies_killed} ", 7)
+        if constants.new_highscore:
+            pyxel.text(25, 85, f"NEW HIGH SCORE: {constants.high_score}", 10)
+        else:
+            pyxel.text(30, 75, f"High Score: {constants.high_score}", 7)
+        pyxel.text(10, 125, f"Thanks for playing : ) ", 2)
     def paint_lives(self):
         """Paint_lives: This method paints hearts in the bottom left corner,the hearts painted vary in the lives the player
         has"""
