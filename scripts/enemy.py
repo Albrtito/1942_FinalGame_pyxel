@@ -39,7 +39,7 @@ class Enemy:
         def lives(self, lives: int):
             # Only change the position_x to float values
             if type(lives) != int:
-                raise TypeError("The position must be an int")
+                raise TypeError("The lives must be an int")
             else:
                 self.__lives = 1
         @property
@@ -49,7 +49,7 @@ class Enemy:
         def is_alive(self, is_alive: bool):
             # Only change the position_x to float values
             if type(is_alive) != bool:
-                raise TypeError("The position must be a bool")
+                raise TypeError("The is alive must be a bool")
             else:
                 self.__is_alive = True
     # Property for height and width
