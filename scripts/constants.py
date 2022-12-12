@@ -8,10 +8,11 @@ This class is used to save methods that are used in more than one class
 player_is_alive = True
 player_lives = 3
 player_score = 0
-player_run_score = 0
+enemies_killed = 0
 f = open("../assets/high_score.txt", "r")
 high_score = f.read()
 f.close()
+new_highscore = False
 # Game variables: App variables
 screen_width = 128
 screen_height = 128
@@ -25,6 +26,8 @@ hitbox_y = 16
 high_score_file_write = open('high_score.txt', "w")
 high_score_file_read = open("high_score.txt","r")
 """
+
+
 # Takes a list and draws all the elements
 def draw_list(list):
     for i in range(len(list)):

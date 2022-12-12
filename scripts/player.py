@@ -206,7 +206,7 @@ class Player:
     def animate_explosion_restart(self):
         """animate_explosion_restart: Animates the explosion of the player. When the explosion is done
         the explosion_done variable turns to true and the position of the player sprite in
-         the bank is returned to 0,0"""
+         the bank is returned to 0,0 and its position in-game is returned to the initial position"""
         # The animation will be run every 3 frames
         if pyxel.frame_count % 3 == 0:
             self.__position_v = 128
@@ -217,3 +217,7 @@ class Player:
                 self.explosion_done = True
                 self.__position_u = 0
                 self.__position_v = 0
+                # When the player explodes, it has to reappear later, for it to reappear in the right place we need to
+                # change the position to the initial position
+                self.position_x = 60
+                self.position_y = 100
