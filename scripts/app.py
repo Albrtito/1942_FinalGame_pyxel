@@ -155,6 +155,7 @@ class App:
                             + Press E to create an enemy in 0,0
                             + Press P to make the player explode and see the animation
                             + Press G to enter the game over screen
+                            + Press C to enter cheat mode: Invincibility
         """
         if pyxel.btnp(pyxel.KEY_E):
             self.enemy_manager.create_enemy(0, 0, "Red")

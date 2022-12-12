@@ -51,7 +51,10 @@ class WaveManager:
         if not constants.player_is_alive and not self.__player_invincible:
             if self.wave != 0:
                 self.wave -= 1
+            # clear the enemies from the screen and the enemy projectiles from the screen so that when te player
+            # reappears it doesn`t die
             self.enemy_manager.enemy_list.clear()
+            self.enemy_manager.projectile_manager.enemy_projectiles.clear()
             self.__bombardier = False
             self.__super_bombardier = False
             self.__player_invincible = True

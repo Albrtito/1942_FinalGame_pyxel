@@ -33,6 +33,8 @@ class Player:
         self.__time_between_shots = 0
         # The projectile manager for the shots fired by the player. Does not need a setter, its private for the player
         self.__projectile_manager = projectile_manager
+        # Loop cooldown in seconds: Defines the time between loops
+        self.__loop_cooldown = 2
 
     # Property and setter for position_x: It can only be given an int.
     @property

@@ -56,7 +56,7 @@ class CollisionManager:
                 if not constants.cheats:
                     if not self.__player.loop:
                         constants.player_lives -= 1
-                        constants.player_is_alive = True
+                        constants.player_is_alive = False
                         self.__projectile_manager.enemy_projectiles[index].is_alive = False
                 else:
                     self.__projectile_manager.enemy_projectiles[index].is_alive = False
