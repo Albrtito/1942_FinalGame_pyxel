@@ -9,6 +9,7 @@ player_is_alive = True
 player_lives = 3
 player_score = 0
 enemies_killed = 0
+local_high_score = 0
 f = open("../assets/high_score.txt", "r")
 high_score = f.read()
 f.close()

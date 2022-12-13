@@ -123,7 +123,7 @@ class BackgroundManager:
                         pyxel.text(40, 17, f"Start again", 0)
                 pyxel.text(45, 55, f" Score:{constants.player_score} ", 0)
                 pyxel.text(25, 65, f" Enemies killed: {constants.enemies_killed} ", 0)
-                pyxel.text(35,75, f"High Score: {constants.high_score}", 0)
+                pyxel.text(35, 75, f"High Score: {constants.high_score}", 0)
                 self.paint_lives()
             # If we are not in the initial screen  we draw the background of the game
             else:
@@ -152,10 +152,14 @@ class BackgroundManager:
         pyxel.text(40, 55, f" Score:{constants.player_score} ", 7)
         pyxel.text(25, 65, f" Enemies killed: {constants.enemies_killed} ", 7)
         if constants.new_highscore:
+            # pyxel.text(25, 85, f"NEW HIGH SCORE: {constants.local_high_score}", 10)
             pyxel.text(25, 85, f"NEW HIGH SCORE: {constants.high_score}", 10)
         else:
+            # pyxel.text(30, 75, f"High Score: {constants.local_high_score}", 7)
             pyxel.text(30, 75, f"High Score: {constants.high_score}", 7)
-        pyxel.text(10, 125, f"Thanks for playing : ) ", 2)
+        pyxel.text(10, 100, f"Thanks for playing : )", 2)
+        pyxel.text(10, 115, f"ENTER to go again", 2)
+
     def paint_lives(self):
         """Paint_lives: This method paints hearts in the bottom left corner,the hearts painted vary in the lives the player
         has"""

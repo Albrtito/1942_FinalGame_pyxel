@@ -105,6 +105,12 @@ class App:
                 # At any moment during the game the background needs to be showing, so its update is always happening
                 self.background_manager.update()
 
+            if constants.player_lives <= 0:
+                if pyxel.btnp(pyxel.KEY_RETURN):
+                    self.background_manager.game_over = False
+                    constants.player_lives = 3
+                    self.background_manager.first_screen = True
+
     def draw(self):
         """Draw: This method is repeated every frame, in it all the objects are drawn in screen"""
 
@@ -131,7 +137,11 @@ class App:
         method is called, that means the player has no lives left to restart the game """
         """
         We now open the high-score file and check if the high score obtained during the game is greater than the max
-        high score ever played, if that's the case, the in-game score is written in the file as the new high score: 
+        high score ever played, if that's the case, the in-game score is written in the file as the new high score:
+        This methods have not been seen in the course itinerary. Because of this we have also made a version of it
+        in which the highscore is only saved locally, that version is now commented, to use it, uncomment it and 
+        comment lines from 139 to 151. The other change necessary to use local_highscores is to uncomment lines 155 and 
+        158 from background_manager and comment the lines below both of them.
         """
         # Open the file as read only
         r = open("../assets/high_score.txt", "r")
@@ -146,6 +156,12 @@ class App:
             w.write(str(constants.player_score))
             w.close()
         r.close()
+
+        """
+        if constants.local_high_score < constants.player_score:
+            constants.new_highscore = True
+            constants.local_high_score = constants.player_score
+        """
         # We change a variable in the background manager: "Sending" the message of game over
         self.background_manager.game_over = True
         self.__game_loop = False
