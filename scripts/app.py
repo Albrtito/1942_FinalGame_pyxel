@@ -109,6 +109,8 @@ class App:
                 if pyxel.btnp(pyxel.KEY_RETURN):
                     self.background_manager.game_over = False
                     constants.player_lives = 3
+                    constants.player_score = 0
+                    constants.enemies_killed = 0
                     self.background_manager.first_screen = True
 
     def draw(self):
@@ -165,6 +167,7 @@ class App:
         # We change a variable in the background manager: "Sending" the message of game over
         self.background_manager.game_over = True
         self.__game_loop = False
+
 
     def dev_mode(self):
         """ The dev mode is a way of easily checking for mistakes in game during development.When active:
